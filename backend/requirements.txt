@@ -9,3 +9,4 @@ tenacity==9.0.0
 sse-starlette==2.2.1
 pytest==8.3.4
 pytest-asyncio==0.25.2
+fpdf2==2.8.1

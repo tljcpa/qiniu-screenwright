@@ -2,7 +2,7 @@
 // 职责：渲染场标题 + 元素序列；adaptation 元素显示外化标签(创新点③)；
 //       点击元素 -> 触发 右->左 高亮(把该 element key 交给父组件)；
 //       当某 element key 在 activeKeys 内时高亮自身(实现 左->右 命中)。
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState, type MutableRefObject } from 'react'
 import type { Screenplay, Element, Adaptation } from '../api'
 import { elementKey } from '../trace'
 
@@ -11,8 +11,8 @@ interface Props {
   activeKeys: Set<string>
   // 点击右侧元素
   onElementClick: (key: string) => void
-  // 重生成某场
-  onRegenerate: (sceneId: string) => void
+  // 重生成某场：传该场 id + 用户填写的指令(可空)，返回 Promise 以便卡片管理 loading/错误。
+  onRegenerate: (sceneId: string, instruction: string) => Promise<void>
 }
 
 // 人物 id -> 显示名
@@ -59,7 +59,9 @@ function adaptLabel(adaptation: Adaptation): string | null {
 export default function ScriptPane(props: Props) {
   const { screenplay, activeKeys, onElementClick, onRegenerate } = props
   const firstHlRef = useRef<HTMLDivElement | null>(null)
-  let assignedFirst = false
+  // 用一个外层闭包变量记录"本轮渲染是否已分配过首个高亮 ref"，
+  // 通过对象包裹传给各 SceneView，使跨场也只滚动到第一个命中元素。
+  const assigned = { done: false }
 
   useEffect(() => {
     if (firstHlRef.current) {
@@ -71,49 +73,140 @@ export default function ScriptPane(props: Props) {
     <div className="pane right">
       <h2 className="pane-title">结构化剧本</h2>
       {screenplay.scenes.map((sc) => (
-        <div className="scene" key={sc.id}>
-          <div className="scene-head">
-            <span className="scene-slug">
-              {sc.heading.int_ext}. {locOf(screenplay, sc.heading.location_id)} — {sc.heading.time_of_day}
-            </span>
-            <span className="scene-id">{sc.id}</span>
-            <button
-              className="btn scene-regen"
-              onClick={() => onRegenerate(sc.id)}
-              title="增量重生成这一场（编辑安全）"
-            >
-              重生成
-            </button>
-          </div>
-          {sc.synopsis ? <div className="scene-synopsis">{sc.synopsis}</div> : null}
+        <SceneView
+          key={sc.id}
+          scene={sc}
+          screenplay={screenplay}
+          activeKeys={activeKeys}
+          onElementClick={onElementClick}
+          onRegenerate={onRegenerate}
+          firstHlRef={firstHlRef}
+          assigned={assigned}
+        />
+      ))}
+    </div>
+  )
+}
 
-          {sc.elements.map((el, idx) => {
-            const key = elementKey(sc.id, idx)
-            const hit = activeKeys.has(key)
-            let ref: ((el: HTMLDivElement | null) => void) | undefined
-            if (hit && !assignedFirst) {
-              assignedFirst = true
-              ref = (node) => {
-                firstHlRef.current = node
+// 单场卡片：自带"重生成"交互状态(展开指令框 / loading / 错误)。
+// 把 regen UI 状态收在每张卡片内部，是为了实现"只动这一场"的隔离感——
+// 一张卡片重生成中/出错，绝不影响其他卡片。
+interface SceneProps {
+  scene: Screenplay['scenes'][number]
+  screenplay: Screenplay
+  activeKeys: Set<string>
+  onElementClick: (key: string) => void
+  onRegenerate: (sceneId: string, instruction: string) => Promise<void>
+  firstHlRef: MutableRefObject<HTMLDivElement | null>
+  assigned: { done: boolean }
+}
+
+function SceneView(p: SceneProps) {
+  const { scene: sc, screenplay, activeKeys, onElementClick, onRegenerate, firstHlRef, assigned } = p
+  // 是否展开指令输入框
+  const [open, setOpen] = useState(false)
+  // 指令文本(可选填)
+  const [instruction, setInstruction] = useState('')
+  // 本场是否正在重生成
+  const [busy, setBusy] = useState(false)
+  // 本场错误信息(为 null 表示无错)
+  const [err, setErr] = useState<string | null>(null)
+
+  // 点确认：调父级 onRegenerate，期间本卡片进入 loading；成功收起输入框，失败保留并显示错误可重试。
+  async function submit() {
+    setBusy(true)
+    setErr(null)
+    try {
+      await onRegenerate(sc.id, instruction.trim())
+      // 成功后收起输入框、清空指令(新内容已由父级替换进 state)。
+      setOpen(false)
+      setInstruction('')
+    } catch (e) {
+      // 出错只在本卡片内展示，可重试，不污染全局。
+      let msg = '重生成失败，请重试'
+      if (e instanceof Error && e.message) {
+        msg = e.message
+      }
+      setErr(msg)
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <div className="scene" key={sc.id} data-scene-id={sc.id}>
+      <div className="scene-head">
+        <span className="scene-slug">
+          {sc.heading.int_ext}. {locOf(screenplay, sc.heading.location_id)} — {sc.heading.time_of_day}
+        </span>
+        <span className="scene-id">{sc.id}</span>
+        <button
+          className="btn scene-regen"
+          onClick={() => setOpen((v) => !v)}
+          disabled={busy}
+          title="增量重生成这一场（编辑安全）"
+        >
+          重生成
+        </button>
+      </div>
+      {sc.synopsis ? <div className="scene-synopsis">{sc.synopsis}</div> : null}
+
+      {/* 重生成指令面板：点"重生成"展开。指令可空。 */}
+      {open ? (
+        <div className="regen-panel">
+          <input
+            className="regen-input"
+            type="text"
+            value={instruction}
+            placeholder="例如: 更紧张、加冲突、台词更口语（可不填）"
+            disabled={busy}
+            onChange={(e) => setInstruction(e.target.value)}
+            onKeyDown={(e) => {
+              // 回车直接提交，体验更顺。
+              if (e.key === 'Enter' && !busy) {
+                submit()
               }
-            }
-            return (
-              <ElementView
-                key={key}
-                el={el}
-                hit={hit}
-                screenplay={screenplay}
-                onClick={() => onElementClick(key)}
-                rootRef={ref}
-              />
-            )
-          })}
-
-          {sc.continuity_flags.map((f, i) => (
-            <div className={'flag ' + f.level} key={i}>
-              {f.msg}
+            }}
+          />
+          <button className="btn primary regen-confirm" onClick={submit} disabled={busy}>
+            {busy ? '重生成中…' : '确认重生成'}
+          </button>
+          {err ? (
+            <div className="regen-error">
+              {err}
+              <button className="btn regen-retry" onClick={submit} disabled={busy}>
+                重试
+              </button>
             </div>
-          ))}
+          ) : null}
+        </div>
+      ) : null}
+
+      {sc.elements.map((el, idx) => {
+        const key = elementKey(sc.id, idx)
+        const hit = activeKeys.has(key)
+        let ref: ((node: HTMLDivElement | null) => void) | undefined
+        if (hit && !assigned.done) {
+          assigned.done = true
+          ref = (node) => {
+            firstHlRef.current = node
+          }
+        }
+        return (
+          <ElementView
+            key={key}
+            el={el}
+            hit={hit}
+            screenplay={screenplay}
+            onClick={() => onElementClick(key)}
+            rootRef={ref}
+          />
+        )
+      })}
+
+      {sc.continuity_flags.map((f, i) => (
+        <div className={'flag ' + f.level} key={i}>
+          {f.msg}
         </div>
       ))}
     </div>

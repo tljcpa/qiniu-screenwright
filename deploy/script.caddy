@@ -1,0 +1,23 @@
+# Screenwright 站点配置（追加到共享 Caddy /etc/caddy/conf.d/script.caddy）。
+# 主 Caddyfile 通过 import /etc/caddy/conf.d/*.caddy 引入，各站点一个文件互不冲突。
+# Caddy 见到域名会自动申请并续期 Let's Encrypt 证书。
+script.qiniu.zdwktlj.top {
+	encode gzip
+
+	# 后端 API 反代到本机容器(仅监听 127.0.0.1:8083)
+	@api path /api/*
+	handle @api {
+		# flush_interval -1 关闭反代缓冲, 保证 /api/convert 的 SSE 进度逐条实时下发,
+		# 否则前端要等管线全部结束才一次性收到。
+		reverse_proxy 127.0.0.1:8083 {
+			flush_interval -1
+		}
+	}
+
+	# 其余走前端静态产物, SPA 回退 index.html
+	handle {
+		root * /opt/screenwright/frontend/dist
+		try_files {path} /index.html
+		file_server
+	}
+}

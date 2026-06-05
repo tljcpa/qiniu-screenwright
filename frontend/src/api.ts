@@ -390,6 +390,26 @@ export async function getSample(
   return convert(samples[0].text, medium, onProgress)
 }
 
+// 加载样例(预计算秒出版)
+// 真实对接点：GET /api/sample/{sample_id}/result。
+// 与 getSample 的区别：后端用预计算的静态 JSON 直接秒回，零 LLM、零等待，
+// 形状与 convert 的 done 一致(screenplay/metrics/chapters)，前端无缝渲染。
+// 为什么需要它：用户路径已对 LLM 关磁盘缓存(隐私)，"加载样例"若仍走 convert 会真跑几十秒，
+// demo 秒出体感全丢。内置样例非用户隐私，故走预计算端点。用户"粘贴+生成"仍走真实 convert。
+export async function getSampleResult(sampleId: string): Promise<WorkbenchData> {
+  if (USE_MOCK) {
+    await delay(120)
+    return buildMockWorkbench('film')
+  }
+  const res = await fetch(API_BASE + '/api/sample/' + encodeURIComponent(sampleId) + '/result')
+  if (!res.ok) {
+    throw new Error('sample result failed: ' + res.status)
+  }
+  const d = (await res.json()) as DoneEvent
+  // 与 convert 的返回保持一致：只取 screenplay + chapters(metrics 前端自行派生)。
+  return { screenplay: d.screenplay, chapters: d.chapters }
+}
+
 // 导出为指定格式，返回一个可下载的文本/二进制 Blob
 // 真实对接点：POST /api/export
 export async function exportAs(

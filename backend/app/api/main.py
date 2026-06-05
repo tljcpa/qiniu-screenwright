@@ -30,9 +30,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse, Response
 from pydantic import BaseModel, Field, ValidationError
 from sse_starlette.sse import EventSourceResponse
+from starlette.background import BackgroundTask
 
 # 业务能力全部从既有模块 import(不复制实现)。
-from app.llm.client import get_llm
+from app.llm.client import get_llm, LLM
 from app.pipeline import ingest as ingest_mod
 from app.pipeline import bible as bible_mod
 from app.pipeline import segment as segment_mod
@@ -153,7 +154,8 @@ def _client_ip(request: Request) -> str:
 
 class ConvertRequest(BaseModel):
     """/api/convert 入参。"""
-    text: str
+    # max_length 给 text 设硬上限：超 20 万字符 pydantic 直接 422，挡住烧钱/OOM 的 DoS 主面。
+    text: str = Field(max_length=200_000)
     title: Optional[str] = None
     medium: str = "film"
 
@@ -166,7 +168,8 @@ class RegenerateRequest(BaseModel):
     medium: Optional[str] = None
     # 可选原文：若提供，用它重建 Novel 以便精确切出本场原文做溯源。
     # 不提供时退化为基于 bible+stub 生成(编辑安全，不动其他场)。
-    text: Optional[str] = None
+    # 同样设 max_length 上限：regenerate 也吃用户原文，是同类放大面。
+    text: Optional[str] = Field(default=None, max_length=200_000)
 
 
 class ExportRequest(BaseModel):
@@ -192,6 +195,16 @@ def health() -> dict:
 # samples 目录：backend/samples。本文件在 backend/app/api/main.py，上溯三级到 backend。
 _BACKEND_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 _SAMPLES_DIR = os.path.join(_BACKEND_DIR, "samples")
+
+# 预计算样例结果目录：backend/samples/precomputed。
+# 内置样例已离线真跑过整条管线，结果(screenplay/metrics/chapters)存成静态 JSON。
+# 这样"加载样例"端点零 LLM、秒回，且不触发任何用户原文落盘问题(样例非用户隐私)。
+_PRECOMPUTED_DIR = os.path.join(_SAMPLES_DIR, "precomputed")
+
+# 文本输入硬上限(字符数)。约 20 万字符，足够任何 demo 样本(中文 20 万字已是长篇)。
+# 作用：堵住"超大 body -> 章数/场数无界 -> LLM 调用无界"的烧钱/OOM/超时 DoS 主面。
+# 同时在 pydantic 模型层(Field max_length)与端点层各设一道，前者自动 422，后者给友好 400。
+_MAX_TEXT_LEN = 200_000
 
 # 样本清单：id / 标题 / 文件名。固定两份(中文网文 + 英文 P&P)。
 _SAMPLE_FILES = [
@@ -226,11 +239,52 @@ def sample() -> List[dict]:
     return out
 
 
+# 合法样例 id 集合：从 _SAMPLE_FILES 派生，端点据此校验路径参数(防任意文件名)。
+_SAMPLE_IDS = {item["id"] for item in _SAMPLE_FILES}
+
+
+@app.get("/api/sample/{sample_id}/result")
+def sample_result(sample_id: str):
+    """
+    返回内置样例的"预计算"完整结果(screenplay/metrics/chapters)。
+
+    为什么要这个端点：用户路径已对 LLM 关缓存(隐私)，若"加载样例"还走真实 convert，
+    每次都得真跑一整条管线(几十秒)，demo 秒出体感没了。内置样例不是用户隐私，
+    所以离线真跑一次把结果固化成静态 JSON，这个端点直接读文件秒回 —— 零 LLM、零等待、
+    无隐私问题。用户自己"粘贴+生成"仍走真实 convert(已 cache=False)。
+
+    形状与 /api/convert 的 done 事件一致(screenplay/metrics/chapters)，前端无缝渲染。
+    sample_id 不在白名单或文件缺失 -> 404。
+    """
+    if sample_id not in _SAMPLE_IDS:
+        return JSONResponse(status_code=404, content={"detail": "未知样例 id"})
+    path = os.path.join(_PRECOMPUTED_DIR, sample_id + ".json")
+    if not os.path.exists(path):
+        return JSONResponse(status_code=404, content={"detail": "样例结果未预计算"})
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    return JSONResponse(content=data)
+
+
 # ----------------------------------------------------------------------------
 # 端点 3：转换(SSE 进度流)
 # ----------------------------------------------------------------------------
 
 _VALID_MEDIA = {"film", "series", "short_drama"}
+
+
+def _new_uncached_llm() -> LLM:
+    """
+    为用户请求路径构造一个关闭磁盘缓存的 LLM 实例。
+
+    provider 解析沿用 LLM.__init__ 的默认优先级(显式入参 > 环境变量 LLM_PROVIDER >
+    deepseek)，这里只覆盖 cache=False。每个用户请求新建一次，构造开销是建一个
+    OpenAI 客户端，相对一整条管线的 LLM 调用可忽略。
+
+    为什么不改 get_llm() 全局默认：get_llm 还被离线脚本/测试复用，那些场景缓存有价值
+    (反复调试省钱)。隐私约束只针对公网用户路径，所以在 API 层局部关缓存最干净。
+    """
+    return LLM(cache=False)
 
 
 def _run_pipeline_blocking(text: str, title: Optional[str], medium: str, emit) -> dict:
@@ -243,8 +297,14 @@ def _run_pipeline_blocking(text: str, title: Optional[str], medium: str, emit) -
     返回最终 done 事件的 payload(含 screenplay + metrics)。
 
     隐私：text 只在本函数内存里流转，不写日志、不落盘。
+
+    隐私关键(兑现 README "原文不落盘")：用 cache=False 的 LLM 实例显式传给每个 Pass。
+    默认 get_llm() 走磁盘缓存(backend/.llm_cache)，缓存内容含 start_marker/source_quote
+    等逐字原文派生物，会落盘 -> 与"原文不落盘"矛盾。这里对用户路径强制关缓存，
+    用户粘贴的原文不再被任何磁盘缓存持久化。代价是丢失"反复调试省钱"，但生产本不该靠缓存。
+    内置样例的秒出体感由预计算端点(/api/sample/{id}/result)保证，不受此影响。
     """
-    llm = get_llm()
+    llm = _new_uncached_llm()
 
     # Pass0 ingest。
     emit({"stage": "ingest", "detail": "解析小说、分章分块", "pct": 5})
@@ -454,7 +514,8 @@ def regenerate_scene(req: RegenerateRequest):
             bible=sp.story_bible,
             medium=medium,
             prev_tail="",
-            llm=get_llm(),
+            # 隐私：用户路径关缓存，避免含 source_quote 逐字原文的派生物落盘。
+            llm=_new_uncached_llm(),
         )
     except Exception as exc:  # noqa: BLE001
         msg = str(exc)
@@ -512,4 +573,12 @@ def export(req: ExportRequest):
     tmp.close()
     export_mod.to_pdf(sp, tmp_path)
     filename = "screenplay.pdf"
-    return FileResponse(tmp_path, media_type="application/pdf", filename=filename)
+    # 隐私(兑现 README "原文不落盘")：PDF 含完整剧本(含 source_quote 逐字原文)。
+    # FileResponse 把文件发完后，BackgroundTask 立即 os.remove 删临时文件，用后即删，
+    # 不在 /tmp 残留含原文的 PDF。BackgroundTask 在响应体发送完成后才执行，删除时机安全。
+    return FileResponse(
+        tmp_path,
+        media_type="application/pdf",
+        filename=filename,
+        background=BackgroundTask(os.remove, tmp_path),
+    )

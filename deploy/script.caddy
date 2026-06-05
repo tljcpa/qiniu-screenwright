@@ -4,6 +4,12 @@
 script.qiniu.zdwktlj.top {
 	encode gzip
 
+	# 传输层请求体上限: 挡住超大 body 在进 Python 前(配合后端 text max_length 防 DoS/烧钱)。
+	# 2MB 足够任何 demo 文本(20 万字符 UTF-8 中文约 600KB), 超限 Caddy 直接 413。
+	request_body {
+		max_size 2MB
+	}
+
 	# 后端 API 反代到本机容器(仅监听 127.0.0.1:8083)
 	@api path /api/*
 	handle @api {
@@ -11,6 +17,9 @@ script.qiniu.zdwktlj.top {
 		# 否则前端要等管线全部结束才一次性收到。
 		reverse_proxy 127.0.0.1:8083 {
 			flush_interval -1
+			# 强制用真实对端 IP 覆盖客户端可能伪造的 X-Forwarded-For,
+			# 否则攻击者每请求自填一个伪造 XFF 就能让后端按 IP 的限流分桶失效。
+			header_up X-Forwarded-For {remote_host}
 		}
 	}
 

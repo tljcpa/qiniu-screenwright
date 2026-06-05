@@ -178,6 +178,13 @@ def test_convert_sse(client):
     assert last["stage"] == "done"
     assert "screenplay" in last
     assert "metrics" in last
+    # done 事件必须附带 chapters(前端双向溯源高亮所需)，且每章 text 非空。
+    assert "chapters" in last
+    assert len(last["chapters"]) >= 1
+    for ch in last["chapters"]:
+        assert "index" in ch
+        assert "title" in ch
+        assert ch["text"]  # 非空原文
     # screenplay 能被重新校验。
     sp = Screenplay.model_validate(last["screenplay"])
     assert sp.meta.target_medium == "film"

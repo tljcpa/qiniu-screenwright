@@ -17,6 +17,7 @@ import {
   type WorkbenchData,
   type TargetMedium,
   type ExportFormat,
+  type ConvertProgress,
 } from './api'
 import { buildChapterSegments } from './trace'
 import NovelPane from './components/NovelPane'
@@ -31,18 +32,22 @@ const MEDIA: { id: TargetMedium; label: string }[] = [
   { id: 'short_drama', label: '短剧' },
 ]
 
-// mock 进度步骤(对应后端 Pass0-5)，演示转换流程
-const PROGRESS_STEPS = [
-  '分章分块（Pass0 ingest）',
-  '构建故事圣经（Pass1 bible）',
-  '场景切分与溯源（Pass2 segment）',
-  '逐场生成与外化（Pass3 generate）',
-  '校验与连贯性检查（Pass4 validate）',
-  '完成',
-]
+// 后端 stage 标识 -> 中文展示标签(对应后端 Pass0-5)。
+// 真实进度由后端 SSE 的 stage 事件驱动，这张表只负责把英文 stage 翻成中文。
+const STAGE_LABELS: Record<string, string> = {
+  ingest: '分章分块（Pass0 ingest）',
+  bible: '构建故事圣经（Pass1 bible）',
+  segment: '场景切分与溯源（Pass2 segment）',
+  generate: '逐场生成与外化（Pass3 generate）',
+  annotate: '校验与连贯性检查（Pass4 annotate）',
+  metrics: '计算质量指标（Pass5 metrics）',
+  done: '完成',
+}
 
 export default function App() {
   const [data, setData] = useState<WorkbenchData | null>(null)
+  // 缓存最近一次提交的小说原文：切媒介/重生成需回传后端，保证真实重渲染与精确溯源。
+  const [sourceText, setSourceText] = useState<string>('')
   const [medium, setMedium] = useState<TargetMedium>('film')
   const [activeKeys, setActiveKeys] = useState<Set<string>>(new Set())
   const [busy, setBusy] = useState(false)
@@ -69,47 +74,57 @@ export default function App() {
     return computeMetrics(data)
   }, [data])
 
-  // 播放一段 mock 进度动画，然后 resolve
-  async function runProgress(): Promise<void> {
-    for (let i = 0; i < PROGRESS_STEPS.length; i++) {
-      setProgressStep(PROGRESS_STEPS[i])
-      setProgressPct(Math.round(((i + 1) / PROGRESS_STEPS.length) * 100))
-      await new Promise((r) => setTimeout(r, 350))
+  // 真实进度回调：把后端 SSE 的 stage 事件映射成进度条状态。
+  function handleProgress(p: ConvertProgress) {
+    const label = STAGE_LABELS[p.stage] || p.stage
+    setProgressStep(label)
+    if (typeof p.pct === 'number') {
+      setProgressPct(p.pct)
     }
   }
 
-  // 生成：跑进度 + 调 convert
+  // 生成：调真实 convert(SSE)，进度由后端事件驱动。
+  // 关键：必须缓存提交的原文，重生成/切媒介时回传后端以保证溯源精确。
   async function handleGenerate(text: string) {
     setBusy(true)
     setActiveKeys(new Set())
-    await runProgress()
-    const d = await convert(text, medium)
+    setProgressStep(null)
+    setProgressPct(0)
+    setSourceText(text)
+    const d = await convert(text, medium, handleProgress)
     setData(d)
     setProgressStep(null)
     setProgressPct(0)
     setBusy(false)
   }
 
-  // 加载样例
+  // 加载样例：走真实 /api/sample 取样本原文后 convert。
   async function handleLoadSample() {
     setBusy(true)
     setActiveKeys(new Set())
-    const d = await getSample()
-    // 样例也应反映当前选择的媒介，统一走 convert 以套用媒介渲染
-    const dm = await convert('', medium)
-    void d
-    setData(dm)
+    setProgressStep(null)
+    setProgressPct(0)
+    const d = await getSample(medium, handleProgress)
+    // 缓存样例原文(取自第一章拼接近似不可靠，这里直接用 chapters 拼回完整原文)。
+    setSourceText(d.chapters.map((c) => c.text).join('\n\n'))
+    setData(d)
+    setProgressStep(null)
+    setProgressPct(0)
     setBusy(false)
   }
 
-  // 切换媒介：若已有数据，按新媒介重渲染(同一 bible+scenes 重渲染，体现①)
+  // 切换媒介：若已有数据，用缓存的原文按新媒介重新 convert(真实重渲染，体现①)。
   async function handleSwitchMedium(m: TargetMedium) {
     setMedium(m)
-    if (data) {
+    if (data && sourceText) {
       setBusy(true)
       setActiveKeys(new Set())
-      const d = await convert('', m)
+      setProgressStep(null)
+      setProgressPct(0)
+      const d = await convert(sourceText, m, handleProgress)
       setData(d)
+      setProgressStep(null)
+      setProgressPct(0)
       setBusy(false)
     }
   }

@@ -174,11 +174,29 @@ export interface QualityMetrics {
 // ---------------------------------------------------------------------------
 // 真假数据开关：将来后端就绪，把 USE_MOCK 置 false 即可整体切换。
 // ---------------------------------------------------------------------------
-const USE_MOCK = true
+const USE_MOCK = false
 
 // 模拟网络延迟，让 mock 下的 loading / 进度也能演示
 function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+// 后端基址。Vite dev 下用代理或同源；这里用相对路径，部署时由反代统一接管。
+const API_BASE = ''
+
+// 转换进度事件(对应后端 SSE 的 stage 事件 payload)。
+export interface ConvertProgress {
+  stage: string
+  detail?: string
+  pct?: number
+}
+
+// 后端 done 事件原始结构(screenplay + metrics + chapters)。
+interface DoneEvent {
+  stage: 'done'
+  screenplay: Screenplay
+  metrics: Record<string, unknown>
+  chapters: Chapter[]
 }
 
 // ---------------------------------------------------------------------------
@@ -186,60 +204,185 @@ function delay(ms: number): Promise<void> {
 // ---------------------------------------------------------------------------
 
 // 转换：小说原文 + 目标媒介 -> 结构化剧本
-// 真实对接点：POST /api/convert （后端为 SSE 进度流，这里先给最终结果）
+// 真实对接点：POST /api/convert (后端为 SSE 进度流)。
+// onProgress 可选：每收到一个 stage 事件就回调一次，用于驱动前端进度条。
+// 实现要点：后端用 text/event-stream 返回，逐事件是一段 "data: {json}\n\n"。
+// 浏览器原生 EventSource 只支持 GET，这里是 POST，所以用 fetch + ReadableStream
+// 手动读字节流、按 "\n\n" 切分事件块、再逐块解析 JSON。
 export async function convert(
   text: string,
   medium: TargetMedium,
+  onProgress?: (p: ConvertProgress) => void,
 ): Promise<WorkbenchData> {
   if (USE_MOCK) {
-    await delay(600)
+    // mock 下也模拟几个 stage 进度，让 onProgress 能演示
+    if (onProgress) {
+      const steps: ConvertProgress[] = [
+        { stage: 'ingest', detail: '分章分块', pct: 5 },
+        { stage: 'bible', detail: '构建故事圣经', pct: 25 },
+        { stage: 'segment', detail: '场景切分', pct: 45 },
+        { stage: 'generate', detail: '逐场生成', pct: 60 },
+        { stage: 'annotate', detail: '连贯性检查', pct: 85 },
+        { stage: 'metrics', detail: '计算指标', pct: 95 },
+      ]
+      for (const s of steps) {
+        await delay(120)
+        onProgress(s)
+      }
+    } else {
+      await delay(600)
+    }
     const data = buildMockWorkbench(medium)
     // mock 下忽略传入 text，仅按媒介渲染样例；真实后端会用 text
     void text
     return data
   }
-  const res = await fetch('/api/convert', {
+
+  const res = await fetch(API_BASE + '/api/convert', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ text, medium }),
   })
-  if (!res.ok) throw new Error('convert failed: ' + res.status)
-  return (await res.json()) as WorkbenchData
+  if (!res.ok || !res.body) {
+    throw new Error('convert failed: ' + res.status)
+  }
+
+  // 读字节流并增量解码成文本。
+  const reader = res.body.getReader()
+  const decoder = new TextDecoder('utf-8')
+  let buffer = ''
+  let done: DoneEvent | null = null
+
+  // 解析一个 SSE 事件块(可能含多行 data:)，返回拼接后的 JSON 字符串或 null。
+  function extractData(block: string): string | null {
+    const dataLines: string[] = []
+    for (const line of block.split('\n')) {
+      if (line.startsWith('data:')) {
+        dataLines.push(line.slice('data:'.length).trimStart())
+      }
+    }
+    if (dataLines.length === 0) {
+      return null
+    }
+    return dataLines.join('\n')
+  }
+
+  // 处理一个完整事件块。
+  function handleBlock(block: string): void {
+    const payload = extractData(block)
+    if (payload === null || payload === '') {
+      return
+    }
+    let evt: { stage?: string } & Record<string, unknown>
+    try {
+      evt = JSON.parse(payload)
+    } catch {
+      // 半截/非 JSON 块跳过(理论上不会发生，因为只在 \n\n 边界处理)。
+      return
+    }
+    if (evt.stage === 'error') {
+      const detail = typeof evt.detail === 'string' ? evt.detail : '转换失败'
+      throw new Error(detail)
+    }
+    if (evt.stage === 'done') {
+      done = evt as unknown as DoneEvent
+      return
+    }
+    // 其余视为 stage 进度事件。
+    if (onProgress) {
+      onProgress({
+        stage: String(evt.stage || ''),
+        detail: typeof evt.detail === 'string' ? evt.detail : undefined,
+        pct: typeof evt.pct === 'number' ? evt.pct : undefined,
+      })
+    }
+  }
+
+  // 流式读取：每读到一段就追加到 buffer，按 "\n\n" 切出完整事件块处理。
+  // 关键：sse-starlette 用 CRLF("\r\n\r\n")分隔事件，先归一化成 "\n" 再按 "\n\n" 切，
+  // 否则永远切不出事件块(实测踩过这个坑)。
+  for (;;) {
+    const { value, done: streamDone } = await reader.read()
+    if (value) {
+      buffer += decoder.decode(value, { stream: true }).replace(/\r\n/g, '\n')
+      let sep = buffer.indexOf('\n\n')
+      while (sep !== -1) {
+        const block = buffer.slice(0, sep)
+        buffer = buffer.slice(sep + 2)
+        handleBlock(block)
+        sep = buffer.indexOf('\n\n')
+      }
+    }
+    if (streamDone) {
+      break
+    }
+  }
+  // 处理可能残留在 buffer 里的最后一个块(无尾随 \n\n 的情况)。
+  if (buffer.trim()) {
+    handleBlock(buffer)
+  }
+
+  if (!done) {
+    throw new Error('convert failed: 未收到 done 事件')
+  }
+  // 组装前端工作台数据包：screenplay + chapters(metrics 前端自行从剧本派生)。
+  const d: DoneEvent = done
+  return { screenplay: d.screenplay, chapters: d.chapters }
 }
 
 // 增量重生成某一场（编辑安全：只动这一场）
 // 真实对接点：POST /api/regenerate_scene
+// 后端需要整份 screenplay 来重建上下文，并只返回更新后的这一场。
+// medium/text 可选：text 给上则用原文重建 Novel，溯源更准。
 export async function regenerateScene(
-  id: string,
+  screenplay: Screenplay,
+  sceneId: string,
   instruction: string,
+  medium?: TargetMedium,
+  text?: string,
 ): Promise<Scene> {
   if (USE_MOCK) {
     await delay(400)
-    const data = buildMockWorkbench('film')
-    const found = data.screenplay.scenes.find((s) => s.id === id)
-    if (!found) throw new Error('scene not found: ' + id)
+    const found = screenplay.scenes.find((s) => s.id === sceneId)
+    if (!found) throw new Error('scene not found: ' + sceneId)
     // mock 下把指令附到 synopsis 末尾，演示"指令生效"
     return { ...found, synopsis: found.synopsis + `（已按指令重生成：${instruction}）` }
   }
-  const res = await fetch('/api/regenerate_scene', {
+  const res = await fetch(API_BASE + '/api/regenerate_scene', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id, instruction }),
+    body: JSON.stringify({
+      screenplay,
+      scene_id: sceneId,
+      instruction,
+      medium,
+      text,
+    }),
   })
   if (!res.ok) throw new Error('regenerate failed: ' + res.status)
   return (await res.json()) as Scene
 }
 
 // 加载样例
-// 真实对接点：GET /api/sample
-export async function getSample(): Promise<WorkbenchData> {
+// 真实对接点：GET /api/sample。
+// 注：后端 /api/sample 返回的是样本列表 [{id,title,text}]，不是 WorkbenchData。
+// 前端约定取第一条样本原文，再走 convert 得到完整工作台数据。
+export async function getSample(
+  medium: TargetMedium = 'film',
+  onProgress?: (p: ConvertProgress) => void,
+): Promise<WorkbenchData> {
   if (USE_MOCK) {
     await delay(300)
-    return buildMockWorkbench('film')
+    return buildMockWorkbench(medium)
   }
-  const res = await fetch('/api/sample')
+  const res = await fetch(API_BASE + '/api/sample')
   if (!res.ok) throw new Error('sample failed: ' + res.status)
-  return (await res.json()) as WorkbenchData
+  const samples = (await res.json()) as { id: string; title: string; text: string }[]
+  if (!samples.length || !samples[0].text) {
+    throw new Error('sample failed: 无可用样本')
+  }
+  // 用第一条样本(中文《旧城咖啡》)的原文真跑 convert。
+  return convert(samples[0].text, medium, onProgress)
 }
 
 // 导出为指定格式，返回一个可下载的文本/二进制 Blob
@@ -253,7 +396,7 @@ export async function exportAs(
     const content = mockExportContent(format, screenplay)
     return new Blob([content], { type: 'text/plain;charset=utf-8' })
   }
-  const res = await fetch('/api/export', {
+  const res = await fetch(API_BASE + '/api/export', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ format, screenplay }),

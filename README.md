@@ -4,7 +4,7 @@
 >
 > 把 3 章以上的小说，自动转换为**结构化、可编辑、可溯源、可按目标媒介重渲染**的剧本（YAML / Fountain / PDF）。
 
-[演示视频（待补）](#) · [在线试用 https://script.qiniu.zdwktlj.top](https://script.qiniu.zdwktlj.top) · [Schema 设计文档](docs/schema-design.md)
+[演示视频](https://script.qiniu.zdwktlj.top/demo/screenwright-demo.mp4) · [在线试用 https://script.qiniu.zdwktlj.top](https://script.qiniu.zdwktlj.top) · [Schema 设计文档](docs/schema-design.md)
 
 ---
 
@@ -21,7 +21,7 @@ Screenwright 不是"切块丢给大模型"的转换器，而是一个**编剧工
 
 ## 亮点演示
 
-- 演示视频：**[链接待补]**（人声讲解，覆盖核心流程，置顶本 README）。
+- 演示视频：<https://script.qiniu.zdwktlj.top/demo/screenwright-demo.mp4>（覆盖核心流程：双向溯源、媒介改编、单场重生成、导出；B 站镜像链接稍后补充）。
 - 在线试用：<https://script.qiniu.zdwktlj.top>（内置中文网文与英文《傲慢与偏见》两份样本，一键试用）。
 
 ---

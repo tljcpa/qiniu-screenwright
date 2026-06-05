@@ -13,6 +13,7 @@ import {
   convert,
   getSample,
   exportAs,
+  regenerateScene,
   computeMetrics,
   type WorkbenchData,
   type TargetMedium,
@@ -129,6 +130,43 @@ export default function App() {
     }
   }
 
+  // 增量重生成某一场（编辑安全：只动这一场）。
+  // 关键：拿到后端返回的单个新 Scene 后，只替换 state.screenplay.scenes 里同 id 的那一场，
+  //       其他场对象引用原样不变(编辑安全)，并触发 segmentsByChapter/metrics 重算以刷新溯源数据。
+  // 失败时把错误抛回 ScriptPane，由该卡片自行展示并允许重试，绝不污染全局 data。
+  async function handleRegenerate(sceneId: string, instruction: string): Promise<void> {
+    if (!data) {
+      return
+    }
+    // 用当前完整 screenplay 调后端；medium 与缓存的 sourceText 一并回传，溯源更准。
+    const newScene = await regenerateScene(
+      data.screenplay,
+      sceneId,
+      instruction,
+      medium,
+      sourceText,
+    )
+    // 函数式更新：基于最新 state 重建，避免闭包里 data 过期。
+    setData((prev) => {
+      if (!prev) {
+        return prev
+      }
+      // 只替换目标 id 的那一场，其余场原样保留(引用不变)。
+      const nextScenes = prev.screenplay.scenes.map((s) => {
+        if (s.id === sceneId) {
+          return newScene
+        }
+        return s
+      })
+      return {
+        ...prev,
+        screenplay: { ...prev.screenplay, scenes: nextScenes },
+      }
+    })
+    // 重生成后旧的高亮 key 可能失效，清掉，避免指向已被替换的元素。
+    setActiveKeys(new Set())
+  }
+
   // 右侧点击元素 -> 高亮该元素，左侧联动
   function handleElementClick(key: string) {
     setActiveKeys(new Set([key]))
@@ -212,11 +250,7 @@ export default function App() {
                 screenplay={data.screenplay}
                 activeKeys={activeKeys}
                 onElementClick={handleElementClick}
-                onRegenerate={(id) => {
-                  // 重生成本轮仅 mock，提示用户(真实接口已在 api.ts 留好)
-                  // eslint-disable-next-line no-alert
-                  window.alert('重生成（mock）：场 ' + id + ' 将按指令增量重生成。真实接口 /api/regenerate_scene 已就绪。')
-                }}
+                onRegenerate={handleRegenerate}
               />
             </div>
             <SideBar screenplay={data.screenplay} metrics={metrics} />

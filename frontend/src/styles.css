@@ -246,6 +246,56 @@ button {
   margin-left: auto;
 }
 
+/* 重生成指令面板：点"重生成"展开，含可选指令输入 + 确认按钮 + 错误重试 */
+.regen-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 12px;
+  padding: 10px;
+  background: var(--paper-2);
+  border: 1px dashed var(--rule);
+  border-radius: 6px;
+}
+.regen-input {
+  flex: 1;
+  min-width: 180px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+.regen-input:focus {
+  outline: none;
+  border-color: var(--accent-soft);
+}
+.regen-confirm {
+  white-space: nowrap;
+}
+.btn:disabled,
+.scene-regen:disabled,
+.regen-confirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+/* 错误条：占满整行，下方可重试 */
+.regen-error {
+  flex-basis: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--accent);
+}
+.regen-retry {
+  padding: 3px 10px;
+  font-size: 12px;
+}
+
 /* 元素：通用块 */
 .el {
   cursor: pointer;
@@ -499,4 +549,66 @@ button {
 .aside::-webkit-scrollbar-thumb {
   background: var(--paper-3);
   border-radius: 5px;
+}
+
+/* ==========================================================================
+   响应式：窄屏(<=900px)下三栏纵向堆叠，各占满宽度、整页可纵向滚动。
+   桌面(>900px)保持原三栏并排布局，本段不影响。
+   ========================================================================== */
+@media (max-width: 900px) {
+  /* 整个 app 改为随内容增高、由 body 滚动，避免内层 100vh 把内容锁死。 */
+  .app {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  /* 顶栏：窄屏下按钮换行不溢出。 */
+  .topbar {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 14px;
+  }
+  /* spacer 在换行布局下不再撑开，避免把后面的按钮挤出屏。 */
+  .topbar .spacer {
+    flex-basis: 100%;
+    height: 0;
+  }
+  .btn-group {
+    flex-wrap: wrap;
+  }
+
+  /* 主体：三栏(原文 / 剧本 / 看板)纵向堆叠。 */
+  .main {
+    flex-direction: column;
+    min-height: 0;
+  }
+  /* split 不再左右分屏，改为纵向堆叠两栏。 */
+  .split {
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* 每栏占满宽度；高度随内容、由整页滚动，不再各自 100% 内滚。 */
+  .pane,
+  .aside {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+    overflow-y: visible;
+    height: auto;
+  }
+
+  /* 用底边框替代左右边框，堆叠时分隔更清晰。 */
+  .pane.left {
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+  }
+  .pane.right {
+    border-bottom: 1px solid var(--rule);
+  }
+  .aside {
+    border-left: none;
+    border-top: 1px solid var(--rule);
+  }
 }

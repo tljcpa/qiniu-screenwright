@@ -1,0 +1,19 @@
+# Screenwright VM 部署编排（与仓库根 docker-compose.yml 区分）
+#
+# 本机为共享部署机, 已有系统级 Caddy(import /etc/caddy/conf.d/*.caddy)在跑另外几个站点。
+# 所以这里只跑后端容器, 绑 127.0.0.1:8083(8080/8081/8082 已被占用), 由宿主机 Caddy 反代;
+# 前端 dist 由宿主机 Caddy 直接 file_server 托管, 不进容器。
+#
+# 用法(在 /opt/screenwright 下):
+#   docker compose -f deploy/docker-compose.vm.yml up -d --build
+name: screenwright
+
+services:
+  backend:
+    build: ../backend
+    image: screenwright-backend:latest
+    restart: unless-stopped
+    env_file:
+      - ../.secrets/runtime.env
+    ports:
+      - "127.0.0.1:8083:8000"

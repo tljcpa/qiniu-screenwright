@@ -279,10 +279,20 @@ def _run_pipeline_blocking(text: str, title: Optional[str], medium: str, emit) -
     emit({"stage": "metrics", "detail": "计算质量指标", "pct": 95})
     m = metrics_mod.compute_metrics(sp, novel)
 
+    # chapters：把本次 ingest 出的每章原文一并回送。
+    # 前端的双向溯源高亮(创新点②)需要每章 text 才能按字符偏移切片定位，
+    # 仅有 screenplay 里的 source_ref(章号+span)无法在前端还原原文，故在此附带。
+    # 隐私：这是用户自己刚提交的原文回显给同一会话，不写日志、不落盘。
+    chapters_out = [
+        {"index": c.index, "title": c.title, "text": c.text}
+        for c in novel.chapters
+    ]
+
     return {
         "stage": "done",
         "screenplay": sp.model_dump(by_alias=True),
         "metrics": m,
+        "chapters": chapters_out,
     }
 
 

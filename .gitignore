@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node / frontend
+node_modules/
+frontend/dist/
+.vite/
+
+# Secrets — never commit
+.env
+*.env
+.secrets/
+!.env.example
+
+# LLM 缓存与产物
+.cache/
+.llm_cache/
+out/
+*.tmp
+
+# 编辑器
+.vscode/
+.idea/
+.DS_Store
+
+# 主控本地文件（不入 git）
+BRIEF.md
+docs/复盘-private.md

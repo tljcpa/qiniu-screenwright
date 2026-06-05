@@ -1,0 +1,17 @@
+# Screenwright 部署：前端静态 + 后端 API 反代
+# 子域名在 NameSilo zdwktlj.top 下新增 A 记录指向 VM
+script.qiniu.zdwktlj.top {
+	encode gzip
+
+	# 后端 API
+	handle /api/* {
+		reverse_proxy backend:8000
+	}
+
+	# 演示视频等静态资源走前端 dist
+	handle {
+		root * /srv/www
+		try_files {path} /index.html
+		file_server
+	}
+}

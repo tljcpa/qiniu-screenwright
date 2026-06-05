@@ -3,7 +3,7 @@
 //       点击元素 -> 触发 右->左 高亮(把该 element key 交给父组件)；
 //       当某 element key 在 activeKeys 内时高亮自身(实现 左->右 命中)。
 import { useEffect, useRef } from 'react'
-import type { Screenplay, Element } from '../api'
+import type { Screenplay, Element, Adaptation } from '../api'
 import { elementKey } from '../trace'
 
 interface Props {
@@ -29,8 +29,17 @@ function locOf(sp: Screenplay, locId: string): string {
   return locId
 }
 
-// 外化标签文案：把 from/technique 翻成人话
-function adaptLabel(from_: string, technique: string): string {
+// 外化标签文案：把 from/technique 翻成人话。
+// 入参直接收整个 adaptation 对象，内部读 "from"(真实 API 键，from 是 JS 保留字故用解构改名)，
+// from_ 仅兜底历史 mock。任一关键字段缺失就返回 null，渲染层据此不渲染标签，绝不出现 undefined。
+function adaptLabel(adaptation: Adaptation): string | null {
+  // from 是保留字，不能直接当变量名，解构时改名成 fromKind；再用 from_ 兜底。
+  const { from: fromKind, from_, technique } = adaptation
+  const sourceKind = fromKind ?? from_
+  // 源类型或技法任一缺失，则不渲染该标签(容错，避免 undefined)。
+  if (!sourceKind || !technique) {
+    return null
+  }
   const fromMap: Record<string, string> = {
     interior_monologue: '内心戏',
     narration: '旁白',
@@ -42,7 +51,7 @@ function adaptLabel(from_: string, technique: string): string {
     voiceover: '画外音',
     visual: '画面',
   }
-  const f = fromMap[from_] ?? from_
+  const f = fromMap[sourceKind] ?? sourceKind
   const t = techMap[technique] ?? technique
   return f + ' → ' + t
 }
@@ -134,28 +143,23 @@ function ElementView(p: ElProps) {
   }
 
   if (el.type === 'action') {
+    // 先算出标签文案，为 null(字段缺失)时整段标签不渲染，杜绝 undefined。
+    const actionTag = el.adaptation ? adaptLabel(el.adaptation) : null
     return (
       <div className={cls + 'el-action'} onClick={onClick} ref={rootRef}>
         {el.text}
-        {el.adaptation ? (
-          <span className="adapt-tag">
-            {adaptLabel(el.adaptation.from_, el.adaptation.technique)}
-          </span>
-        ) : null}
+        {actionTag ? <span className="adapt-tag">{actionTag}</span> : null}
       </div>
     )
   }
 
   // dialogue
+  const dialogueTag = el.adaptation ? adaptLabel(el.adaptation) : null
   return (
     <div className={cls + 'el-dialogue'} onClick={onClick} ref={rootRef}>
       <div className="char">
         {nameOf(screenplay, el.character)}
-        {el.adaptation ? (
-          <span className="adapt-tag">
-            {adaptLabel(el.adaptation.from_, el.adaptation.technique)}
-          </span>
-        ) : null}
+        {dialogueTag ? <span className="adapt-tag">{dialogueTag}</span> : null}
       </div>
       {el.parenthetical ? <div className="paren">（{el.parenthetical}）</div> : null}
       <div className="line">{el.line}</div>

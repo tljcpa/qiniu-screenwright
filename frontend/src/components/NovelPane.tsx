@@ -28,10 +28,22 @@ export default function NovelPane(props: Props) {
   // 记录是否已经把"第一个高亮分片"的 ref 绑定过，保证只滚到第一个
   let assignedFirst = false
 
+  // 防御：按 index 去重，确保每章只渲染一次。
+  // 正常后端每章 index 唯一；但若上游异常返回重复章节，
+  // 这里保证左栏不会把同一章原文刷多遍(对应历史 Bug1 的根因防线)。
+  const seenIndex = new Set<number>()
+  const uniqueChapters = chapters.filter((ch) => {
+    if (seenIndex.has(ch.index)) {
+      return false
+    }
+    seenIndex.add(ch.index)
+    return true
+  })
+
   return (
     <div className="pane left">
       <h2 className="pane-title">小说原文</h2>
-      {chapters.map((ch) => {
+      {uniqueChapters.map((ch) => {
         const seg = segmentsByChapter.get(ch.index)
         return (
           <div className="chapter" key={ch.index}>

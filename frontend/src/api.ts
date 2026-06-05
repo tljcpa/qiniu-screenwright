@@ -30,9 +30,14 @@ export interface SourceRef {
   spans: Span[]
 }
 
-// 内心戏外化标记（创新点③）。注意后端 YAML 里字段名是 from，TS 用 from_ 对齐 pydantic 别名。
+// 内心戏外化标记（创新点③）。
+// 关键：后端用 pydantic 的 alias="from" + model_dump(by_alias=True) 序列化，
+//       真实 API 的 JSON 键是 "from"(不是 "from_")。
+//       所以前端类型以 from 为准；同时保留可选的 from_ 仅为兼容历史 mock 数据。
 export interface Adaptation {
-  from_: 'interior_monologue' | 'narration' | 'description'
+  from?: 'interior_monologue' | 'narration' | 'description'
+  // 兼容历史 mock：极少数旧数据可能用 from_，渲染时以 from 优先、from_ 兜底。
+  from_?: 'interior_monologue' | 'narration' | 'description'
   technique: 'subtext' | 'action' | 'voiceover' | 'visual'
 }
 

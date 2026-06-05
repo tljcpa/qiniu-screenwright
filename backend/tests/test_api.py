@@ -91,6 +91,9 @@ def patch_pipeline(monkeypatch):
     """
     # get_llm：返回假客户端，避免找 API key。
     monkeypatch.setattr(api_main, "get_llm", lambda *a, **k: _FakeLLM())
+    # _new_uncached_llm：用户路径(convert/regenerate)现在用关缓存的 LLM 实例。
+    # 桩成假客户端，避免测试时真去初始化 OpenAI 客户端/找 API key。
+    monkeypatch.setattr(api_main, "_new_uncached_llm", lambda *a, **k: _FakeLLM())
 
     # build_bible / segment / generate / generate_scene 全部桩掉。
     monkeypatch.setattr(api_main.bible_mod, "build_bible", lambda novel, llm=None: _fake_bible())
@@ -199,6 +202,53 @@ def test_convert_bad_medium(client):
 def test_convert_empty_text(client):
     r = client.post("/api/convert", json={"text": "   ", "medium": "film"})
     assert r.status_code == 400
+
+
+def test_convert_text_too_long(client):
+    """超长 text 被 pydantic 的 Field(max_length) 拒绝(422)，挡住烧钱/OOM 的 DoS 主面。"""
+    huge = "第一章\n" + ("字" * 200_001)
+    r = client.post("/api/convert", json={"text": huge, "medium": "film"})
+    # pydantic v2 校验失败默认返回 422(请求体不满足模型约束)。
+    assert r.status_code == 422
+
+
+def test_sample_result_precomputed(client, tmp_path, monkeypatch):
+    """/api/sample/{id}/result 返回预计算结构(screenplay/metrics/chapters)，秒回、零 LLM。"""
+    # 把预计算目录指到临时目录，写一份合法的预计算 JSON。
+    monkeypatch.setattr(api_main, "_PRECOMPUTED_DIR", str(tmp_path))
+    sp_dict = _make_screenplay_dict()
+    payload = {
+        "stage": "done",
+        "screenplay": sp_dict,
+        "metrics": {"scene_count": 1},
+        "chapters": [{"index": 1, "title": "第一章", "text": "林深推开木门。"}],
+    }
+    (tmp_path / "zh_oldtown_cafe.json").write_text(
+        json.dumps(payload, ensure_ascii=False), encoding="utf-8"
+    )
+
+    r = client.get("/api/sample/zh_oldtown_cafe/result")
+    assert r.status_code == 200
+    data = r.json()
+    assert "screenplay" in data
+    assert "metrics" in data
+    assert "chapters" in data
+    # screenplay 能被重新校验。
+    sp = Screenplay.model_validate(data["screenplay"])
+    assert len(sp.scenes) == 1
+
+
+def test_sample_result_unknown_id(client):
+    """未知样例 id 返回 404。"""
+    r = client.get("/api/sample/not_a_sample/result")
+    assert r.status_code == 404
+
+
+def test_sample_result_missing_file(client, tmp_path, monkeypatch):
+    """合法 id 但预计算文件缺失返回 404。"""
+    monkeypatch.setattr(api_main, "_PRECOMPUTED_DIR", str(tmp_path))
+    r = client.get("/api/sample/en_pride_prejudice/result")
+    assert r.status_code == 404
 
 
 def _make_screenplay_dict():

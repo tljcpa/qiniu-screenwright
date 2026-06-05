@@ -11,7 +11,7 @@
 import { useMemo, useState } from 'react'
 import {
   convert,
-  getSample,
+  getSampleResult,
   exportAs,
   regenerateScene,
   computeMetrics,
@@ -99,15 +99,20 @@ export default function App() {
     setBusy(false)
   }
 
-  // 加载样例：走真实 /api/sample 取样本原文后 convert。
+  // 加载样例：走预计算端点 /api/sample/{id}/result，秒回(零 LLM、无隐私问题)。
+  // 不再走 convert：用户路径已对 LLM 关磁盘缓存(隐私)，样例若真跑会慢；样例非用户隐私，
+  // 故用离线预计算的静态结果。用户"粘贴+生成"仍走真实 convert(cache=False)。
+  // 默认加载中文《旧城咖啡》样例(预计算媒介为短剧)，同步把 UI 媒介切到一致值。
   async function handleLoadSample() {
     setBusy(true)
     setActiveKeys(new Set())
     setProgressStep(null)
     setProgressPct(0)
-    const d = await getSample(medium, handleProgress)
-    // 缓存样例原文(取自第一章拼接近似不可靠，这里直接用 chapters 拼回完整原文)。
+    const d = await getSampleResult('zh_oldtown_cafe')
+    // 缓存样例原文：切媒介/重生成需回传后端，直接用 chapters 拼回完整原文。
     setSourceText(d.chapters.map((c) => c.text).join('\n\n'))
+    // 预计算结果自带 target_medium，把 UI 媒介切换器同步到它，避免显示与数据不一致。
+    setMedium(d.screenplay.meta.target_medium)
     setData(d)
     setProgressStep(null)
     setProgressPct(0)

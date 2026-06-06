@@ -3,7 +3,7 @@
 //       点击元素 -> 触发 右->左 高亮(把该 element key 交给父组件)；
 //       当某 element key 在 activeKeys 内时高亮自身(实现 左->右 命中)。
 import { useEffect, useRef, useState, type MutableRefObject } from 'react'
-import type { Screenplay, Element, Adaptation } from '../api'
+import type { Screenplay, Element, Adaptation, Scene } from '../api'
 import { elementKey } from '../trace'
 
 interface Props {
@@ -13,6 +13,8 @@ interface Props {
   onElementClick: (key: string) => void
   // 重生成某场：传该场 id + 用户填写的指令(可空)，返回 Promise 以便卡片管理 loading/错误。
   onRegenerate: (sceneId: string, instruction: string) => Promise<void>
+  // H：sceneId -> 上一版该场。某场存在上一版时，卡片提供"看上一版/对比"切换。
+  prevScenes: Record<string, Scene>
 }
 
 // 人物 id -> 显示名
@@ -57,7 +59,7 @@ function adaptLabel(adaptation: Adaptation): string | null {
 }
 
 export default function ScriptPane(props: Props) {
-  const { screenplay, activeKeys, onElementClick, onRegenerate } = props
+  const { screenplay, activeKeys, onElementClick, onRegenerate, prevScenes } = props
   const firstHlRef = useRef<HTMLDivElement | null>(null)
   // 用一个外层闭包变量记录"本轮渲染是否已分配过首个高亮 ref"，
   // 通过对象包裹传给各 SceneView，使跨场也只滚动到第一个命中元素。
@@ -82,6 +84,7 @@ export default function ScriptPane(props: Props) {
           onRegenerate={onRegenerate}
           firstHlRef={firstHlRef}
           assigned={assigned}
+          prevScene={prevScenes[sc.id]}
         />
       ))}
     </div>
@@ -99,10 +102,12 @@ interface SceneProps {
   onRegenerate: (sceneId: string, instruction: string) => Promise<void>
   firstHlRef: MutableRefObject<HTMLDivElement | null>
   assigned: { done: boolean }
+  // H：该场的上一版(重生成前的内容)，存在则提供对比切换。
+  prevScene?: Scene
 }
 
 function SceneView(p: SceneProps) {
-  const { scene: sc, screenplay, activeKeys, onElementClick, onRegenerate, firstHlRef, assigned } = p
+  const { scene: sc, screenplay, activeKeys, onElementClick, onRegenerate, firstHlRef, assigned, prevScene } = p
   // 是否展开指令输入框
   const [open, setOpen] = useState(false)
   // 指令文本(可选填)
@@ -111,6 +116,8 @@ function SceneView(p: SceneProps) {
   const [busy, setBusy] = useState(false)
   // 本场错误信息(为 null 表示无错)
   const [err, setErr] = useState<string | null>(null)
+  // H：是否正在查看上一版(默认看当前版)。
+  const [showPrev, setShowPrev] = useState(false)
 
   // 点确认：调父级 onRegenerate，期间本卡片进入 loading；成功收起输入框，失败保留并显示错误可重试。
   async function submit() {
@@ -140,6 +147,16 @@ function SceneView(p: SceneProps) {
           {sc.heading.int_ext}. {locOf(screenplay, sc.heading.location_id)} — {sc.heading.time_of_day}
         </span>
         <span className="scene-id">{sc.id}</span>
+        {/* H：存在上一版时提供"看上一版/看当前版"切换 */}
+        {prevScene ? (
+          <button
+            className={'btn scene-diff' + (showPrev ? ' active' : '')}
+            onClick={() => setShowPrev((v) => !v)}
+            title="对比重生成前后的内容"
+          >
+            {showPrev ? '看当前版' : '看上一版'}
+          </button>
+        ) : null}
         <button
           className="btn scene-regen"
           onClick={() => setOpen((v) => !v)}
@@ -182,27 +199,43 @@ function SceneView(p: SceneProps) {
         </div>
       ) : null}
 
-      {sc.elements.map((el, idx) => {
-        const key = elementKey(sc.id, idx)
-        const hit = activeKeys.has(key)
-        let ref: ((node: HTMLDivElement | null) => void) | undefined
-        if (hit && !assigned.done) {
-          assigned.done = true
-          ref = (node) => {
-            firstHlRef.current = node
+      {/* H：查看上一版时，只读渲染重生成前的内容(不参与溯源/高亮/点击) */}
+      {showPrev && prevScene ? (
+        <div className="prev-version">
+          <div className="prev-banner">以下为重生成前的上一版（只读）</div>
+          {prevScene.elements.map((el, idx) => (
+            <ElementView
+              key={'prev-' + idx}
+              el={el}
+              hit={false}
+              screenplay={screenplay}
+              onClick={() => {}}
+            />
+          ))}
+        </div>
+      ) : (
+        sc.elements.map((el, idx) => {
+          const key = elementKey(sc.id, idx)
+          const hit = activeKeys.has(key)
+          let ref: ((node: HTMLDivElement | null) => void) | undefined
+          if (hit && !assigned.done) {
+            assigned.done = true
+            ref = (node) => {
+              firstHlRef.current = node
+            }
           }
-        }
-        return (
-          <ElementView
-            key={key}
-            el={el}
-            hit={hit}
-            screenplay={screenplay}
-            onClick={() => onElementClick(key)}
-            rootRef={ref}
-          />
-        )
-      })}
+          return (
+            <ElementView
+              key={key}
+              el={el}
+              hit={hit}
+              screenplay={screenplay}
+              onClick={() => onElementClick(key)}
+              rootRef={ref}
+            />
+          )
+        })
+      )}
 
       {sc.continuity_flags.map((f, i) => (
         <div className={'flag ' + f.level} key={i}>

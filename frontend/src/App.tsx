@@ -14,17 +14,23 @@ import {
   getSampleResult,
   exportAs,
   regenerateScene,
+  baseline,
   computeMetrics,
   type WorkbenchData,
   type TargetMedium,
   type ExportFormat,
   type ConvertProgress,
+  type BaselineResult,
+  type StoryBible,
+  type Scene,
 } from './api'
 import { buildChapterSegments } from './trace'
 import NovelPane from './components/NovelPane'
 import ScriptPane from './components/ScriptPane'
 import SideBar from './components/SideBar'
 import Intake from './components/Intake'
+import BaselineCompare from './components/BaselineCompare'
+import ImportDialog from './components/ImportDialog'
 
 // 媒介选项与中文标签
 const MEDIA: { id: TargetMedium; label: string }[] = [
@@ -54,6 +60,13 @@ export default function App() {
   const [busy, setBusy] = useState(false)
   const [progressStep, setProgressStep] = useState<string | null>(null)
   const [progressPct, setProgressPct] = useState(0)
+  // 朴素基线对比(A)：请求中标志 + 结果(非 null 时弹出对比浮层)。
+  const [baselineBusy, setBaselineBusy] = useState(false)
+  const [baselineResult, setBaselineResult] = useState<BaselineResult | null>(null)
+  // 导入剧本浮层(E)：是否打开。
+  const [importOpen, setImportOpen] = useState(false)
+  // 重生成 diff(H)：sceneId -> 上一版该场。重生成成功前先存旧版，供卡片对比查看。
+  const [prevScenes, setPrevScenes] = useState<Record<string, Scene>>({})
 
   // 由 source_ref 投影出的各章分片(只在 data 变化时重算)
   const segmentsByChapter = useMemo(() => {
@@ -143,6 +156,8 @@ export default function App() {
     if (!data) {
       return
     }
+    // H：重生成前先把当前这一场存为"上一版"，成功后卡片可对比查看改了什么。
+    const oldScene = data.screenplay.scenes.find((s) => s.id === sceneId)
     // 用当前完整 screenplay 调后端；medium 与缓存的 sourceText 一并回传，溯源更准。
     const newScene = await regenerateScene(
       data.screenplay,
@@ -151,6 +166,12 @@ export default function App() {
       medium,
       sourceText,
     )
+    // 后端成功返回后再记录旧版(失败则不记，旧版保持原样)。
+    if (oldScene) {
+      setPrevScenes((prev) => {
+        return { ...prev, [sceneId]: oldScene }
+      })
+    }
     // 函数式更新：基于最新 state 重建，避免闭包里 data 过期。
     setData((prev) => {
       if (!prev) {
@@ -170,6 +191,51 @@ export default function App() {
     })
     // 重生成后旧的高亮 key 可能失效，清掉，避免指向已被替换的元素。
     setActiveKeys(new Set())
+  }
+
+  // A：请求朴素基线对比。用当前缓存原文 + 媒介 + 我们的指标调 /api/baseline，
+  //    成功后置 baselineResult 弹出对比浮层。无原文时按钮已禁用，这里再兜底一层。
+  async function handleBaseline() {
+    if (!data || !sourceText) {
+      return
+    }
+    setBaselineBusy(true)
+    try {
+      const r = await baseline(sourceText, medium, metrics)
+      setBaselineResult(r)
+    } catch (e) {
+      // 失败用 alert 轻量提示(对比是辅助功能，失败不阻断主流程)。
+      let msg = '对比请求失败，请稍后重试'
+      if (e instanceof Error && e.message) {
+        msg = e.message
+      }
+      window.alert(msg)
+    } finally {
+      setBaselineBusy(false)
+    }
+  }
+
+  // E：导入成功后把工作台数据载入，并同步缓存原文(若 chapters 可拼回)，清空高亮与旧版。
+  function handleImported(d: WorkbenchData) {
+    setData(d)
+    setSourceText(d.chapters.map((c) => c.text).join('\n\n'))
+    setMedium(d.screenplay.meta.target_medium)
+    setActiveKeys(new Set())
+    setPrevScenes({})
+    setImportOpen(false)
+  }
+
+  // F：故事圣经就地编辑回写。把新的 story_bible 合并进 screenplay(纯前端，导出即生效)。
+  function handleUpdateBible(bible: StoryBible) {
+    setData((prev) => {
+      if (!prev) {
+        return prev
+      }
+      return {
+        ...prev,
+        screenplay: { ...prev.screenplay, story_bible: bible },
+      }
+    })
   }
 
   // 右侧点击元素 -> 高亮该元素，左侧联动
@@ -222,6 +288,23 @@ export default function App() {
 
         <div className="spacer" />
 
+        {/* 对比朴素版(A)：无原文(未生成过)时禁用并提示先生成 */}
+        <button
+          className="btn"
+          onClick={handleBaseline}
+          disabled={!data || !sourceText || busy || baselineBusy}
+          title={
+            !data || !sourceText ? '请先生成或加载剧本，再对比朴素版' : '与朴素直转结果并排对比'
+          }
+        >
+          {baselineBusy ? '对比中…' : '对比朴素版'}
+        </button>
+
+        {/* 导入剧本续编(E) */}
+        <button className="btn" onClick={() => setImportOpen(true)} disabled={busy}>
+          导入剧本
+        </button>
+
         {/* 导出 */}
         <div className="btn-group">
           <button className="btn" onClick={() => handleExport('yaml')} disabled={!data}>
@@ -256,9 +339,14 @@ export default function App() {
                 activeKeys={activeKeys}
                 onElementClick={handleElementClick}
                 onRegenerate={handleRegenerate}
+                prevScenes={prevScenes}
               />
             </div>
-            <SideBar screenplay={data.screenplay} metrics={metrics} />
+            <SideBar
+              screenplay={data.screenplay}
+              metrics={metrics}
+              onUpdateBible={handleUpdateBible}
+            />
           </>
         ) : (
           <Intake
@@ -270,6 +358,21 @@ export default function App() {
           />
         )}
       </div>
+
+      {/* 朴素基线对比浮层(A)：请求成功后弹出 */}
+      {baselineResult && data ? (
+        <BaselineCompare
+          result={baselineResult}
+          screenplay={data.screenplay}
+          metrics={metrics}
+          onClose={() => setBaselineResult(null)}
+        />
+      ) : null}
+
+      {/* 导入剧本浮层(E) */}
+      {importOpen ? (
+        <ImportDialog onImported={handleImported} onClose={() => setImportOpen(false)} />
+      ) : null}
     </div>
   )
 }

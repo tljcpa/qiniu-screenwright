@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- 暖米纸底圆角方块，呼应工作台纸感配色 -->
+  <rect x="2" y="2" width="60" height="60" rx="13" fill="#f4efe6" stroke="#d6cdba" stroke-width="2"/>
+  <!-- 深褐边框内的衬线 S，象征剧本(Screenplay/Screenwright) -->
+  <text x="32" y="46" text-anchor="middle"
+        font-family="Georgia, 'Songti SC', serif"
+        font-size="44" font-weight="700" fill="#9c4a2f">S</text>
+  <!-- 左侧细竖条，暗示装订/书脊意象 -->
+  <rect x="12" y="14" width="3" height="36" rx="1.5" fill="#2b2622" opacity="0.35"/>
+</svg>

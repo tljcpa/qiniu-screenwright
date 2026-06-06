@@ -552,6 +552,294 @@ button {
 }
 
 /* ==========================================================================
+   模态浮层(对比朴素版 / 导入剧本 共用)
+   ========================================================================== */
+.modal-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(43, 38, 34, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 50;
+}
+.modal {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(43, 38, 34, 0.25);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-2);
+}
+.modal-head h3 {
+  font-family: var(--serif);
+  font-size: 17px;
+  color: var(--ink);
+  margin: 0;
+  flex: 1;
+}
+.modal-close {
+  margin-left: auto;
+}
+.modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 12px 18px;
+  border-top: 1px solid var(--rule);
+  background: var(--paper-2);
+}
+
+/* ---------- 朴素基线对比浮层 ---------- */
+.baseline-modal {
+  width: 1040px;
+  max-width: 100%;
+}
+.cmp-table {
+  width: calc(100% - 36px);
+  margin: 16px 18px 4px;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.cmp-table th,
+.cmp-table td {
+  border: 1px solid var(--rule);
+  padding: 7px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+.cmp-table th {
+  background: var(--paper-2);
+  font-family: var(--sans);
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+.cmp-table .dim {
+  font-weight: 600;
+  color: var(--ink);
+  width: 32%;
+}
+.cmp-table .naive-cell {
+  width: 14%;
+}
+.mark-no {
+  color: #9a3b2a;
+  font-weight: 700;
+}
+.mark-yes {
+  color: #3f7a3f;
+  font-weight: 700;
+  margin-right: 8px;
+}
+.dim-detail {
+  color: var(--ink-faint);
+  font-size: 11.5px;
+}
+.cmp-cols {
+  display: flex;
+  gap: 0;
+  overflow: auto;
+  padding: 8px 18px 18px;
+}
+.cmp-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.cmp-col.naive-col {
+  border-right: 1px dashed var(--rule);
+  padding-right: 16px;
+}
+.cmp-col.ours-col {
+  padding-left: 16px;
+}
+.cmp-col-head {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.cmp-col-sub {
+  display: block;
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--ink-faint);
+  font-weight: 400;
+  margin-top: 2px;
+}
+.cmp-col-body {
+  overflow-y: auto;
+  max-height: 52vh;
+}
+/* 朴素版的自由文本场：刻意素净、无结构感 */
+.naive-scene {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--rule);
+}
+.naive-heading {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+.naive-line {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--ink-soft);
+  margin: 4px 0;
+}
+
+/* ---------- 导入剧本浮层 ---------- */
+.import-modal {
+  width: 620px;
+  max-width: 100%;
+  overflow-y: auto;
+  padding-bottom: 0;
+}
+.import-hint {
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  margin: 14px 18px 4px;
+}
+.import-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin: 12px 18px 4px;
+}
+.import-area {
+  display: block;
+  width: calc(100% - 36px);
+  margin: 0 18px;
+  height: 160px;
+  resize: vertical;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+.import-area-sm {
+  height: 96px;
+}
+.import-area:focus {
+  outline: none;
+  border-color: var(--accent-soft);
+}
+.import-row {
+  margin: 8px 18px 0;
+}
+.import-error {
+  margin: 10px 18px 0;
+  font-size: 12.5px;
+  color: var(--accent);
+  background: rgba(156, 74, 47, 0.08);
+  border: 1px solid rgba(156, 74, 47, 0.30);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+/* ---------- 故事圣经就地编辑 ---------- */
+.char-card .bible-edit {
+  float: right;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink-faint);
+  font-size: 11px;
+  border-radius: 5px;
+  padding: 1px 8px;
+}
+.char-card .bible-edit:hover {
+  border-color: var(--accent-soft);
+  color: var(--ink);
+}
+.char-card.editing {
+  background: var(--paper);
+  border: 1px dashed var(--accent-soft);
+  border-radius: 6px;
+  padding: 10px;
+}
+.bible-input {
+  display: block;
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--ink);
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 5px 8px;
+  margin-bottom: 6px;
+}
+.bible-input:focus {
+  outline: none;
+  border-color: var(--accent-soft);
+}
+.bible-edit-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+.bible-btn {
+  padding: 3px 12px;
+  font-size: 12px;
+}
+
+/* ---------- 重生成 diff(看上一版) ---------- */
+.scene-diff {
+  margin-left: auto;
+  padding: 3px 10px;
+  font-size: 12px;
+}
+.scene-diff + .scene-regen {
+  margin-left: 8px;
+}
+.scene-diff.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #f7f2ea;
+}
+.prev-version {
+  border: 1px dashed var(--accent-soft);
+  border-radius: 6px;
+  padding: 8px 10px;
+  background: rgba(156, 74, 47, 0.04);
+}
+.prev-banner {
+  font-size: 11.5px;
+  color: var(--accent);
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+.prev-version .el {
+  cursor: default;
+}
+.prev-version .el:hover {
+  background: transparent;
+}
+
+/* ==========================================================================
    响应式：窄屏(<=900px)下三栏纵向堆叠，各占满宽度、整页可纵向滚动。
    桌面(>900px)保持原三栏并排布局，本段不影响。
    ========================================================================== */
@@ -610,5 +898,23 @@ button {
   .aside {
     border-left: none;
     border-top: 1px solid var(--rule);
+  }
+
+  /* 对比浮层窄屏下左右两栏改纵向堆叠，避免横向挤压。 */
+  .cmp-cols {
+    flex-direction: column;
+  }
+  .cmp-col.naive-col {
+    border-right: none;
+    border-bottom: 1px dashed var(--rule);
+    padding-right: 0;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+  }
+  .cmp-col.ours-col {
+    padding-left: 0;
+  }
+  .cmp-col-body {
+    max-height: none;
   }
 }

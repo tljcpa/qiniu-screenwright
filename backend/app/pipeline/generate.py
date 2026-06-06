@@ -225,7 +225,7 @@ def _build_messages(
         "【输出要求】只返回一个 JSON 对象，形如：\n"
         "{\n"
         '  "heading": {"int_ext":"INT|EXT|INT/EXT", "location_id":"<地点id>", '
-        '"time_of_day":"日|夜|黄昏|...", "time_ref": null},\n'
+        '"time_of_day":"<时段，用与本场原文相同的语言>", "time_ref": null},\n'
         '  "characters": ["<人物id>", ...],\n'
         '  "synopsis": "本场一句话梗概",\n'
         '  "elements": [\n'
@@ -247,7 +247,11 @@ def _build_messages(
         "不要直接当旁白照抄，要外化成可拍的动作、潜台词台词、画外音或视觉化处理，"
         "并在该元素上给 adaptation，from 固定为 interior_monologue，"
         "technique 从 subtext/action/voiceover/visual 中选最贴切的。\n"
-        "3. 对白的 character 必须是给定人物设定里的 id，不要用名字。"
+        "3. 对白的 character 必须是给定人物设定里的 id，不要用名字。\n"
+        "4. heading.time_of_day(时段)必须用与'本场原文'相同的语言来写："
+        "原文是中文就用 日/夜/黄昏/清晨 等中文词；"
+        "原文是英文就用 DAY/NIGHT/DUSK/DAWN 等英文词；"
+        "不要把英文原文的时段翻成中文，也不要把中文原文的时段翻成英文。"
     )
     system = "\n\n".join(system_parts)
 
@@ -468,6 +472,7 @@ def generate_scene(
     medium: str = "film",
     prev_tail: str = "",
     llm=None,
+    language: Optional[str] = None,
 ) -> Scene:
     """
     逐场生成(Pass3)：把一个 SceneStub 展开成完整 Scene。
@@ -479,6 +484,12 @@ def generate_scene(
       4. 解析 heading / characters / elements；对每个元素用代码定位 source_ref(创新点②)，
          把内心戏外化落到 adaptation(创新点③)，对白说话人映射成 bible id。
       5. 用 pydantic 构造并校验 Scene(id 用 stub.id)返回。
+
+    language(可选)：本场原文语言提示，仅用于 heading.time_of_day 的兜底默认值。
+      默认 None(保持中文 "日" 兜底，既有中文行为不变)；
+      调用方传 "en" 时，模型缺省时段会兜底成英文 "DAY" 而非中文。
+      时段语言的首要保证仍在 prompt 里(要求模型用原文语言写时段)，
+      这个参数只是兜底层的兜底，避免英文输入因模型漏填而回退出中文。
     """
     # llm 为空时取默认单例。
     if llm is None:
@@ -502,8 +513,8 @@ def generate_scene(
         # 极端情况下兜底成空结构，避免后续 KeyError。
         data = {}
 
-    # 4a. heading。
-    heading = _build_heading(data.get("heading"), stub, bible)
+    # 4a. heading。把 language 透传给兜底逻辑，决定缺省时段的语言。
+    heading = _build_heading(data.get("heading"), stub, bible, language=language)
 
     # 4b. characters：优先用 LLM 给的，逐个 resolve 成 id；为空回退到 stub.characters。
     raw_chars = data.get("characters")
@@ -540,14 +551,72 @@ def generate_scene(
     return scene
 
 
-def _build_heading(raw: Optional[dict], stub: SceneStub, bible: StoryBible) -> Heading:
+# 中文时段词 -> 英文 slugline 时段词的映射(仅英文输入时用于归一)。
+# 覆盖常见时段；键为可能出现在中文输出里的子串。
+_ZH_TO_EN_TIME = {
+    "清晨": "DAWN",
+    "黎明": "DAWN",
+    "拂晓": "DAWN",
+    "早晨": "MORNING",
+    "上午": "MORNING",
+    "黄昏": "DUSK",
+    "傍晚": "DUSK",
+    "午后": "AFTERNOON",
+    "下午": "AFTERNOON",
+    "深夜": "NIGHT",
+    "夜晚": "NIGHT",
+    "夜": "NIGHT",
+    "日": "DAY",
+    "白天": "DAY",
+}
+
+
+def _has_cjk(text: str) -> bool:
+    """判断字符串里是否含有 CJK 汉字(用于检测英文产出里混入的中文时段)。"""
+    for ch in text:
+        # 基本汉字区间 U+4E00..U+9FFF，足够覆盖时段词。
+        if "一" <= ch <= "鿿":
+            return True
+    return False
+
+
+def _normalize_time_of_day_en(value: str) -> str:
+    """
+    英文输入时把时段值归一成英文。
+
+    规则：
+      - value 不含中文：原样返回(已是英文，如 DAY/evening，不强行改大小写)。
+      - value 含中文：按 _ZH_TO_EN_TIME 逐键匹配(子串命中即替换)，命中返回对应英文；
+        都不命中(罕见生僻表达)兜底为 "DAY"，绝不把中文时段漏到英文 slugline 里。
+    """
+    if not value:
+        return "DAY"
+    if not _has_cjk(value):
+        # 已是英文(或不含中文)，不动。
+        return value
+    # 含中文：按映射子串匹配。
+    for zh_word in _ZH_TO_EN_TIME:
+        if zh_word in value:
+            return _ZH_TO_EN_TIME[zh_word]
+    # 含中文但无法识别具体时段：兜底为 DAY。
+    return "DAY"
+
+
+def _build_heading(
+    raw: Optional[dict],
+    stub: SceneStub,
+    bible: StoryBible,
+    language: Optional[str] = None,
+) -> Heading:
     """
     构造 Heading，对 LLM 给的脏/缺数据做兜底，保证一定能通过 schema 校验。
 
     - int_ext：非法值兜底为 INT(最常见)。
     - location_id：优先用 LLM 给的；非法/空时退化到 bible 第一个地点 id；
       bible 也没地点时给占位 "loc_unknown"。
-    - time_of_day：优先 LLM > stub.time_of_day > "日"。
+    - time_of_day：优先 LLM > stub.time_of_day > 语言相关默认值。
+      默认值随 language 走：language=="en" 用 "DAY"，其余(含 None)仍用中文 "日"，
+      保证既有中文行为不变，英文输入时不再回退出中文时段。
     - time_ref：透传(可为 None)。
     """
     if not isinstance(raw, dict):
@@ -573,7 +642,18 @@ def _build_heading(raw: Optional[dict], stub: SceneStub, bible: StoryBible) -> H
         if stub.time_of_day:
             time_of_day = stub.time_of_day
         else:
-            time_of_day = "日"
+            # 兜底默认值随语言走：英文输入回退到 "DAY"，否则保持中文 "日"。
+            if language == "en":
+                time_of_day = "DAY"
+            else:
+                time_of_day = "日"
+
+    # 语言一致性兜底：英文输入时，把模型偶发回的中文时段词归一成英文。
+    # prompt 已要求时段随原文语言，但 LLM 偶尔仍漏译个别场(实测 sc_001 会回 "日")，
+    # 这里做最后一道代码侧防线，保证英文产物的 slugline 时段一定是英文。
+    # 只在 language=="en" 时介入；中文/默认路径完全不动，既有中文行为零影响。
+    if language == "en":
+        time_of_day = _normalize_time_of_day_en(time_of_day)
 
     # time_ref 透传。
     time_ref = raw.get("time_ref")
@@ -619,6 +699,7 @@ def generate(
     stubs: List[SceneStub],
     medium: str = "film",
     llm=None,
+    language: Optional[str] = None,
 ) -> List[Scene]:
     """
     管线驱动器：按 stubs 顺序逐场生成 Scene。
@@ -626,6 +707,9 @@ def generate(
     跨场连贯做法：把上一场最后 1~2 个元素的文本当作下一场的 prev_tail 注入，
     让相邻场之间衔接自然(创新点不直接，但是产品质量基础)。
     第一场 prev_tail 为空串。
+
+    language(可选)：透传给 generate_scene，仅影响 heading.time_of_day 的兜底默认值
+      (英文 "en" 兜底成 "DAY"，默认 None 保持中文 "日")。不传则维持既有中文行为。
     """
     if llm is None:
         llm = get_llm()
@@ -640,6 +724,7 @@ def generate(
             medium=medium,
             prev_tail=prev_tail,
             llm=llm,
+            language=language,
         )
         scenes.append(scene)
         # 更新 prev_tail 供下一场。

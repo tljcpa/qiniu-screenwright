@@ -128,7 +128,8 @@ def main() -> int:
     # --- STEP 5: generate 逐场生成(真实 LLM, medium=film) ------------------
     _banner(5, "generate 逐场生成(真实 LLM, medium=film)")
     with _Timer("generate"):
-        scenes = generate(novel, bible, stubs, medium="film")
+        # language="en"：让 heading.time_of_day 的兜底默认值也跟随英文(回退到 DAY 而非中文 日)。
+        scenes = generate(novel, bible, stubs, medium="film", language="en")
     print("生成场景数: %d" % len(scenes))
     assert scenes, "generate 没有生成任何 Scene"
 
@@ -220,7 +221,8 @@ def main() -> int:
     _banner(9, "compute_metrics + format_report")
     with _Timer("metrics"):
         metrics = compute_metrics(sp, novel)
-        report = format_report(metrics)
+        # language="en"：英文输入产出英文简报。
+        report = format_report(metrics, language="en")
     print(report)
 
     # --- STEP 10: 导出 YAML / Fountain / PDF(英文产物) --------------------

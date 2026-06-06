@@ -249,16 +249,29 @@ def _merged_length(intervals: list) -> int:
     return total
 
 
-def format_report(metrics: dict) -> str:
+def format_report(metrics: dict, language: str = "zh") -> str:
     """
-    把指标 dict 排成一段可读中文简报。
+    把指标 dict 排成一段可读简报。
 
     用途：路演口播稿 / README 段落 / 前端质量面板文案。
     设计：
       - 百分比类指标(覆盖率)转成带一位小数的百分号，人读友好。
       - source_coverage 可能不存在(没传 novel)，缺失时不输出该行。
       - 纯文本，无 emoji(遵守代码风格)。
+
+    language(默认 "zh")：简报语言。
+      - "zh"(默认)：输出中文模板，与历史行为完全一致(既有调用/测试不受影响)。
+      - "en"：输出对应的英文模板，让英文输入的产物简报也跟随英文。
+      其余未知取值一律回退到中文，绝不抛错。
     """
+    # 英文模板单独走一条分支；其余(含未知值)都走中文模板，保证向后兼容。
+    if language == "en":
+        return _format_report_en(metrics)
+    return _format_report_zh(metrics)
+
+
+def _format_report_zh(metrics: dict) -> str:
+    """中文简报模板(历史默认实现，逐行点明数字背后的卖点)。"""
     # 把 [0,1] 的覆盖率转成 "xx.x%" 文本。
     trace_pct = _to_percent(metrics.get("traceability_coverage", 0.0))
 
@@ -308,6 +321,67 @@ def format_report(metrics: dict) -> str:
         lines.append("原文覆盖率(创新②)：剧本场级溯源覆盖了原著 {0} 的字符。".format(src_pct))
 
     # 用换行连成一段。
+    return "\n".join(lines)
+
+
+def _format_report_en(metrics: dict) -> str:
+    """英文简报模板，与中文逐行一一对应(语义等价，仅语言不同)。"""
+    # 把 [0,1] 的覆盖率转成 "xx.x%" 文本。
+    trace_pct = _to_percent(metrics.get("traceability_coverage", 0.0))
+
+    # schema 自检结果转成英文 "valid/invalid"。
+    if metrics.get("schema_valid", False):
+        schema_text = "valid"
+    else:
+        schema_text = "invalid"
+
+    lines = []
+    lines.append("Screenwright Quality Dashboard")
+    lines.append(
+        "Scale: {0} scenes, {1} characters, {2} locations, {3} screenplay elements total.".format(
+            metrics.get("scene_count", 0),
+            metrics.get("character_count", 0),
+            metrics.get("location_count", 0),
+            metrics.get("element_count", 0),
+        )
+    )
+    lines.append(
+        "Structure: {0} dialogue lines, {1} action lines, {2} transitions.".format(
+            metrics.get("dialogue_count", 0),
+            metrics.get("action_count", 0),
+            metrics.get("transition_count", 0),
+        )
+    )
+    lines.append(
+        "Interior-monologue externalization (innovation 3): {0} lines externalized from "
+        "inner monologue/narration, tagged with adaptation, auditable and reversible.".format(
+            metrics.get("externalized_count", 0)
+        )
+    )
+    lines.append(
+        "Line-level traceability coverage (innovation 2): {0}, the share of content lines "
+        "that link back to the source text for precise highlighting.".format(trace_pct)
+    )
+    lines.append(
+        "Continuity check (innovation 4): {0} errors, {1} warnings found.".format(
+            metrics.get("continuity_error_count", 0),
+            metrics.get("continuity_warn_count", 0),
+        )
+    )
+    lines.append(
+        "Schema self-check: round-trip {0} (output strictly conforms to the custom contract).".format(
+            schema_text
+        )
+    )
+
+    # source_coverage 仅在算过时输出。
+    if "source_coverage" in metrics:
+        src_pct = _to_percent(metrics["source_coverage"])
+        lines.append(
+            "Source coverage (innovation 2): scene-level traceability covers {0} of the "
+            "original characters.".format(src_pct)
+        )
+
     return "\n".join(lines)
 
 

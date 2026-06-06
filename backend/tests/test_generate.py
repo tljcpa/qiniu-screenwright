@@ -188,6 +188,132 @@ def test_generate_scene_with_fake_llm():
 
 
 # ---------------------------------------------------------------------------
+# time_of_day 语言：prompt 要求随原文语言 + 兜底默认值随 language 走
+# ---------------------------------------------------------------------------
+
+class _FakeLLMNoTimeOfDay:
+    """模型回的 heading 故意不给 time_of_day，用来验证代码侧兜底默认值的语言。"""
+
+    def complete(self, messages, json=False, model=None, temperature=0.0, **kw):
+        return {
+            "heading": {
+                "int_ext": "INT",
+                "location_id": "loc_cafe",
+                # 故意省略 time_of_day。
+                "time_ref": None,
+            },
+            "characters": ["char_lin"],
+            "synopsis": "测试兜底时段",
+            "elements": [
+                {"type": "action", "text": "林深推开门。", "source_quote": "林深推开门", "adaptation": None},
+            ],
+        }
+
+
+def test_prompt_requires_time_of_day_in_source_language():
+    """prompt 必须明确要求 time_of_day 用本场原文语言书写(英文实证的根因修复)。"""
+    novel = _make_novel()
+    bible = _make_bible()
+    stub = _make_stub()
+    fake = FakeLLM()
+
+    generate_scene(stub, novel, bible, medium="film", prev_tail="", llm=fake)
+    joined = "\n".join([m["content"] for m in fake.last_messages])
+    # 关键约束词：time_of_day 随原文语言；英文用 DAY/NIGHT 等。
+    assert "time_of_day" in joined
+    assert "原文相同的语言" in joined
+    assert "DAY" in joined
+
+
+def test_time_of_day_fallback_default_chinese():
+    """language 不传(默认)时，模型漏填时段兜底为中文 日(既有行为不变)。"""
+    novel = _make_novel()
+    bible = _make_bible()
+    # stub 不给 time_of_day，逼出最终的语言相关默认值。
+    n = len(_CHAPTER_TEXT)
+    stub = SceneStub(
+        id="sc_001",
+        chapter_index=1,
+        source_ref=SourceRef(chapter=1, spans=[Span(start=0, end=n)]),
+        characters=["char_lin"],
+    )
+    scene = generate_scene(stub, novel, bible, medium="film", llm=_FakeLLMNoTimeOfDay())
+    assert scene.heading.time_of_day == "日"
+
+
+class _FakeLLMChineseTimeOfDay:
+    """模型对英文原文却回了中文时段(实测 LLM 偶发)，验证英文路径会归一成英文。"""
+
+    def complete(self, messages, json=False, model=None, temperature=0.0, **kw):
+        return {
+            "heading": {
+                "int_ext": "INT",
+                "location_id": "loc_cafe",
+                "time_of_day": "黄昏",   # 故意回中文(英文输入下应被归一为 DUSK)。
+                "time_ref": None,
+            },
+            "characters": ["char_lin"],
+            "synopsis": "test",
+            "elements": [
+                {"type": "action", "text": "He pushes the door open.", "source_quote": "", "adaptation": None},
+            ],
+        }
+
+
+def test_time_of_day_chinese_normalized_to_english_when_en():
+    """language='en' 时，模型回的中文时段被归一成英文 slugline 词。"""
+    novel = _make_novel()
+    bible = _make_bible()
+    n = len(_CHAPTER_TEXT)
+    stub = SceneStub(
+        id="sc_001",
+        chapter_index=1,
+        source_ref=SourceRef(chapter=1, spans=[Span(start=0, end=n)]),
+        characters=["char_lin"],
+    )
+    scene = generate_scene(
+        stub, novel, bible, medium="film", llm=_FakeLLMChineseTimeOfDay(), language="en"
+    )
+    # "黄昏" -> "DUSK"。
+    assert scene.heading.time_of_day == "DUSK"
+
+
+def test_time_of_day_chinese_preserved_when_zh():
+    """默认(中文)路径不归一：模型回的中文时段原样保留(中文行为零影响)。"""
+    novel = _make_novel()
+    bible = _make_bible()
+    n = len(_CHAPTER_TEXT)
+    stub = SceneStub(
+        id="sc_001",
+        chapter_index=1,
+        source_ref=SourceRef(chapter=1, spans=[Span(start=0, end=n)]),
+        characters=["char_lin"],
+    )
+    scene = generate_scene(
+        stub, novel, bible, medium="film", llm=_FakeLLMChineseTimeOfDay()
+    )
+    # 中文路径不动，保留 "黄昏"。
+    assert scene.heading.time_of_day == "黄昏"
+
+
+def test_time_of_day_fallback_default_english():
+    """language='en' 时，模型漏填时段兜底为英文 DAY，而非中文。"""
+    novel = _make_novel()
+    bible = _make_bible()
+    n = len(_CHAPTER_TEXT)
+    stub = SceneStub(
+        id="sc_001",
+        chapter_index=1,
+        source_ref=SourceRef(chapter=1, spans=[Span(start=0, end=n)]),
+        characters=["char_lin"],
+    )
+    scene = generate_scene(
+        stub, novel, bible, medium="film", llm=_FakeLLMNoTimeOfDay(), language="en"
+    )
+    assert scene.heading.time_of_day == "DAY"
+
+
+# ---------------------------------------------------------------------------
 # 媒介注入测试：short_drama 风格指令进了 prompt
 # ---------------------------------------------------------------------------
 

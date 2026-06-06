@@ -43,6 +43,8 @@ from app.schema.models import (
 )
 # 复用管线中间类型。
 from app.pipeline.types import Novel, Chapter, SceneStub
+# 共享三级回退定位器(精确->归一->模糊)，用于把 source_quote 定位成 SourceRef。
+from app.pipeline.locate import locate as _shared_locate
 
 # 复用 LLM 工厂。
 from app.llm.client import get_llm
@@ -311,14 +313,16 @@ def _locate_source_ref(
     if not quote:
         return None
 
-    # 在该章原文里找首次出现位置。
-    pos = chapter.text.find(quote)
-    if pos < 0:
-        # 没命中：可能模型对原文做了改写。允许缺失，返回 None。
+    # 在该章原文里定位。走共享三级回退 locate(精确->归一->模糊)：
+    #   - 中文 LLM 多半精确命中，第一级 find 即返回，行为与原 chapter.text.find 一致；
+    #   - 英文长引语 LLM 常改写/标点空白不一致，由归一/模糊兜底，提升溯源命中率。
+    # 返回的 (start, end) 永远相对 chapter.text，满足 chapter.text[start:end] 自洽。
+    hit = _shared_locate(chapter.text, quote)
+    if hit is None:
+        # 三级都没命中：可能是纯外化新增或改写过度。允许缺失，返回 None。
         return None
 
-    start = pos
-    end = pos + len(quote)
+    start, end = hit
     span = Span(start=start, end=end)
     return SourceRef(chapter=chapter_index, spans=[span])
 

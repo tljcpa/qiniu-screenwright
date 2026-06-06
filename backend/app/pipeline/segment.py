@@ -42,6 +42,9 @@ from app.schema.models import SourceRef, Span, StoryBible
 from app.pipeline.types import Novel, Chapter, SceneStub
 # LLM 工厂；llm 参数为 None 时回退到它(在线路径)。
 from app.llm.client import get_llm
+# 共享三级回退定位器(精确->归一->模糊)。中文精确命中走第一级，行为不变；
+# 英文因 LLM 改写/标点空白不一致时由后两级兜底，显著提升溯源命中率。
+from app.pipeline.locate import locate as _shared_locate
 
 
 # 给 LLM 的系统提示：钉死它的职责边界——只判断切分点 + 复制 marker，绝不报偏移。
@@ -120,13 +123,47 @@ def _locate(text: str, marker: Optional[str], search_from: int) -> int:
     从 search_from 起找(而非从 0)，是为了避免同一段文字在前文重复出现时定位
     到错误的早先位置——场景是顺序推进的，下一场的 marker 必在上一场之后。
     marker 为空/None 时直接当作找不到。
+
+    定位走共享三级回退 locate(精确->归一->模糊)：
+      - 在 text[search_from:] 这个子串上定位(保持"顺序推进、不回头"语义)，
+        命中后把子串内偏移加回 search_from，换算成相对整章 text 的真实下标。
+      - 中文 LLM 精确复制 marker 时第一级 find 命中，行为与原 text.find 完全一致；
+      - 英文 marker 被改写/标点空白不一致时由归一/模糊兜底，提升命中率。
+    返回相对整章 text 的起始下标(end 由调用方按命中片段在原文上重新定界，见下)。
     """
     if marker is None:
         return -1
     m = marker.strip()
     if not m:
         return -1
-    return text.find(m, search_from)
+    # 只在 search_from 之后的子串里找，等价于原 text.find(m, search_from) 的窗口语义。
+    sub = text[search_from:]
+    hit = _shared_locate(sub, m)
+    if hit is None:
+        return -1
+    sub_start, _sub_end = hit
+    return search_from + sub_start
+
+
+def _locate_span(text: str, marker: Optional[str], search_from: int):
+    """在 text[search_from:] 上定位 marker，返回相对整章 text 的 (start, end)，找不到 None。
+
+    与 _locate 的区别：连同 end 一起返回。end 用"命中片段在原文上的真实右边界"，
+    而不是 start+len(marker)。这点在归一/模糊命中时很关键——LLM 给的 marker 可能
+    与原文长度不同(改写、标点差异)，若仍用 start+len(marker.strip()) 会切错边界，
+    破坏 chapter.text[start:end] 自洽。精确命中时二者等价，中文行为不变。
+    """
+    if marker is None:
+        return None
+    m = marker.strip()
+    if not m:
+        return None
+    sub = text[search_from:]
+    hit = _shared_locate(sub, m)
+    if hit is None:
+        return None
+    sub_start, sub_end = hit
+    return search_from + sub_start, search_from + sub_end
 
 
 def segment(novel: Novel, bible: Optional[StoryBible] = None, llm=None) -> List[SceneStub]:
@@ -223,13 +260,15 @@ def segment(novel: Novel, bible: Optional[StoryBible] = None, llm=None) -> List[
             if isinstance(raw, dict):
                 end_marker = raw.get("end_marker")
             # end_marker 从本场 start 之后开始找，避免匹配到本场之前的文字。
-            mpos = _locate(text, end_marker, start)
-            if mpos < 0:
+            # 用 _locate_span 同时拿到命中片段在原文上的真实右边界 mend，
+            # 而非 start+len(marker)——归一/模糊命中时长度可能与原文不一致。
+            mspan = _locate_span(text, end_marker, start)
+            if mspan is None:
                 # end 找不到：兜底到下一场 start 之前(最后一场即章末)。
                 end = next_start
             else:
-                # 命中：end 是 marker 结尾位置(含整个 marker)。
-                end = mpos + len(end_marker.strip())
+                # 命中：end 取命中片段在原文上的真实结尾(含整个 marker)。
+                _mstart, end = mspan
 
             # 约束 1：end 不得超过下一场起点，否则会与下一场重叠、破坏连续覆盖。
             if end > next_start:

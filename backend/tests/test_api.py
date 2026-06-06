@@ -328,6 +328,161 @@ def test_rate_limit_429(client, monkeypatch):
     assert r.status_code == 429
 
 
+# ---------------------------------------------------------------------------
+# /api/import：validate_and_repair 真正被用上(诚信闭环)
+# ---------------------------------------------------------------------------
+
+def test_import_valid_yaml_roundtrip(client):
+    """传合法剧本 YAML：直接校验通过，返回 screenplay/metrics/chapters。"""
+    import yaml
+
+    sp_dict = _make_screenplay_dict()
+    content = yaml.safe_dump(sp_dict, allow_unicode=True, sort_keys=False)
+    r = client.post("/api/import", json={"content": content})
+    assert r.status_code == 200
+    data = r.json()
+    assert "screenplay" in data
+    assert "metrics" in data
+    assert "chapters" in data
+    # 没给 text，chapters 为空。
+    assert data["chapters"] == []
+    # 返回的 screenplay 能被重新校验。
+    sp = Screenplay.model_validate(data["screenplay"])
+    assert sp.meta.title == "测试"
+
+
+def test_import_with_text_returns_chapters(client):
+    """给了原文 text：ingest 出 chapters 一并回送，供前端溯源。"""
+    import yaml
+
+    sp_dict = _make_screenplay_dict()
+    content = yaml.safe_dump(sp_dict, allow_unicode=True, sort_keys=False)
+    r = client.post(
+        "/api/import",
+        json={"content": content, "text": "第一章\n林深推开木门。"},
+    )
+    assert r.status_code == 200
+    data = r.json()
+    assert len(data["chapters"]) >= 1
+    for ch in data["chapters"]:
+        assert ch["text"]
+
+
+def test_import_broken_yaml_repaired(client, monkeypatch):
+    """传缺字段的非法剧本：走修复环(回喂 LLM)后返回合法 screenplay。
+
+    桩一个会修复的 LLM：第一次构造失败 -> validate_and_repair 调 llm.complete
+    求修复 -> 返回一份合法 YAML -> 第二次构造成功。证明修复环真正被用上。
+    """
+    import yaml
+
+    good_yaml = yaml.safe_dump(_make_screenplay_dict(), allow_unicode=True, sort_keys=False)
+
+    class _RepairLLM:
+        def complete(self, messages, json=False, **kw):
+            # 不管喂进来什么坏内容，都吐回一份合法 YAML(模拟 LLM 修复)。
+            return good_yaml
+
+    monkeypatch.setattr(api_main, "_new_uncached_llm", lambda *a, **k: _RepairLLM())
+
+    # 故意缺字段的非法剧本(meta 缺 source、scenes 缺 heading 等)。
+    broken = "meta:\n  title: 坏剧本\nscenes: []\n"
+    r = client.post("/api/import", json={"content": broken})
+    assert r.status_code == 200
+    data = r.json()
+    sp = Screenplay.model_validate(data["screenplay"])
+    # 修复后用的是 good_yaml 的内容。
+    assert sp.meta.title == "测试"
+
+
+def test_import_unrepairable_400(client, monkeypatch):
+    """修复也救不回(LLM 一直吐坏内容)：返回 400，不泄露堆栈。"""
+    class _BadLLM:
+        def complete(self, messages, json=False, **kw):
+            return "still: broken\nnot a screenplay"
+
+    monkeypatch.setattr(api_main, "_new_uncached_llm", lambda *a, **k: _BadLLM())
+
+    r = client.post("/api/import", json={"content": "garbage: [unclosed"})
+    assert r.status_code == 400
+    assert "detail" in r.json()
+
+
+def test_import_empty_content_400(client):
+    r = client.post("/api/import", json={"content": "   "})
+    assert r.status_code == 400
+
+
+# ---------------------------------------------------------------------------
+# /api/baseline：朴素对比
+# ---------------------------------------------------------------------------
+
+def test_baseline_basic(client):
+    """朴素基线返回 naive 结构(无 summary，因为没传 ours_metrics)。"""
+    r = client.post(
+        "/api/baseline",
+        json={"text": "第一章\n林深推开门。", "medium": "film"},
+    )
+    assert r.status_code == 200
+    data = r.json()
+    assert "naive" in data
+    naive = data["naive"]
+    assert naive["medium"] == "film"
+    assert "chunks" in naive
+    assert "scenes" in naive
+    # 没传 ours_metrics，不应有 summary。
+    assert "summary" not in data
+
+
+def test_baseline_with_summary(client):
+    """传了 ours_metrics：附带 naive vs ours 对照摘要，维度齐全。"""
+    ours_metrics = {
+        "traceability_coverage": 0.42,
+        "externalized_count": 3,
+        "schema_valid": True,
+        "character_count": 2,
+        "continuity_error_count": 0,
+        "continuity_warn_count": 1,
+    }
+    r = client.post(
+        "/api/baseline",
+        json={
+            "text": "第一章\n林深推开门。",
+            "medium": "film",
+            "ours_metrics": ours_metrics,
+        },
+    )
+    assert r.status_code == 200
+    data = r.json()
+    assert "naive" in data
+    assert "summary" in data
+    summary = data["summary"]
+    assert "dimensions" in summary
+    assert "headline" in summary
+    # 五个核心维度齐全。
+    dims = summary["dimensions"]
+    for key in [
+        "cross_chapter_consistency",
+        "traceable",
+        "externalization_marked",
+        "structured_editable",
+        "continuity_checked",
+    ]:
+        assert key in dims
+        assert "naive" in dims[key]
+        assert "ours" in dims[key]
+
+
+def test_baseline_bad_medium_400(client):
+    r = client.post("/api/baseline", json={"text": "x", "medium": "movie"})
+    assert r.status_code == 400
+
+
+def test_baseline_empty_text_400(client):
+    r = client.post("/api/baseline", json={"text": "   ", "medium": "film"})
+    assert r.status_code == 400
+
+
 def test_import_smoke():
     """uvicorn 能 import app(冒烟)。"""
     from app.api.main import app as imported_app

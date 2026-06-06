@@ -652,7 +652,15 @@
             "character": "char_mr_bennet",
             "line": "My dear Mr. Bennet, have you heard that Netherfield Park is let at last?",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 426,
+                  "end": 485
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -666,7 +674,15 @@
             "character": "char_mrs_bennet",
             "line": "Indeed I have. Mrs. Long says that Netherfield is taken by a young man of large fortune from the north of England.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 931,
+                  "end": 1030
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -680,7 +696,15 @@
             "character": "char_mr_bennet",
             "line": "Is that his name?",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 1661,
+                  "end": 1675
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -720,7 +744,15 @@
             "character": "char_mrs_bennet",
             "line": "Oh! single, my dear, to be sure! A single man of large fortune; four or five thousand a year. What a fine thing for our girls!",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 1363,
+                  "end": 1489
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -734,7 +766,15 @@
             "character": "char_mr_bennet",
             "line": "How so? How can it affect them?",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 1493,
+                  "end": 1524
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -742,7 +782,15 @@
             "character": "char_mrs_bennet",
             "line": "My dear Mr. Bennet, how can you be so tiresome! You must know that I am thinking of his marrying one of them.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 1564,
+                  "end": 1657
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -778,7 +826,15 @@
             "character": "char_mrs_bennet",
             "line": "Design! Nonsense, how can you talk so! But it is very likely that he may fall in love with one of them, and therefore you must visit him as soon as he comes.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 1701,
+                  "end": 1860
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -786,7 +842,15 @@
             "character": "char_mr_bennet",
             "line": "I see no occasion for that. You and the girls may go, or you may send them by themselves, which perhaps will be still better, for as you are as handsome as any of them, Mr. Bingley might like you the best of the party.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 1864,
+                  "end": 2082
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -800,7 +864,15 @@
             "character": "char_mrs_bennet",
             "line": "My dear, you flatter me. I certainly have had my share of beauty, but I do not pretend to be anything extraordinary now. When a woman has five grown-up daughters, she ought to give over thinking of her own beauty.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 2086,
+                  "end": 2301
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -836,7 +908,15 @@
             "character": "char_mrs_bennet",
             "line": "But, my dear, you must indeed go and see Mr. Bingley when he comes into the neighbourhood.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 2370,
+                  "end": 2460
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -860,7 +940,15 @@
             "character": "char_mrs_bennet",
             "line": "But consider your daughters. Only think what an establishment it would be for one of them. Sir William and Lady Lucas are determined to go, merely on that account, for in general you know they visit no newcomers. Indeed you must go, for it will be impossible for us to visit him if you do not.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 2511,
+                  "end": 2810
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -874,7 +962,15 @@
             "character": "char_mr_bennet",
             "line": "You are over-scrupulous, surely. I dare say Mr. Bingley will be very glad to see you; and I will send a few lines by you to assure him of my hearty consent to his marrying whichever he chooses of the girls; though I must throw in a good word for my little Lizzy.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 2814,
+                  "end": 3076
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -924,7 +1020,15 @@
             "character": "char_mrs_bennet",
             "line": "My dear Mr. Bennet, have you heard that Netherfield Park is let at last?",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 426,
+                  "end": 485
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -954,7 +1058,15 @@
             "character": "char_mrs_bennet",
             "line": "But it is; for Mrs. Long has just been here, and she told me all about it.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 546,
+                  "end": 616
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -992,7 +1104,15 @@
             "character": "char_mr_bennet",
             "line": "You want to tell me, and I have no objection to hearing it.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 723,
+                  "end": 783
+                }
+              ]
+            },
             "adaptation": null
           }
         ],
@@ -1011,7 +1131,7 @@
           "spans": [
             {
               "start": 873,
-              "end": 1301
+              "end": 1299
             }
           ]
         },
@@ -1023,8 +1143,16 @@
         "elements": [
           {
             "type": "action",
-            "text": "Mrs. Bennet leans forward, unable to contain her excitement.",
-            "source_ref": null,
+            "text": "Mr. Bennet, seated in his armchair, looks up from his book with a faint, knowing smile.",
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 873,
+                  "end": 900
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -1032,7 +1160,15 @@
             "character": "char_mrs_bennet",
             "line": "Why, my dear, you must know, Mrs. Long says that Netherfield is taken by a young man of large fortune from the north of England; that he came down on Monday in a chaise and four to see the place, and was so much delighted with it that he agreed with Mr. Morris immediately; that he is to take possession before Michaelmas, and some of his servants are to be in the house by the end of next week.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 903,
+                  "end": 1298
+                }
+              ]
+            },
             "adaptation": null
           }
         ],
@@ -1063,7 +1199,7 @@
         "elements": [
           {
             "type": "action",
-            "text": "Mr. Bennet looks up from his book, a flicker of interest in his eyes.",
+            "text": "Mr. Bennet closes his book, one finger marking his place. He looks at his wife with a faint, teasing smile.",
             "source_ref": null,
             "adaptation": null
           },
@@ -1119,13 +1255,21 @@
             "type": "dialogue",
             "character": "char_mrs_bennet",
             "line": "Oh, single, my dear, to be sure! A single man of large fortune; four or five thousand a year. What a fine thing for our girls!",
-            "parenthetical": "excitedly",
-            "source_ref": null,
+            "parenthetical": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 1363,
+                  "end": 1489
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bennet arches an eyebrow, a hint of a smirk playing on his lips.",
+            "text": "Mr. Bennet raises an eyebrow, his tone dry.",
             "source_ref": null,
             "adaptation": null
           },
@@ -1133,7 +1277,7 @@
             "type": "dialogue",
             "character": "char_mr_bennet",
             "line": "How so? How can it affect them?",
-            "parenthetical": "feigning ignorance",
+            "parenthetical": null,
             "source_ref": {
               "chapter": 1,
               "spans": [
@@ -1149,15 +1293,23 @@
             "type": "dialogue",
             "character": "char_mrs_bennet",
             "line": "My dear Mr. Bennet, how can you be so tiresome? You must know that I am thinking of his marrying one of them.",
-            "parenthetical": "exasperated",
-            "source_ref": null,
+            "parenthetical": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 1564,
+                  "end": 1657
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mr_bennet",
             "line": "Is that his design in settling here?",
-            "parenthetical": "dryly",
+            "parenthetical": null,
             "source_ref": {
               "chapter": 1,
               "spans": [
@@ -1173,13 +1325,21 @@
             "type": "dialogue",
             "character": "char_mrs_bennet",
             "line": "Design? Nonsense, how can you talk so! But it is very likely that he may fall in love with one of them, and therefore you must visit him as soon as he comes.",
-            "parenthetical": "indignantly",
-            "source_ref": null,
+            "parenthetical": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 1701,
+                  "end": 1860
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bennet closes his book deliberately, a teasing glint in his eye.",
+            "text": "Mr. Bennet opens his book again, deliberately avoiding her gaze.",
             "source_ref": null,
             "adaptation": null
           },
@@ -1187,19 +1347,27 @@
             "type": "dialogue",
             "character": "char_mr_bennet",
             "line": "I see no occasion for that. You and the girls may go—or you may send them by themselves, which perhaps will be still better, for as you are as handsome as any of them, Mr. Bingley might like you the best of the party.",
-            "parenthetical": "with mock seriousness",
-            "source_ref": null,
+            "parenthetical": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 1864,
+                  "end": 2082
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet's face flushes with a mix of annoyance and flattery.",
+            "text": "Mrs. Bennet's face flushes with irritation. She opens her mouth to retort, but Mr. Bennet has already returned to his reading, a slight smirk on his lips.",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "transition",
-            "text": "CUT TO:"
+            "text": "CUT TO"
           }
         ],
         "continuity_flags": []
@@ -1225,33 +1393,57 @@
           "char_mr_bennet",
           "char_mrs_bennet"
         ],
-        "synopsis": "Mr. Bennet teases his wife about her beauty; she insists he must visit Bingley.",
+        "synopsis": "Mr. Bennet teases Mrs. Bennet about her beauty, then she insists he must visit Bingley.",
         "elements": [
           {
             "type": "action",
-            "text": "Mr. Bennet smirks, leaning back in his chair. He gestures lazily toward his wife.",
+            "text": "Mr. Bennet looks up from his book, a teasing glint in his eye.",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mr_bennet",
-            "line": "My dear, you flatter me. I certainly have had my share of beauty, but I do not pretend to be anything extraordinary now. When a woman has five grown-up daughters, she ought to give over thinking of her own beauty.",
-            "parenthetical": "teasingly",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Mrs. Bennet's eyes narrow. She purses her lips, then forces a tight smile.",
-            "source_ref": null,
+            "line": "As you are as handsome as any of them, Mr. Bingley might like you the best of the party.",
+            "parenthetical": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 1994,
+                  "end": 2082
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mrs_bennet",
+            "line": "My dear, you flatter me. I certainly have had my share of beauty, but I do not pretend to be anything extraordinary now. When a woman has five grown-up daughters, she ought to give over thinking of her own beauty.",
+            "parenthetical": "with a flattered smile",
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 2086,
+                  "end": 2301
+                }
+              ]
+            },
+            "adaptation": null
+          },
+          {
+            "type": "action",
+            "text": "Mr. Bennet smirks, returning his gaze to his book.",
+            "source_ref": null,
+            "adaptation": null
+          },
+          {
+            "type": "dialogue",
+            "character": "char_mr_bennet",
             "line": "In such cases, a woman has not often much beauty to think of.",
-            "parenthetical": "with a sharp edge",
+            "parenthetical": "dryly",
             "source_ref": {
               "chapter": 1,
               "spans": [
@@ -1265,41 +1457,27 @@
           },
           {
             "type": "action",
-            "text": "Mr. Bennet chuckles, picking up his book. Mrs. Bennet huffs and turns away, but then spins back, pointing a finger at him.",
+            "text": "Mrs. Bennet's smile fades. She purses her lips, then leans forward earnestly.",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mrs_bennet",
-            "line": "But you must visit Mr. Bingley as soon as he arrives!",
+            "line": "But I must insist on your visiting Mr. Bingley. It is the least you can do for our girls.",
             "parenthetical": "insistent",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bennet raises an eyebrow, not looking up from his book.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mr_bennet",
-            "line": "I see no occasion for that. You and the girls may go, or perhaps you may send them by themselves, which will be still better; for as you are as handsome as any of them, Mr. Bingley might like you the best of the party.",
-            "parenthetical": "dryly",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Mrs. Bennet's face flushes with a mix of annoyance and flattery. She opens her mouth to retort, but Mr. Bennet returns to his reading, a faint smile on his lips.",
+            "text": "Mr. Bennet sighs, closing his book with a snap.",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "transition",
-            "text": "CUT TO:"
+            "text": "CUT TO"
           }
         ],
         "continuity_flags": []
@@ -1325,11 +1503,11 @@
           "char_mr_bennet",
           "char_mrs_bennet"
         ],
-        "synopsis": "Mrs. Bennet insists Mr. Bennet visit Mr. Bingley; he teases her by offering to consent to Bingley marrying any daughter, with a preference for Lizzy.",
+        "synopsis": "Mrs. Bennet insists Mr. Bennet visit Mr. Bingley; he jokes about consenting to Bingley marrying any daughter, favoring Lizzy.",
         "elements": [
           {
             "type": "action",
-            "text": "Mrs. Bennet stands near Mr. Bennet's chair, hands clasped in urgency.",
+            "text": "Mrs. Bennet bustles into the library, where Mr. Bennet sits reading. She wrings her hands.",
             "source_ref": null,
             "adaptation": null
           },
@@ -1338,7 +1516,15 @@
             "character": "char_mrs_bennet",
             "line": "But, my dear, you must indeed go and see Mr. Bingley when he comes into the neighbourhood.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 2370,
+                  "end": 2460
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -1358,22 +1544,24 @@
             "adaptation": null
           },
           {
-            "type": "action",
-            "text": "Mrs. Bennet steps closer, her voice rising.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
             "type": "dialogue",
             "character": "char_mrs_bennet",
             "line": "But consider your daughters. Only think what an establishment it would be for one of them. Sir William and Lady Lucas are determined to go, merely on that account; for in general, you know, they visit no new comers. Indeed you must go, for it will be impossible for us to visit him, if you do not.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 2511,
+                  "end": 2810
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bennet lowers his book, a sly smile forming.",
+            "text": "Mr. Bennet lowers his book, a sly smile playing on his lips.",
             "source_ref": null,
             "adaptation": null
           },
@@ -1382,12 +1570,20 @@
             "character": "char_mr_bennet",
             "line": "You are over scrupulous, surely. I dare say Mr. Bingley will be very glad to see you; and I will send a few lines by you to assure him of my hearty consent to his marrying whichever he chooses of the girls--though I must throw in a good word for my little Lizzy.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 2814,
+                  "end": 3076
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet's eyes widen in alarm.",
+            "text": "Mrs. Bennet's face flushes with irritation.",
             "source_ref": null,
             "adaptation": null
           },
@@ -1408,14 +1604,8 @@
             "adaptation": null
           },
           {
-            "type": "action",
-            "text": "Mr. Bennet chuckles softly and returns to his book, leaving Mrs. Bennet sputtering.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
             "type": "transition",
-            "text": "CUT TO:"
+            "text": "CUT TO"
           }
         ],
         "continuity_flags": []
@@ -1444,37 +1634,35 @@
         "synopsis": "Mrs. Bennet criticizes Lizzy; Mr. Bennet defends her quickness; Mrs. Bennet complains about her nerves.",
         "elements": [
           {
-            "type": "action",
-            "text": "Mrs. Bennet paces, gesturing emphatically.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
             "type": "dialogue",
             "character": "char_mrs_bennet",
-            "line": "And I am sure she is not half so handsome as Jane, nor half so good-humoured as Lydia. But you are always giving her the preference.",
+            "line": "I am sure she is not half so handsome as Jane, nor half so good-humoured as Lydia. But you are always giving her the preference.",
             "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Mr. Bennet looks up from his book, a faint smile on his lips.",
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 3163,
+                  "end": 3293
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mr_bennet",
-            "line": "They have none of them much to recommend them. They are all silly and ignorant like other girls; but Lizzy has something more of quickness than her sisters.",
+            "line": "They have none of them much to recommend them: they are all silly and ignorant like other girls; but Lizzy has something more of quickness than her sisters.",
             "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Mrs. Bennet stops pacing, hands on her hips.",
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 3297,
+                  "end": 3467
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -1482,13 +1670,15 @@
             "character": "char_mrs_bennet",
             "line": "Mr. Bennet, how can you abuse your own children in such a way? You take delight in vexing me. You have no compassion on my poor nerves.",
             "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Mr. Bennet closes his book, maintaining a calm demeanor.",
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 3471,
+                  "end": 3606
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -1496,14 +1686,25 @@
             "character": "char_mr_bennet",
             "line": "You mistake me, my dear. I have a high respect for your nerves. They are my old friends. I have heard you mention them with consideration these twenty years at least.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 3610,
+                  "end": 3776
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet sighs dramatically, pressing a hand to her forehead.",
+            "text": "Mrs. Bennet sighs dramatically, pressing a hand to her temple.",
             "source_ref": null,
-            "adaptation": null
+            "adaptation": {
+              "from": "interior_monologue",
+              "technique": "action"
+            }
           },
           {
             "type": "dialogue",
@@ -1523,7 +1724,7 @@
           },
           {
             "type": "transition",
-            "text": "CUT TO:"
+            "text": "CUT TO"
           }
         ],
         "continuity_flags": []
@@ -1553,7 +1754,7 @@
         "elements": [
           {
             "type": "action",
-            "text": "Mr. Bennet looks up from his book, a teasing glint in his eye.",
+            "text": "Mr. Bennet, seated in his armchair, looks up from his book with a dry smile.",
             "source_ref": null,
             "adaptation": null
           },
@@ -1562,43 +1763,58 @@
             "character": "char_mr_bennet",
             "line": "But I hope you will get over it, and live to see many young men of four thousand a year come into the neighbourhood.",
             "parenthetical": "sarcastically",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Mrs. Bennet shakes her head, exasperated.",
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 3818,
+                  "end": 3934
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mrs_bennet",
             "line": "It will be no use to us, if twenty such should come, since you will not visit them.",
-            "parenthetical": "complaining",
-            "source_ref": null,
+            "parenthetical": "resentfully",
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 3938,
+                  "end": 4021
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mr_bennet",
             "line": "Depend upon it, my dear, that when there are twenty, I will visit them all.",
-            "parenthetical": "with mock seriousness",
+            "parenthetical": "with a teasing smile",
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 4025,
+                  "end": 4100
+                }
+              ]
+            },
+            "adaptation": null
+          },
+          {
+            "type": "action",
+            "text": "Mrs. Bennet shakes her head, exasperated. Mr. Bennet returns to his book, a faint smirk on his lips.",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bennet returns to his book, a slight smile playing on his lips. Mrs. Bennet sighs, turning away.",
-            "source_ref": null,
-            "adaptation": {
-              "from": "interior_monologue",
-              "technique": "action"
-            }
-          },
-          {
-            "type": "action",
-            "text": "A brief pause. The narrator's voice (V.O.) describes Mr. Bennet's character: a mixture of quick parts, sarcastic humour, reserve, and caprice, which twenty-three years of marriage had not fully revealed to his wife.",
+            "text": "A brief pause. The narrator's voice (V.O.) reflects on Mr. Bennet's character.",
             "source_ref": null,
             "adaptation": {
               "from": "interior_monologue",
@@ -1606,8 +1822,31 @@
             }
           },
           {
+            "type": "action",
+            "text": "V.O.: Mr. Bennet was so odd a mixture of quick parts, sarcastic humour, reserve, and caprice, that the experience of three-and-twenty years had been insufficient to make his wife understand his character.",
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 4103,
+                  "end": 4240
+                }
+              ]
+            },
+            "adaptation": {
+              "from": "interior_monologue",
+              "technique": "voiceover"
+            }
+          },
+          {
+            "type": "action",
+            "text": "Mrs. Bennet sighs and turns away, muttering under her breath.",
+            "source_ref": null,
+            "adaptation": null
+          },
+          {
             "type": "transition",
-            "text": "CUT TO:"
+            "text": "CUT TO"
           }
         ],
         "continuity_flags": []
@@ -1631,13 +1870,14 @@
         },
         "characters": [
           "char_mr_bennet",
-          "char_lizzy"
+          "char_lizzy",
+          "char_mrs_bennet"
         ],
         "synopsis": "Mr. Bennet reveals he visited Mr. Bingley, surprising his wife and daughters.",
         "elements": [
           {
             "type": "action",
-            "text": "Mr. Bennet sits in his chair, watching Lizzy trim a hat. Mrs. Bennet and other daughters are present but not in focus.",
+            "text": "The Bennet family sits in the sitting room. Lizzy is trimming a hat. Mr. Bennet watches her from his chair, a sly smile playing on his lips.",
             "source_ref": {
               "chapter": 2,
               "spans": [
@@ -1667,7 +1907,7 @@
           },
           {
             "type": "action",
-            "text": "Lizzy looks up, surprised. Mrs. Bennet and the other daughters turn to Mr. Bennet with curiosity.",
+            "text": "Lizzy looks up, puzzled. Mrs. Bennet stops her pacing and stares at her husband.",
             "source_ref": null,
             "adaptation": null
           },
@@ -1680,28 +1920,82 @@
             "adaptation": null
           },
           {
-            "type": "action",
-            "text": "Mr. Bennet smirks, enjoying the suspense.",
+            "type": "dialogue",
+            "character": "char_mrs_bennet",
+            "line": "But you forget, mamma, that we shall meet him at the assemblies, and that Mrs. Long promised to introduce him.",
+            "parenthetical": null,
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mr_bennet",
-            "line": "But you forget, mama, that I have paid the visit.",
+            "line": "I do not believe Mrs. Long will do any such thing. She has two nieces of her own. She is a selfish, hypocritical woman, and I have no opinion of her.",
+            "parenthetical": null,
+            "source_ref": null,
+            "adaptation": null
+          },
+          {
+            "type": "dialogue",
+            "character": "char_mrs_bennet",
+            "line": "No, no, do not imagine it. I know Mrs. Long well, and she is a very good woman. She has two nieces of her own, but she would not do such a thing.",
+            "parenthetical": null,
+            "source_ref": null,
+            "adaptation": null
+          },
+          {
+            "type": "dialogue",
+            "character": "char_mr_bennet",
+            "line": "She has two nieces of her own. She is a selfish, hypocritical woman, and I have no opinion of her.",
             "parenthetical": null,
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet gasps, and the room falls into stunned silence.",
+            "text": "Mrs. Bennet begins to protest, but Mr. Bennet cuts her off with a wave of his hand.",
+            "source_ref": null,
+            "adaptation": null
+          },
+          {
+            "type": "dialogue",
+            "character": "char_mr_bennet",
+            "line": "I cannot see that London has any great advantage over the country, for my part, except the shops and public places. The country is a vast deal pleasanter, is it not, Mr. Bingley?",
+            "parenthetical": null,
+            "source_ref": null,
+            "adaptation": null
+          },
+          {
+            "type": "action",
+            "text": "He pauses, letting the name hang in the air. Mrs. Bennet's eyes widen.",
+            "source_ref": null,
+            "adaptation": null
+          },
+          {
+            "type": "dialogue",
+            "character": "char_mrs_bennet",
+            "line": "Mr. Bingley? But you said you would not go!",
+            "parenthetical": null,
+            "source_ref": null,
+            "adaptation": null
+          },
+          {
+            "type": "dialogue",
+            "character": "char_mr_bennet",
+            "line": "I did. But I changed my mind. I waited on him this morning.",
+            "parenthetical": null,
+            "source_ref": null,
+            "adaptation": null
+          },
+          {
+            "type": "action",
+            "text": "Mrs. Bennet is speechless. Lizzy smiles knowingly.",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "transition",
-            "text": "CUT TO:"
+            "text": "CUT TO"
           }
         ],
         "continuity_flags": []
@@ -1719,30 +2013,46 @@
           "spans": [
             {
               "start": 447,
-              "end": 1371
+              "end": 1369
             }
           ]
         },
         "characters": [
+          "char_mr_bennet",
           "char_mrs_bennet",
           "char_lizzy",
-          "char_mr_bennet",
           "char_kitty"
         ],
         "synopsis": "Mrs. Bennet complains about not visiting Mr. Bingley, and the family discusses the upcoming ball.",
         "elements": [
           {
             "type": "action",
-            "text": "Mrs. Bennet sits stiffly, her hands clasped in her lap, a resentful expression on her face.",
-            "source_ref": null,
+            "text": "Mrs. Bennet sits stiffly, her face resentful.",
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 520,
+                  "end": 531
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mrs_bennet",
             "line": "We are not in a way to know what Mr. Bingley likes, since we are not to visit.",
-            "parenthetical": "resentfully",
-            "source_ref": null,
+            "parenthetical": null,
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 448,
+                  "end": 515
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -1750,7 +2060,15 @@
             "character": "char_lizzy",
             "line": "But you forget, mamma, that we shall meet him at the assemblies, and that Mrs. Long has promised to introduce him.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 566,
+                  "end": 696
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -1758,7 +2076,15 @@
             "character": "char_mrs_bennet",
             "line": "I do not believe Mrs. Long will do any such thing. She has two nieces of her own. She is a selfish, hypocritical woman, and I have no opinion of her.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 700,
+                  "end": 849
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -1766,13 +2092,29 @@
             "character": "char_mr_bennet",
             "line": "No more have I; and I am glad to find that you do not depend on her serving you.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 882,
+                  "end": 952
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet purses her lips, refusing to reply, then turns sharply to Kitty, who is coughing.",
-            "source_ref": null,
+            "text": "Mrs. Bennet purses her lips, then turns sharply to Kitty, who is coughing.",
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 1030,
+                  "end": 1065
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -1780,7 +2122,15 @@
             "character": "char_mrs_bennet",
             "line": "Don't keep coughing so, Kitty, for heaven's sake! Have a little compassion on my nerves. You tear them to pieces.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 1069,
+                  "end": 1182
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -1788,7 +2138,15 @@
             "character": "char_mr_bennet",
             "line": "Kitty has no discretion in her coughs; she times them ill.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 1186,
+                  "end": 1260
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -1796,12 +2154,20 @@
             "character": "char_kitty",
             "line": "I do not cough for my own amusement. When is your next ball to be, Lizzy?",
             "parenthetical": "fretfully",
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 1279,
+                  "end": 1368
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "transition",
-            "text": "CUT TO:"
+            "text": "CUT TO"
           }
         ],
         "continuity_flags": []
@@ -1819,7 +2185,7 @@
           "spans": [
             {
               "start": 1371,
-              "end": 2151
+              "end": 1861
             }
           ]
         },
@@ -1831,8 +2197,16 @@
         "elements": [
           {
             "type": "action",
-            "text": "Mrs. Bennet paces, wringing her hands. Mr. Bennet sits in his armchair, watching her with a faint smile.",
-            "source_ref": null,
+            "text": "Mrs. Bennet's eyes widen as she calculates. She shakes her head.",
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 1395,
+                  "end": 1571
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -1844,17 +2218,11 @@
               "chapter": 2,
               "spans": [
                 {
-                  "start": 1372,
-                  "end": 1392
+                  "start": 1371,
+                  "end": 1393
                 }
               ]
             },
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "She stops, turning to him with a worried expression.",
-            "source_ref": null,
             "adaptation": null
           },
           {
@@ -1862,12 +2230,20 @@
             "character": "char_mrs_bennet",
             "line": "Ay, so it is, and Mrs. Long does not come back till the day before; so, it will be impossible for her to introduce him, for she will not know him herself.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 1395,
+                  "end": 1571
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bennet raises an eyebrow, a teasing glint in his eye.",
+            "text": "Mr. Bennet lowers his book, a sly smile playing on his lips.",
             "source_ref": null,
             "adaptation": null
           },
@@ -1875,13 +2251,21 @@
             "type": "dialogue",
             "character": "char_mr_bennet",
             "line": "Then, my dear, you may have the advantage of your friend, and introduce Mr. Bingley to her.",
-            "parenthetical": null,
-            "source_ref": null,
+            "parenthetical": "teasingly",
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 1573,
+                  "end": 1668
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet throws her hands up in exasperation.",
+            "text": "Mrs. Bennet throws up her hands in exasperation.",
             "source_ref": null,
             "adaptation": null
           },
@@ -1890,27 +2274,37 @@
             "character": "char_mrs_bennet",
             "line": "Impossible, Mr. Bennet, impossible, when I am not acquainted with him myself; how can you be so teasing?",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 1670,
+                  "end": 1776
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bennet chuckles softly, leaning back in his chair.",
+            "text": "Mr. Bennet returns to his book, a dry chuckle escaping him.",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mr_bennet",
-            "line": "I honour your circumspection. A fortnight's acquaintance is certainly very little. One cannot know what a man really is by the end of a fortnight. But if we do not venture, somebody else will; and after all, Mrs. Long and her nieces must stand their chance; and, therefore, as she will think it an act of kindness, if you decline the office, I will take it on myself.",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Mrs. Bennet stares at him, speechless, then turns away with a huff.",
-            "source_ref": null,
+            "line": "I honour your circumspection. A fortnight's acquaintance is certainly very little.",
+            "parenthetical": "dryly",
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 1778,
+                  "end": 1861
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -1933,7 +2327,7 @@
           "spans": [
             {
               "start": 2151,
-              "end": 2546
+              "end": 2544
             }
           ]
         },
@@ -1947,7 +2341,15 @@
           {
             "type": "action",
             "text": "The girls stare at their father. Mrs. Bennet says only, \"Nonsense, nonsense!\"",
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 2151,
+                  "end": 2229
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -1955,17 +2357,22 @@
             "character": "char_mr_bennet",
             "line": "What can be the meaning of that emphatic exclamation? Do you consider the forms of introduction, and the stress that is laid on them, as nonsense? I cannot quite agree with you there. What say you, Mary? For you are a young lady of deep reflection, I know, and read great books, and make extracts.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 2231,
+                  "end": 2544
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mary looks up from her book, startled to be addressed. She composes herself, eager to display her learning.",
+            "text": "Mary looks thoughtful, then speaks.",
             "source_ref": null,
-            "adaptation": {
-              "from": "interior_monologue",
-              "technique": "action"
-            }
+            "adaptation": null
           }
         ],
         "continuity_flags": []
@@ -1996,7 +2403,7 @@
         "elements": [
           {
             "type": "action",
-            "text": "Mary opens her mouth, then closes it. She looks down at her book, fingers tracing the page as if searching for an answer.",
+            "text": "Mary opens her mouth, then closes it. She looks down at her book, fingers tracing the page edge.",
             "source_ref": {
               "chapter": 2,
               "spans": [
@@ -2015,8 +2422,16 @@
             "type": "dialogue",
             "character": "char_mr_bennet",
             "line": "While Mary is adjusting her ideas, let us return to Mr. Bingley.",
-            "parenthetical": null,
-            "source_ref": null,
+            "parenthetical": "with a dry smile",
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 2610,
+                  "end": 2690
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -2028,8 +2443,8 @@
               "chapter": 2,
               "spans": [
                 {
-                  "start": 2693,
-                  "end": 2736
+                  "start": 2694,
+                  "end": 2718
                 }
               ]
             },
@@ -2037,9 +2452,13 @@
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet throws her hands up in exasperation. Mary shrinks further into her chair, burying her nose in her book.",
+            "text": "Mrs. Bennet throws her hands up and turns away from her husband.",
             "source_ref": null,
             "adaptation": null
+          },
+          {
+            "type": "transition",
+            "text": "CUT TO"
           }
         ],
         "continuity_flags": []
@@ -2057,7 +2476,7 @@
           "spans": [
             {
               "start": 2738,
-              "end": 3507
+              "end": 3292
             }
           ]
         },
@@ -2069,7 +2488,7 @@
         "elements": [
           {
             "type": "action",
-            "text": "Mr. Bennet looks up from his book, a sly smile playing on his lips.",
+            "text": "Mr. Bennet closes his book and looks at his wife with a sly smile.",
             "source_ref": null,
             "adaptation": null
           },
@@ -2078,28 +2497,59 @@
             "character": "char_mr_bennet",
             "line": "I am sorry to hear that; but why did you not tell me so before? If I had known as much this morning, I certainly would not have called on him. It is very unlucky; but as I have actually paid the visit, we cannot escape the acquaintance now.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 2739,
+                  "end": 2981
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet's eyes widen, then she bursts into a delighted smile.",
-            "source_ref": null,
-            "adaptation": null
+            "text": "Mrs. Bennet's eyes widen, then she breaks into a delighted smile.",
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 2984,
+                  "end": 3204
+                }
+              ]
+            },
+            "adaptation": {
+              "from": "interior_monologue",
+              "technique": "action"
+            }
           },
           {
             "type": "dialogue",
             "character": "char_mrs_bennet",
-            "line": "How good it was in you, my dear Mr. Bennet! But I knew I should persuade you at last. I was sure you loved your girls too well to neglect such an acquaintance. Well, how pleased I am! And it is such a good joke, too, that you should have gone this morning, and never said a word about it till now.",
-            "parenthetical": null,
-            "source_ref": null,
+            "line": "How good it was in you, my dear Mr. Bennet! But I knew I should persuade you at last.",
+            "parenthetical": "beaming",
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 3207,
+                  "end": 3292
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bennet chuckles softly and returns to his book, a twinkle in his eye.",
+            "text": "Mr. Bennet chuckles and returns to his book, a knowing look on his face.",
             "source_ref": null,
             "adaptation": null
+          },
+          {
+            "type": "transition",
+            "text": "FADE OUT"
           }
         ],
         "continuity_flags": []
@@ -2117,7 +2567,7 @@
           "spans": [
             {
               "start": 3507,
-              "end": 3508
+              "end": 4175
             }
           ]
         },
@@ -2126,54 +2576,87 @@
           "char_mrs_bennet",
           "char_lydia"
         ],
-        "synopsis": "Mr. Bennet leaves the room, and Mrs. Bennet praises him, then Lydia boasts about dancing with Mr. Bingley.",
+        "synopsis": "Mr. Bennet leaves the room; Mrs. Bennet praises him and boasts about Mr. Bingley dancing with Lydia.",
         "elements": [
           {
             "type": "action",
-            "text": "Mr. Bennet closes his book and rises from his chair. He walks toward the door, pausing to glance back at his wife with a dry smile.",
-            "source_ref": null,
+            "text": "Mr. Bennet, weary of his wife's raptures, speaks to Kitty before exiting the room.",
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 3507,
+                  "end": 3650
+                }
+              ]
+            },
+            "adaptation": null
+          },
+          {
+            "type": "dialogue",
+            "character": "char_mr_bennet",
+            "line": "Now, Kitty, you may cough as much as you choose.",
+            "parenthetical": null,
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 3507,
+                  "end": 3574
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet watches him go, then turns to her daughters, her face alight with satisfaction.",
-            "source_ref": null,
+            "text": "He leaves the room, closing the door behind him.",
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 3593,
+                  "end": 3609
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mrs_bennet",
-            "line": "How good it was in you, my dear Mr. Bennet! But I knew I should persuade you at last. I was sure you loved your girls too well to neglect such an acquaintance. Well, how pleased I am! And it is such a good joke, too, that you should have gone this morning, and never said a word about it till now.",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Mr. Bennet exits, closing the door softly. Mrs. Bennet beams at her daughters.",
-            "source_ref": null,
+            "line": "What an excellent father you have, girls. I do not know how you will ever make him amends for his kindness; or me either, for that matter. At our time of life, it is not so pleasant, I can tell you, to be making new acquaintances every day; but for your sakes we would do anything. Lydia, my love, though you are the youngest, I dare say Mr. Bingley will dance with you at the next ball.",
+            "parenthetical": "when the door was shut",
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 3652,
+                  "end": 4079
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_lydia",
-            "line": "I danced with Mr. Bingley! He is so charming! I am sure he will be the life of every party.",
-            "parenthetical": "boastfully",
-            "source_ref": null,
-            "adaptation": {
-              "from": "interior_monologue",
-              "technique": "subtext"
-            }
-          },
-          {
-            "type": "action",
-            "text": "Lydia twirls, her dress swirling, as she giggles with excitement.",
-            "source_ref": null,
+            "line": "Oh, I am not afraid; for though I am the youngest, I'm the tallest.",
+            "parenthetical": "stoutly",
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 4081,
+                  "end": 4175
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "transition",
-            "text": "CUT TO"
+            "text": "FADE OUT"
           }
         ],
         "continuity_flags": []
@@ -2190,61 +2673,31 @@
           "chapter": 2,
           "spans": [
             {
-              "start": 3508,
-              "end": 4409
+              "start": 4177,
+              "end": 4323
             }
           ]
         },
         "characters": [
           "char_mr_bennet",
           "char_mrs_bennet",
+          "char_lizzy",
+          "char_jane",
           "char_lydia",
           "char_kitty",
-          "char_jane",
-          "char_lizzy",
           "char_mary"
         ],
-        "synopsis": "The Bennet family spends the evening speculating about Mr. Bingley's return visit.",
+        "synopsis": "The Bennet family spends the evening speculating about Mr. Bingley's return visit and planning a dinner invitation.",
         "elements": [
           {
             "type": "action",
-            "text": "Mr. Bennet, weary from his wife's exclamations, stands and addresses Kitty with a dry smile.",
+            "text": "The Bennet family gathers in the sitting room after dinner. Mrs. Bennet paces excitedly while Mr. Bennet reads by the fire. The younger girls sit on the sofa, whispering.",
             "source_ref": {
               "chapter": 2,
               "spans": [
                 {
-                  "start": 3508,
-                  "end": 3555
-                }
-              ]
-            },
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mr_bennet",
-            "line": "Now, Kitty, you may cough as much as you choose.",
-            "parenthetical": null,
-            "source_ref": {
-              "chapter": 2,
-              "spans": [
-                {
-                  "start": 3508,
-                  "end": 3555
-                }
-              ]
-            },
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "He exits the room, closing the door behind him. Mrs. Bennet turns to her daughters, her voice brimming with self-pity.",
-            "source_ref": {
-              "chapter": 2,
-              "spans": [
-                {
-                  "start": 3593,
-                  "end": 3649
+                  "start": 4177,
+                  "end": 4323
                 }
               ]
             },
@@ -2253,42 +2706,52 @@
           {
             "type": "dialogue",
             "character": "char_mrs_bennet",
-            "line": "What an excellent father you have, girls. I do not know how you will ever make him amends for his kindness; or me either, for that matter. At our time of life, it is not so pleasant, I can tell you, to be making new acquaintances every day; but for your sakes we would do anything.",
-            "parenthetical": null,
+            "line": "I am sure he will call tomorrow. Lady Lucas said he was so agreeable at the assembly!",
+            "parenthetical": "excitedly",
             "source_ref": null,
             "adaptation": null
           },
           {
-            "type": "action",
-            "text": "She turns to Lydia, who is lounging confidently.",
+            "type": "dialogue",
+            "character": "char_jane",
+            "line": "Perhaps he may not come so soon. He has many acquaintances in the neighbourhood.",
+            "parenthetical": "mildly",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mrs_bennet",
-            "line": "Lydia, my love, though you are the youngest, I dare say Mr. Bingley will dance with you at the next ball.",
-            "parenthetical": null,
+            "line": "Nonsense, Jane! He danced with you twice. He must be eager to see you again.",
+            "parenthetical": "waving a hand",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Lydia puffs out her chest, a bold grin on her face.",
+            "text": "Lydia and Kitty giggle. Mary looks up from her book, then returns to reading. Mr. Bennet turns a page without looking up.",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "dialogue",
-            "character": "char_lydia",
-            "line": "Oh, I am not afraid; for though I am the youngest, I'm the tallest.",
-            "parenthetical": null,
+            "character": "char_lizzy",
+            "line": "We must decide when to ask him to dinner. Perhaps next week?",
+            "parenthetical": "calmly",
+            "source_ref": null,
+            "adaptation": null
+          },
+          {
+            "type": "dialogue",
+            "character": "char_mrs_bennet",
+            "line": "Yes, yes! I shall write a note tomorrow. We must have him before the Lucases do.",
+            "parenthetical": "determined",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "The sisters exchange amused glances. The rest of the evening is filled with animated chatter: they speculate how soon Mr. Bingley will return Mr. Bennet's visit, and debate when to invite him to dinner.",
+            "text": "Mrs. Bennet continues to plan aloud while the others exchange glances. Mr. Bennet remains absorbed in his book, a faint smile on his lips.",
             "source_ref": null,
             "adaptation": null
           },
@@ -2312,198 +2775,145 @@
           "spans": [
             {
               "start": 16,
-              "end": 17
+              "end": 1013
             }
           ]
         },
         "characters": [
           "char_mr_bennet",
           "char_mrs_bennet",
+          "char_sir_william",
           "char_lady_lucas"
         ],
-        "synopsis": "Mrs. Bennet tries to get information about Mr. Bingley from her husband but fails, then learns from Lady Lucas that Mr. Bingley is young, handsome, and will attend the next assembly.",
+        "synopsis": "Mrs. Bennet fails to get information about Mr. Bingley from her husband, then learns from Lady Lucas that Mr. Bingley is young, handsome, and will attend the next assembly.",
         "elements": [
           {
             "type": "action",
-            "text": "Mrs. Bennet enters the library where Mr. Bennet is reading. She hovers near his chair, waiting for him to look up.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mrs_bennet",
-            "line": "My dear Mr. Bennet, have you heard that Netherfield Park is let at last?",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Mr. Bennet turns a page without looking up.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mr_bennet",
-            "line": "I have not.",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mrs_bennet",
-            "line": "But it is. Lady Lucas has just been here, and she told me all about it. Do you not want to know who has taken it?",
-            "parenthetical": null,
-            "source_ref": null,
+            "text": "Mrs. Bennet and her daughters surround Mr. Bennet in the library, firing questions about Mr. Bingley. Mr. Bennet remains absorbed in his book, responding with noncommittal grunts.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 16,
+                  "end": 204
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bennet sighs, closes his book, and looks at her with a hint of amusement.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mr_bennet",
-            "line": "You want to tell me, and I have no objection to hearing it.",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Mrs. Bennet beams, settling into a chair opposite him.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mrs_bennet",
-            "line": "Well, my dear, it is a single man of large fortune; four or five thousand a year. What a fine thing for our girls!",
-            "parenthetical": null,
-            "source_ref": null,
+            "text": "They try direct questions, clever suppositions, and vague hints, but Mr. Bennet deflects each with a dry remark or a turn of the page.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 205,
+                  "end": 348
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bennet raises an eyebrow, his tone dry.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mr_bennet",
-            "line": "How so? How can it affect them?",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mrs_bennet",
-            "line": "My dear Mr. Bennet, how can you be so tiresome! You must know that I am thinking of his marrying one of them.",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Mr. Bennet returns to his book, his voice flat.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mr_bennet",
-            "line": "Is that his design in settling here?",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mrs_bennet",
-            "line": "Design! Nonsense, how can you talk so! But it is very likely that he may fall in love with one of them, and therefore you must visit him as soon as he comes.",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Mr. Bennet shakes his head, a faint smile playing on his lips.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mr_bennet",
-            "line": "I see no occasion for that. You and the girls may go, or you may send them by themselves, which perhaps will be still better, for as you are as handsome as any of them, Mr. Bingley might like you the best of the party.",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Mrs. Bennet flushes with irritation, but before she can retort, a knock is heard. The maid enters and announces Lady Lucas.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Lady Lucas enters, her face bright with news. Mrs. Bennet rises eagerly.",
-            "source_ref": null,
+            "text": "Defeated, Mrs. Bennet turns to Lady Lucas, who has just arrived. Lady Lucas reports that Sir William was delighted with Mr. Bingley.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 349,
+                  "end": 524
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_lady_lucas",
-            "line": "My dear Mrs. Bennet, I have just heard that Mr. Bingley is a young man of large fortune, and he is to attend the next assembly!",
+            "line": "He is quite young, wonderfully handsome, extremely agreeable, and, to crown the whole, he means to be at the next assembly with a large party.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 525,
+                  "end": 668
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet claps her hands together, her earlier frustration forgotten.",
-            "source_ref": null,
-            "adaptation": null
+            "text": "Mrs. Bennet's eyes light up. She clasps her hands together.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 669,
+                  "end": 702
+                }
+              ]
+            },
+            "adaptation": {
+              "from": "interior_monologue",
+              "technique": "action"
+            }
           },
           {
             "type": "dialogue",
             "character": "char_mrs_bennet",
-            "line": "Is he indeed? And is he handsome?",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_lady_lucas",
-            "line": "Very handsome, I am told. And quite young.",
-            "parenthetical": null,
-            "source_ref": null,
+            "line": "To be fond of dancing is a certain step towards falling in love.",
+            "parenthetical": "to her husband",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 703,
+                  "end": 768
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet turns triumphantly to Mr. Bennet, who has not looked up from his book.",
-            "source_ref": null,
-            "adaptation": null
+            "text": "She turns to Mr. Bennet with a hopeful smile.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 769,
+                  "end": 831
+                }
+              ]
+            },
+            "adaptation": {
+              "from": "interior_monologue",
+              "technique": "action"
+            }
           },
           {
             "type": "dialogue",
             "character": "char_mrs_bennet",
-            "line": "There, my dear! You see what you have been missing. But no matter—we shall see him at the assembly.",
+            "line": "If I can but see one of my daughters happily settled at Netherfield, and all the others equally well married, I shall have nothing to wish for.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 834,
+                  "end": 1012
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bennet merely grunts, turning a page. Mrs. Bennet and Lady Lucas exit, chattering excitedly.",
+            "text": "Mr. Bennet looks up from his book, a faint smile on his lips, then returns to reading.",
             "source_ref": null,
             "adaptation": null
           },
@@ -2526,7 +2936,7 @@
           "chapter": 3,
           "spans": [
             {
-              "start": 17,
+              "start": 1015,
               "end": 1414
             }
           ]
@@ -2539,53 +2949,77 @@
         "elements": [
           {
             "type": "action",
-            "text": "Mr. Bingley enters the library, hat in hand. Mr. Bennet rises from his armchair, book still open on his lap.",
-            "source_ref": null,
+            "text": "Mr. Bingley enters Mr. Bennet's library. Mr. Bennet rises from his chair, book in hand.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 1015,
+                  "end": 1120
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "They exchange bows. Mr. Bingley glances around, hoping to see the young ladies.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mr_bennet",
-            "line": "Pray, sit down. I trust you found Netherfield to your liking?",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mr_bingley",
-            "line": "Exceedingly so, sir. The grounds are fine, and the house is most comfortable.",
-            "parenthetical": null,
-            "source_ref": null,
+            "text": "Mr. Bingley glances around the room, hoping to see the young ladies.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 1121,
+                  "end": 1230
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bingley sits, but his eyes keep drifting to the door. Mr. Bennet watches him with a faint, knowing smile.",
-            "source_ref": null,
+            "text": "He sees only Mr. Bennet, who gestures to a chair. They sit.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 1231,
+                  "end": 1258
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "After a few minutes of stilted conversation, Mr. Bingley rises, bows, and departs. Mr. Bennet returns to his book.",
-            "source_ref": null,
+            "text": "Upstairs, Mrs. Bennet and her daughters crowd at an upper window, peering down.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 1259,
+                  "end": 1414
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Upstairs, Mrs. Bennet and her daughters crowd at an upper window. They see Mr. Bingley mount a black horse and ride away, his blue coat vivid against the green.",
-            "source_ref": null,
+            "text": "They watch as Mr. Bingley mounts his black horse and rides away, his blue coat visible.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 1366,
+                  "end": 1414
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "transition",
-            "text": "CUT TO:"
+            "text": "CUT TO"
           }
         ],
         "continuity_flags": []
@@ -2603,7 +3037,7 @@
           "spans": [
             {
               "start": 1416,
-              "end": 1417
+              "end": 2226
             }
           ]
         },
@@ -2611,41 +3045,90 @@
           "char_mrs_bennet",
           "char_lady_lucas"
         ],
-        "synopsis": "Mrs. Bennet sends a dinner invitation but Mr. Bingley declines due to business in town; Lady Lucas suggests he went to London to get a party for the ball.",
+        "synopsis": "Mrs. Bennet sends a dinner invitation to Mr. Bingley, but he declines due to business in town; Lady Lucas suggests he went to London to get a party for the ball.",
         "elements": [
           {
             "type": "action",
-            "text": "Mrs. Bennet sits in the drawing-room, a letter in her hand. She frowns.",
-            "source_ref": null,
+            "text": "Mrs. Bennet sits at her desk, penning a letter with eager strokes. She pauses, counting courses on her fingers.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 1416,
+                  "end": 1562
+                }
+              ]
+            },
+            "adaptation": null
+          },
+          {
+            "type": "action",
+            "text": "A servant enters with a letter. Mrs. Bennet snatches it, reads, and her face falls. She slumps into a chair.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 1564,
+                  "end": 1773
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mrs_bennet",
-            "line": "He has declined our dinner invitation. Says he must go to town on business.",
-            "parenthetical": "complaining",
-            "source_ref": null,
+            "line": "What business can he possibly have in town so soon after arriving? He'll be flying about from place to place, never settled at Netherfield!",
+            "parenthetical": "fretting",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 1774,
+                  "end": 2013
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Lady Lucas, seated opposite, nods knowingly.",
-            "source_ref": null,
+            "text": "Lady Lucas, seated nearby, sets down her teacup with a knowing smile.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 2011,
+                  "end": 2128
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_lady_lucas",
-            "line": "I dare say he has gone to London to bring back a party for the ball.",
-            "parenthetical": null,
-            "source_ref": null,
+            "line": "Perhaps he has gone to London only to get a large party for the ball.",
+            "parenthetical": "soothingly",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 2011,
+                  "end": 2128
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet's eyes light up with renewed hope.",
+            "text": "Mrs. Bennet's expression brightens. She nods slowly, a new hope dawning.",
             "source_ref": null,
-            "adaptation": null
+            "adaptation": {
+              "from": "interior_monologue",
+              "technique": "action"
+            }
           },
           {
             "type": "transition",
@@ -2666,8 +3149,8 @@
           "chapter": 3,
           "spans": [
             {
-              "start": 1417,
-              "end": 1418
+              "start": 2227,
+              "end": 2547
             }
           ]
         },
@@ -2678,15 +3161,35 @@
         "elements": [
           {
             "type": "action",
-            "text": "A report circulates in the neighbourhood that Mr. Bingley will bring twelve ladies and seven gentlemen to the ball.",
-            "source_ref": null,
+            "text": "The Bennet sisters gather in the sitting room, their faces falling as they hear the news.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 2344,
+                  "end": 2390
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "The day before the ball, the Bennet family learns the truth: Mr. Bingley brings only six—his five sisters and a cousin.",
-            "source_ref": null,
+            "text": "A few days later, the day before the ball, they receive updated information. Their expressions lighten.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 2392,
+                  "end": 2547
+                }
+              ]
+            },
             "adaptation": null
+          },
+          {
+            "type": "transition",
+            "text": "CUT TO"
           }
         ],
         "continuity_flags": []
@@ -2703,8 +3206,8 @@
           "chapter": 3,
           "spans": [
             {
-              "start": 1418,
-              "end": 1419
+              "start": 2548,
+              "end": 3698
             }
           ]
         },
@@ -2713,36 +3216,90 @@
           "char_mr_darcy",
           "char_mr_hurst"
         ],
-        "synopsis": "At the assembly, Mr. Bingley's party arrives; Mr. Darcy is admired for his looks and wealth but soon disliked for his proud manners.",
+        "synopsis": "Bingley's party enters the assembly-room; Darcy is admired for his looks and wealth but soon disliked for his proud manners.",
         "elements": [
           {
             "type": "action",
-            "text": "The assembly-room buzzes with conversation. Mr. Bingley enters with his party of five, including Mr. Darcy and Mr. Hurst. Heads turn.",
-            "source_ref": null,
+            "text": "The assembly-room doors open. Mr. Bingley enters with his party: his two sisters, Mr. Hurst, and Mr. Darcy.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 2552,
+                  "end": 2711
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Darcy, tall and handsome, draws immediate attention. Whispers of admiration spread through the crowd.",
-            "source_ref": null,
+            "text": "Bingley smiles warmly, nodding to acquaintances. His sisters glide in with fashionable airs. Mr. Hurst follows, looking gentlemanly but unremarkable.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 2713,
+                  "end": 2941
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "He stands aloof, barely acknowledging the locals. His expression remains cold and disdainful.",
-            "source_ref": null,
+            "text": "Darcy enters last, tall and handsome. Heads turn. Whispers spread.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 2947,
+                  "end": 3059
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bingley, by contrast, greets everyone warmly, smiling and shaking hands.",
-            "source_ref": null,
+            "text": "A cluster of gentlemen nod approvingly at Darcy. Nearby ladies whisper, glancing between him and Bingley.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 3185,
+                  "end": 3302
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "A group of ladies nearby glance at Darcy, then exchange disappointed looks as he turns away without speaking.",
-            "source_ref": null,
+            "text": "For half the evening, Darcy is admired. Then he stands apart, refusing to dance, looking disdainfully around. His expression turns cold.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 3308,
+                  "end": 3531
+                }
+              ]
+            },
+            "adaptation": null
+          },
+          {
+            "type": "action",
+            "text": "Guests exchange disapproving glances. A lady shakes her head. The admiration fades.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 3537,
+                  "end": 3698
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -2764,8 +3321,8 @@
           "chapter": 3,
           "spans": [
             {
-              "start": 1419,
-              "end": 1420
+              "start": 3700,
+              "end": 4387
             }
           ]
         },
@@ -2779,30 +3336,76 @@
         "elements": [
           {
             "type": "action",
-            "text": "Mr. Bingley moves through the crowd, smiling and shaking hands. He leads a young lady onto the dance floor, laughing as they begin to dance.",
-            "source_ref": null,
+            "text": "Mr. Bingley moves through the crowd, shaking hands and smiling. He joins a dance, laughing with his partner.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 3700,
+                  "end": 3836
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Nearby, Mr. Darcy stands stiffly with Mrs. Hurst and Miss Bingley. He dances once with each of them, then retreats to the edge of the room, arms crossed.",
-            "source_ref": null,
+            "text": "The ball ends. Bingley looks disappointed, glancing at the clock.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 3838,
+                  "end": 3877
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "A group of gentlemen glance at Darcy and whisper among themselves. One shakes his head.",
-            "source_ref": null,
+            "text": "Bingley gestures animatedly to his friends, as if planning a future event.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 3883,
+                  "end": 3926
+                }
+              ]
+            },
+            "adaptation": null
+          },
+          {
+            "type": "action",
+            "text": "Nearby, Mr. Darcy stands apart, arms crossed. He dances once with Mrs. Hurst, then once with Miss Bingley, then retreats to the edge of the room.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 4022,
+                  "end": 4245
+                }
+              ]
+            },
+            "adaptation": null
+          },
+          {
+            "type": "action",
+            "text": "Guests whisper and shake their heads, casting disapproving glances at Darcy.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 4246,
+                  "end": 4387
+                }
+              ]
+            },
             "adaptation": {
               "from": "interior_monologue",
               "technique": "visual"
             }
-          },
-          {
-            "type": "action",
-            "text": "Darcy notices the whispers and turns his back, staring out a window.",
-            "source_ref": null,
-            "adaptation": null
           },
           {
             "type": "transition",
@@ -2823,50 +3426,82 @@
           "chapter": 3,
           "spans": [
             {
-              "start": 1420,
-              "end": 1421
+              "start": 4388,
+              "end": 5301
             }
           ]
         },
         "characters": [
           "char_mrs_bennet",
-          "char_mr_bingley",
           "char_lizzy",
-          "char_mr_darcy"
+          "char_mr_darcy",
+          "char_mr_bingley"
         ],
-        "synopsis": "Mrs. Bennet resents Mr. Darcy for slighting Elizabeth; Elizabeth overhears Darcy telling Bingley he detests dancing at such an assembly.",
+        "synopsis": "Mrs. Bennet resents Darcy for slighting Elizabeth; Elizabeth overhears Darcy telling Bingley he detests dancing at the assembly.",
         "elements": [
           {
             "type": "action",
-            "text": "Mrs. Bennet, seated among other matrons, glares at Mr. Darcy across the room. She leans toward a neighbor and whispers, her fan fluttering rapidly.",
-            "source_ref": null,
+            "text": "Mrs. Bennet glares at Darcy from across the room, her face flushed with indignation. She mutters to herself, shaking her head.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 4388,
+                  "end": 4566
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Elizabeth stands near a pillar, pretending to adjust her glove, but her attention is fixed on Darcy and Bingley, who are conversing a few feet away.",
-            "source_ref": null,
+            "text": "Elizabeth sits down after a dance, fanning herself. Nearby, Mr. Darcy stands alone, watching the crowd with a bored expression. Mr. Bingley approaches him.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 4568,
+                  "end": 4868
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mr_bingley",
             "line": "Come, Darcy, I must have you dance. I hate to see you standing about by yourself in this stupid manner. You had much better dance.",
-            "parenthetical": "cheerfully",
-            "source_ref": null,
+            "parenthetical": null,
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 4871,
+                  "end": 5012
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mr_darcy",
             "line": "I certainly shall not. You know how I detest it, unless I am particularly acquainted with my partner. At such an assembly as this, it would be insupportable. Your sisters are engaged, and there is not another woman in the room whom it would not be a punishment to me to stand up with.",
-            "parenthetical": "coldly, with a slight sneer",
-            "source_ref": null,
+            "parenthetical": null,
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 5016,
+                  "end": 5300
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Elizabeth's hand freezes on her glove. She turns her head slightly, her eyes narrowing as she catches Darcy's dismissive gesture toward the room.",
+            "text": "Elizabeth's eyes widen slightly. She turns her head away, a faint blush rising on her cheeks. She clenches her fan.",
             "source_ref": null,
             "adaptation": {
               "from": "interior_monologue",
@@ -2875,12 +3510,9 @@
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet, having overheard, snaps her fan shut and mutters audibly to her neighbor, 'Insufferable man!'",
+            "text": "Mrs. Bennet, having overheard, purses her lips and shoots a venomous look at Darcy.",
             "source_ref": null,
-            "adaptation": {
-              "from": "interior_monologue",
-              "technique": "subtext"
-            }
+            "adaptation": null
           },
           {
             "type": "transition",
@@ -2901,8 +3533,8 @@
           "chapter": 3,
           "spans": [
             {
-              "start": 1421,
-              "end": 6327
+              "start": 5303,
+              "end": 6325
             }
           ]
         },
@@ -2915,31 +3547,29 @@
         "elements": [
           {
             "type": "action",
-            "text": "The assembly-room buzzes with conversation and music. Mr. Bingley, lively and unreserved, dances every dance. His friend Mr. Darcy stands apart, walking about the room, speaking only occasionally to his own party. Elizabeth Bennet sits down for two dances due to scarcity of gentlemen. Darcy stands nearby.",
+            "text": "Bingley and Darcy stand near a wall, observing the dancers. Bingley gestures enthusiastically toward the room.",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mr_bingley",
-            "line": "Come, Darcy, I must have you dance. I hate to see you standing about by yourself in this stupid manner. You had much better dance.",
+            "line": "I would not be so fastidious as you are, for a kingdom! Upon my honour, I never met with so many pleasant girls in my life as I have this evening; and there are several of them, you see, uncommonly pretty.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 5305,
+                  "end": 5526
+                }
+              ]
+            },
             "adaptation": null
           },
           {
-            "type": "dialogue",
-            "character": "char_mr_darcy",
-            "line": "I certainly shall not. You know how I detest it, unless I am particularly acquainted with my partner. At such an assembly as this, it would be insupportable. Your sisters are engaged, and there is not another woman in the room whom it would not be a punishment to me to stand up with.",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mr_bingley",
-            "line": "I would not be so fastidious as you are for a kingdom! Upon my honour, I never met with so many pleasant girls in my life as I have this evening; and there are several of them, you see, uncommonly pretty.",
-            "parenthetical": null,
+            "type": "action",
+            "text": "Darcy's gaze drifts to Jane Bennet, who is dancing nearby.",
             "source_ref": null,
             "adaptation": null
           },
@@ -2947,8 +3577,16 @@
             "type": "dialogue",
             "character": "char_mr_darcy",
             "line": "You are dancing with the only handsome girl in the room.",
-            "parenthetical": null,
-            "source_ref": null,
+            "parenthetical": "looking at the eldest Miss Bennet",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 5531,
+                  "end": 5587
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -2956,13 +3594,29 @@
             "character": "char_mr_bingley",
             "line": "Oh, she is the most beautiful creature I ever beheld! But there is one of her sisters sitting down just behind you, who is very pretty, and I dare say very agreeable. Do let me ask my partner to introduce you.",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 5643,
+                  "end": 5852
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Darcy turns around and looks at Elizabeth for a moment. She catches his eye. He withdraws his gaze coldly.",
-            "source_ref": null,
+            "text": "Darcy turns around and briefly looks at Elizabeth, who is seated nearby. Their eyes meet for a moment; Elizabeth's expression is curious. Darcy quickly looks away, his face cold.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 5954,
+                  "end": 6049
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -2970,12 +3624,20 @@
             "character": "char_mr_darcy",
             "line": "She is tolerable: but not handsome enough to tempt me; and I am in no humour at present to give consequence to young ladies who are slighted by other men. You had better return to your partner and enjoy her smiles, for you are wasting your time with me.",
             "parenthetical": "coldly",
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 6069,
+                  "end": 6324
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Elizabeth, having overheard, stiffens slightly, her expression a mix of mortification and defiance. She looks away, composing herself.",
+            "text": "Elizabeth, having overheard, stiffens slightly, her eyes narrowing with a mix of surprise and disdain. She turns away, pretending not to have heard.",
             "source_ref": null,
             "adaptation": {
               "from": "interior_monologue",
@@ -3015,29 +3677,71 @@
         "elements": [
           {
             "type": "action",
-            "text": "Mr. Bingley follows his advice. Mr. Darcy walks off. Elizabeth remains, her expression cool.",
-            "source_ref": null,
+            "text": "Mr. Bingley follows his advice, walking away. Mr. Darcy strides off in the opposite direction. Elizabeth remains standing alone, her gaze following Darcy with a hint of displeasure.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 6327,
+                  "end": 6447
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Elizabeth turns to her friends, a mischievous glint in her eye. She begins to recount the incident, her tone lively and playful, mimicking Darcy's haughty demeanor.",
-            "source_ref": null,
+            "text": "She turns to a group of friends nearby, a mischievous glint in her eyes. She begins to recount the incident, her voice animated and her gestures lively, mimicking Darcy's haughty tone.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 6448,
+                  "end": 6596
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_lizzy",
             "line": "He said I was tolerable, but not handsome enough to tempt him!",
-            "parenthetical": "with mock indignation",
+            "parenthetical": "laughing",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 6076,
+                  "end": 6122
+                }
+              ]
+            },
+            "adaptation": null
+          },
+          {
+            "type": "action",
+            "text": "Her friends gasp and giggle. Elizabeth continues, her eyes sparkling with mock indignation.",
+            "source_ref": null,
+            "adaptation": null
+          },
+          {
+            "type": "dialogue",
+            "character": "char_lizzy",
+            "line": "And he refused to dance with me! Can you imagine such pride?",
+            "parenthetical": "shaking her head",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Her friends laugh and shake their heads. Elizabeth smiles, her eyes sparkling with amusement.",
+            "text": "The group erupts in laughter. Elizabeth glances over her shoulder at Darcy, who is now standing alone across the room, unaware of the amusement he has caused.",
             "source_ref": null,
             "adaptation": null
+          },
+          {
+            "type": "transition",
+            "text": "CUT TO"
           }
         ],
         "continuity_flags": []
@@ -3055,13 +3759,12 @@
           "spans": [
             {
               "start": 6598,
-              "end": 6599
+              "end": 7324
             }
           ]
         },
         "characters": [
           "char_mrs_bennet",
-          "char_mr_bennet",
           "char_lizzy",
           "char_jane"
         ],
@@ -3069,100 +3772,98 @@
         "elements": [
           {
             "type": "action",
-            "text": "The Bennet family walks along the dark lane toward Longbourn. Mrs. Bennet chatters excitedly, her voice carrying in the night air. Mr. Bennet walks a few paces ahead, silent. Jane and Lizzy follow arm in arm.",
-            "source_ref": null,
+            "text": "The Bennet family walks along the dark lane toward Longbourn. Mrs. Bennet chatters excitedly, her voice carrying in the night air. Jane walks arm-in-arm with Elizabeth, a quiet smile on her face.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 7189,
+                  "end": 7324
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mrs_bennet",
-            "line": "I am quite delighted with Mr. Bingley! He is so handsome and agreeable!",
-            "parenthetical": null,
-            "source_ref": null,
+            "line": "Did you see how Mr. Bingley danced with Jane twice? And his sisters were so attentive to her!",
+            "parenthetical": "triumphantly",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 6664,
+                  "end": 6829
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet turns to Jane, her eyes bright.",
-            "source_ref": null,
+            "text": "Jane blushes and looks down, but her smile widens. Elizabeth squeezes her arm affectionately.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 6830,
+                  "end": 6945
+                }
+              ]
+            },
             "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mrs_bennet",
-            "line": "Jane, my dear, I am sure he danced with you twice. That is a sure sign of his admiration!",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Jane smiles softly, but says nothing. Lizzy gives her sister's arm a gentle squeeze.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mrs_bennet",
-            "line": "And Lizzy, you were very silly to refuse Mr. Darcy's hand. He is a fine gentleman, though he may be proud.",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Lizzy's smile fades. She looks away, her jaw tightening.",
-            "source_ref": null,
-            "adaptation": {
-              "from": "interior_monologue",
-              "technique": "action"
-            }
           },
           {
             "type": "dialogue",
             "character": "char_lizzy",
-            "line": "I did not refuse him, Mama. He did not ask me. He merely stood by and said I was tolerable.",
-            "parenthetical": "with forced lightness",
-            "source_ref": null,
-            "adaptation": null
+            "line": "Indeed, Jane, you were the belle of the ball.",
+            "parenthetical": "warmly",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 6914,
+                  "end": 6945
+                }
+              ]
+            },
+            "adaptation": {
+              "from": "interior_monologue",
+              "technique": "subtext"
+            }
           },
           {
             "type": "action",
-            "text": "Mrs. Bennet waves a dismissive hand.",
+            "text": "Mrs. Bennet continues, barely pausing for breath. She gestures animatedly as she walks.",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mrs_bennet",
-            "line": "Nonsense! He is a man of fortune, and you should have been more agreeable. But never mind—Mr. Bingley is the better catch!",
-            "parenthetical": null,
-            "source_ref": null,
+            "line": "And Mary was mentioned as the most accomplished girl in the neighbourhood! And Lydia and Kitty never lacked partners—excellent!",
+            "parenthetical": "beaming",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 6946,
+                  "end": 7188
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "They approach the house. Mr. Bennet opens the door and holds it for the ladies. Mrs. Bennet bustles inside, still talking.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_mrs_bennet",
-            "line": "I declare, this has been the most delightful evening! I shall dream of nothing but Mr. Bingley!",
-            "parenthetical": null,
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Lizzy and Jane exchange a knowing glance. Mr. Bennet shakes his head slightly, a faint smile on his lips.",
+            "text": "The group approaches the front door of Longbourn. The warm glow of candlelight spills from the windows. Mrs. Bennet bustles inside, still talking, as Jane and Elizabeth follow more slowly, sharing a knowing look.",
             "source_ref": null,
             "adaptation": null
           },
           {
             "type": "transition",
-            "text": "FADE OUT."
+            "text": "FADE OUT"
           }
         ],
         "continuity_flags": []
@@ -3179,8 +3880,8 @@
           "chapter": 3,
           "spans": [
             {
-              "start": 6599,
-              "end": 9758
+              "start": 7325,
+              "end": 9739
             }
           ]
         },
@@ -3192,8 +3893,16 @@
         "elements": [
           {
             "type": "action",
-            "text": "The Bennet family returns to Longbourn in high spirits. Mr. Bennet is still up, reading by candlelight. He looks up with curiosity as his wife enters.",
-            "source_ref": null,
+            "text": "Mr. Bennet sits in his armchair, a book open on his lap. He looks up as Mrs. Bennet bursts into the room, followed by Jane and Elizabeth.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 7325,
+                  "end": 7531
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -3201,7 +3910,15 @@
             "character": "char_mrs_bennet",
             "line": "Oh, my dear Mr. Bennet, we have had a most delightful evening, a most excellent ball. I wish you had been there. Jane was so admired, nothing could be like it. Everybody said how well she looked; and Mr. Bingley thought her quite beautiful, and danced with her twice. Only think of that, my dear: he actually danced with her twice; and she was the only creature in the room that he asked a second time. First of all, he asked Miss Lucas. I was so vexed to see him stand up with her; but, however, he did not admire her at all; indeed, nobody can, you know; and he seemed quite struck with Jane as she was going down the dance. So he inquired who she was, and got introduced, and asked her for the two next. Then, the two third he danced with Miss King, and the two fourth with Maria Lucas, and the two fifth with Jane again, and the two sixth with Lizzy, and the Boulanger----",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 7680,
+                  "end": 8589
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -3209,7 +3926,15 @@
             "character": "char_mr_bennet",
             "line": "If he had had any compassion for me, he would not have danced half so much! For God's sake, say no more of his partners. O that he had sprained his ancle in the first dance!",
             "parenthetical": "impatiently",
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 8591,
+                  "end": 8801
+                }
+              ]
+            },
             "adaptation": null
           },
           {
@@ -3217,32 +3942,50 @@
             "character": "char_mrs_bennet",
             "line": "Oh, my dear, I am quite delighted with him. He is so excessively handsome! and his sisters are charming women. I never in my life saw anything more elegant than their dresses. I dare say the lace upon Mrs. Hurst's gown----",
             "parenthetical": null,
-            "source_ref": null,
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 8803,
+                  "end": 9052
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bennet holds up a hand, cutting her off with a gesture of protest.",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "Mrs. Bennet, undeterred, shifts to a new topic with bitterness and exaggeration.",
-            "source_ref": null,
+            "text": "Mr. Bennet holds up a hand, cutting her off with a dismissive gesture.",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 9054,
+                  "end": 9141
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "dialogue",
             "character": "char_mrs_bennet",
             "line": "But I can assure you that Lizzy does not lose much by not suiting his fancy; for he is a most disagreeable, horrid man, not at all worth pleasing. So high and so conceited, that there was no enduring him! He walked here, and he walked there, fancying himself so very great! Not handsome enough to dance with! I wish you had been there, my dear, to have given him one of your set-downs. I quite detest the man.",
-            "parenthetical": null,
-            "source_ref": null,
+            "parenthetical": "with bitterness",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 9312,
+                  "end": 9739
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "Mr. Bennet listens with a faint, sardonic smile, turning a page of his book.",
+            "text": "Mr. Bennet returns to his book, a faint smile playing on his lips.",
             "source_ref": null,
             "adaptation": {
               "from": "interior_monologue",
@@ -3251,7 +3994,7 @@
           },
           {
             "type": "transition",
-            "text": "FADE OUT."
+            "text": "FADE OUT"
           }
         ],
         "continuity_flags": []
@@ -3262,16 +4005,16 @@
     "scene_count": 27,
     "character_count": 20,
     "location_count": 7,
-    "element_count": 250,
-    "dialogue_count": 112,
-    "action_count": 118,
-    "transition_count": 20,
-    "externalized_count": 12,
-    "traceability_coverage": 0.10869565217391304,
+    "element_count": 229,
+    "dialogue_count": 103,
+    "action_count": 102,
+    "transition_count": 24,
+    "externalized_count": 14,
+    "traceability_coverage": 0.6634146341463415,
     "continuity_error_count": 0,
     "continuity_warn_count": 0,
     "schema_valid": true,
-    "source_coverage": 0.9661043836920311
+    "source_coverage": 0.9327904394267886
   },
   "chapters": [
     {

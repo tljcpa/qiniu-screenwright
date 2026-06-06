@@ -41,8 +41,10 @@ from app.pipeline import generate as generate_mod
 from app.pipeline import continuity as continuity_mod
 from app.pipeline import metrics as metrics_mod
 from app.pipeline import export as export_mod
+from app.pipeline import baseline as baseline_mod
 from app.pipeline.types import SceneStub
 from app.schema.models import Screenplay, Meta, SourceMeta, SourceRef, Span
+from app.schema.validate import validate_and_repair
 
 
 # ----------------------------------------------------------------------------
@@ -176,6 +178,32 @@ class ExportRequest(BaseModel):
     """/api/export 入参。"""
     screenplay: dict
     format: str = "yaml"
+
+
+class ImportRequest(BaseModel):
+    """/api/import 入参。
+
+    content：用户在前端编辑过的剧本(YAML 或 JSON 文本)。可能被手改坏(漏字段、
+             类型写错)，正是 validate_and_repair 修复环要兜的真实场景。
+    text   ：可选原著原文。给了就 ingest 出 chapters 回送，供前端做行级溯源
+             高亮(与 convert 的 done 事件同形)；不给则 chapters 为空。
+    设 max_length 上限：content/text 都吃用户输入，是烧钱/OOM 放大面，统一设上限。
+    """
+    content: str = Field(max_length=400_000)
+    text: Optional[str] = Field(default=None, max_length=200_000)
+
+
+class BaselineRequest(BaseModel):
+    """/api/baseline 入参。
+
+    text        ：小说原文(<=20 万字符，与 convert 同上限)。
+    medium      ：目标媒介，film/series/short_drama。
+    ours_metrics：可选，我们完整管线的 metrics dict。给了就附带 naive vs ours
+                  对照摘要(naive_vs_ours_summary)，供前端朴素对比看板渲染。
+    """
+    text: str = Field(max_length=200_000)
+    medium: str = "film"
+    ours_metrics: Optional[dict] = None
 
 
 # ----------------------------------------------------------------------------
@@ -582,3 +610,138 @@ def export(req: ExportRequest):
         filename=filename,
         background=BackgroundTask(os.remove, tmp_path),
     )
+
+
+# ----------------------------------------------------------------------------
+# 端点 6：导入用户手改的剧本(诚信闭环 —— validate_and_repair 真正被用上)
+# ----------------------------------------------------------------------------
+
+@app.post("/api/import")
+def import_screenplay(req: ImportRequest):
+    """
+    导入用户编辑过的剧本(YAML/JSON)，解析 + 校验 + (非法则)自动修复后返回。
+
+    为什么需要这个端点(诚信闭环)：
+      validate_and_repair 这套"校验失败->回喂 LLM 修复->重试"的修复环，此前在主路径
+      (convert 逐字段构造 Scene)里并未真正被用上——等于摆设，与文档宣称矛盾。
+      "用户在前端手改剧本 YAML 后导入"是它最自然的真实落点：用户难免改坏(漏字段、
+      类型写错、缩进乱)，这里用修复环把坏 YAML 自动救回成合法 Screenplay。
+
+    隐私：用户路径强制 cache=False(关磁盘缓存)，与 convert 同源约束——
+      修复对话里会带用户改过的剧本文本，绝不落任何磁盘缓存。
+
+    入参：
+      content：用户编辑过的剧本文本(YAML 或 JSON)。
+      text   ：可选原著原文。给了就 ingest 出 chapters 回送供前端溯源。
+
+    返回：
+      {screenplay, metrics, chapters}
+      - screenplay：修复并校验通过的剧本(by_alias)。
+      - metrics   ：对修复后剧本算的质量指标(给了 text 则一并传 novel，溯源覆盖率更准)。
+      - chapters  ：给了 text 则为各章原文(index/title/text)，否则空列表。
+
+    失败：content 无法解析或修复后仍不合法 -> 400(信息简短，不泄露堆栈/密钥)。
+    """
+    # 空内容直接 400。
+    if not req.content or not req.content.strip():
+        return JSONResponse(status_code=400, content={"detail": "content 不能为空"})
+
+    # 用户路径关缓存(隐私)。
+    llm = _new_uncached_llm()
+
+    # 解析 + 校验 + 自动修复。validate_and_repair 内部：首次构造失败就把
+    # pydantic 错误 + 原始内容回喂 llm 求修复，最多重试若干次；全失败抛异常。
+    try:
+        sp = validate_and_repair(req.content, llm)
+    except Exception as exc:  # noqa: BLE001
+        # 解析失败 / 修复用尽仍不合法。只回送简短信息。
+        msg = str(exc)
+        if len(msg) > 200:
+            msg = msg[:200]
+        return JSONResponse(
+            status_code=400,
+            content={"detail": "导入失败(无法解析或修复后仍不合法): " + msg},
+        )
+
+    # 给了原文：ingest 出 novel，既用于算更准的溯源覆盖率，也回送 chapters 给前端。
+    novel = None
+    chapters_out: List[dict] = []
+    if req.text and req.text.strip():
+        novel = ingest_mod.ingest(req.text, title=sp.meta.title)
+        chapters_out = [
+            {"index": c.index, "title": c.title, "text": c.text}
+            for c in novel.chapters
+        ]
+
+    # 算质量指标。novel 为 None 时 compute_metrics 退化(溯源覆盖率按 span 自洽估算)。
+    m = metrics_mod.compute_metrics(sp, novel)
+
+    return {
+        "screenplay": sp.model_dump(by_alias=True),
+        "metrics": m,
+        "chapters": chapters_out,
+    }
+
+
+# ----------------------------------------------------------------------------
+# 端点 7：朴素基线(给前端做"朴素 vs 我们"的并排对比)
+# ----------------------------------------------------------------------------
+
+@app.post("/api/baseline")
+async def baseline(req: BaselineRequest, request: Request):
+    """
+    朴素基线转换：直白地把小说切块逐块改成轻量剧本(无 bible/无溯源/无外化)，
+    作为我们完整管线的对照组。给了 ours_metrics 还附带维度对照摘要。
+
+    为什么限流同 convert：naive_convert 也会逐块调 LLM(烧 token)，是同类滥用面，
+    复用同一个 IP 滑动窗口限流器，防刷。
+
+    隐私：用户路径 cache=False，朴素转换的 LLM 调用也不落磁盘缓存。
+
+    入参：text / medium / ours_metrics?。
+    返回：
+      {naive: <朴素输出>, summary?: <给了 ours_metrics 时的对照摘要>}
+
+    naive_convert 是阻塞的(逐块同步调 LLM)，丢线程池跑，避免堵死事件循环。
+    """
+    # 校验 medium。
+    if req.medium not in _VALID_MEDIA:
+        return JSONResponse(
+            status_code=400,
+            content={"detail": "medium 必须是 film/series/short_drama 之一"},
+        )
+    # 校验 text 非空。
+    if not req.text or not req.text.strip():
+        return JSONResponse(status_code=400, content={"detail": "text 不能为空"})
+
+    # 限流：复用 convert 的限流器(同类烧 token 面)。超阈值 429。
+    ip = _client_ip(request)
+    if not convert_limiter.allow(ip):
+        return JSONResponse(
+            status_code=429,
+            content={"detail": "请求过于频繁，请稍后再试"},
+        )
+
+    def _run() -> dict:
+        """线程池里跑：阻塞的朴素转换 + (可选)对照摘要。"""
+        # 用户路径关缓存(隐私)。
+        llm = _new_uncached_llm()
+        naive_out = baseline_mod.naive_convert(req.text, medium=req.medium, llm=llm)
+        result = {"naive": naive_out}
+        # 给了我们的指标才算对照摘要(纯本地计算，不再调 LLM)。
+        if isinstance(req.ours_metrics, dict):
+            result["summary"] = baseline_mod.naive_vs_ours_summary(
+                naive_out, req.ours_metrics
+            )
+        return result
+
+    # 阻塞函数丢线程池，事件循环不被堵。失败回送简短信息，不泄露堆栈/密钥。
+    try:
+        result = await asyncio.to_thread(_run)
+    except Exception as exc:  # noqa: BLE001
+        msg = str(exc)
+        if len(msg) > 200:
+            msg = msg[:200]
+        return JSONResponse(status_code=400, content={"detail": "基线转换失败: " + msg})
+
+    return result

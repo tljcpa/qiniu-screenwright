@@ -131,8 +131,16 @@
         "elements": [
           {
             "type": "action",
-            "text": "林深推开城南旧咖啡馆的木门，门楣上的铜铃响起，清脆如三年前。他站在门口，任由初秋的风从背后灌入，身体微微僵硬。",
-            "source_ref": null,
+            "text": "林深推开城南旧咖啡馆的木门，门楣上的铜铃响起，声音又轻又脆。他站在门口没动，任由初秋的风从背后灌进来。",
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 0,
+                  "end": 80
+                }
+              ]
+            },
             "adaptation": null
           }
         ],
@@ -159,7 +167,7 @@
           "char_lin_shen",
           "char_shen_yan"
         ],
-        "synopsis": "林深看到沈言在窗边搅咖啡，内心震动，僵在原地。",
+        "synopsis": "林深在咖啡馆看到沈言，内心震动，僵在原地。",
         "elements": [
           {
             "type": "action",
@@ -177,35 +185,51 @@
           },
           {
             "type": "action",
-            "text": "林深的心猛地一沉。他僵在原地，连脚都迈不动。",
-            "source_ref": null,
+            "text": "林深的目光锁定那个女人，瞳孔骤缩。",
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 122,
+                  "end": 126
+                }
+              ]
+            },
             "adaptation": null
           },
           {
             "type": "action",
-            "text": "林深攥紧拳头，指节发白，喉结上下滚动。",
-            "source_ref": null,
+            "text": "他僵在原地，手指微微颤抖，喉咙发紧。",
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 128,
+                  "end": 214
+                }
+              ]
+            },
             "adaptation": {
               "from": "interior_monologue",
               "technique": "action"
             }
           },
           {
-            "type": "dialogue",
-            "character": "char_lin_shen",
-            "line": "好久不见。",
-            "parenthetical": "声音发涩",
-            "source_ref": null,
+            "type": "action",
+            "text": "林深脑海中闪过无数个排练过的画面——笑着说“好久不见”，假装过得很好，让她看见自己放下了。但此刻，他连脚都迈不动。",
+            "source_ref": {
+              "chapter": 1,
+              "spans": [
+                {
+                  "start": 214,
+                  "end": 302
+                }
+              ]
+            },
             "adaptation": {
               "from": "interior_monologue",
-              "technique": "subtext"
+              "technique": "visual"
             }
-          },
-          {
-            "type": "action",
-            "text": "沈言抬起头，看到林深，手中的勺子掉进杯里，发出一声脆响。",
-            "source_ref": null,
-            "adaptation": null
           },
           {
             "type": "transition",
@@ -235,11 +259,11 @@
           "char_lin_shen",
           "char_shen_yan"
         ],
-        "synopsis": "沈言平静地看林深一眼，林深坐下后两人简短对话，林深内心苦涩。",
+        "synopsis": "林深在咖啡馆与沈言重逢，两人简短对话，林深内心苦涩。",
         "elements": [
           {
             "type": "action",
-            "text": "沈言抬起头，目光在林深脸上停了两秒，然后平静地移开，仿佛进来的只是一个普通客人。",
+            "text": "沈言抬起头，目光在林深脸上停了两秒，然后平静地移开，仿佛进来的只是一个普通的客人。",
             "source_ref": {
               "chapter": 1,
               "spans": [
@@ -254,29 +278,13 @@
           {
             "type": "dialogue",
             "character": "char_lin_shen",
-            "line": "还是老位置。",
+            "line": "还是老位置。你常来？",
             "parenthetical": "声音干涩",
             "source_ref": {
               "chapter": 1,
               "spans": [
                 {
                   "start": 355,
-                  "end": 382
-                }
-              ]
-            },
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_lin_shen",
-            "line": "你常来？",
-            "parenthetical": null,
-            "source_ref": {
-              "chapter": 1,
-              "spans": [
-                {
-                  "start": 383,
                   "end": 389
                 }
               ]
@@ -284,45 +292,15 @@
             "adaptation": null
           },
           {
-            "type": "action",
-            "text": "沈言把搅了一半的勺子放下。",
-            "source_ref": {
-              "chapter": 1,
-              "spans": [
-                {
-                  "start": 396,
-                  "end": 408
-                }
-              ]
-            },
-            "adaptation": null
-          },
-          {
             "type": "dialogue",
             "character": "char_shen_yan",
-            "line": "偶尔。",
-            "parenthetical": null,
+            "line": "偶尔。听说你回来了。",
+            "parenthetical": "把搅了一半的勺子放下",
             "source_ref": {
               "chapter": 1,
               "spans": [
                 {
                   "start": 391,
-                  "end": 396
-                }
-              ]
-            },
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_shen_yan",
-            "line": "听说你回来了。",
-            "parenthetical": null,
-            "source_ref": {
-              "chapter": 1,
-              "spans": [
-                {
-                  "start": 409,
                   "end": 418
                 }
               ]
@@ -347,13 +325,13 @@
           },
           {
             "type": "action",
-            "text": "两人之间隔着一张小圆桌，和三年的沉默。林深盯着那只铜铃晃动后慢慢静止的弧线，嘴角扯出一丝苦笑。",
+            "text": "两人之间隔着一张小圆桌，和三年的沉默。林深盯着那只铜铃晃动后慢慢静止的弧线，嘴角扯出一丝苦笑——他飞了一万公里回来，准备了那么多话，结果第一句竟然是“你常来”。",
             "source_ref": {
               "chapter": 1,
               "spans": [
                 {
                   "start": 429,
-                  "end": 474
+                  "end": 508
                 }
               ]
             },
@@ -393,13 +371,13 @@
         "elements": [
           {
             "type": "action",
-            "text": "深夜，公司办公室。沈言坐在电脑前，盯着屏幕上的报表，手指在鼠标上无意识地滑动。同事的声音从画外传来。",
+            "text": "沈言坐在办公桌前，盯着电脑屏幕，手指在鼠标上机械地移动。同事从旁边走过，随口说了一句话。",
             "source_ref": {
               "chapter": 2,
               "spans": [
                 {
                   "start": 20,
-                  "end": 29
+                  "end": 38
                 }
               ]
             },
@@ -408,8 +386,8 @@
           {
             "type": "dialogue",
             "character": "char_shen_yan",
-            "line": "（画外音，同事）听说林深从慕尼黑回来了，还是老样子，谁也不告诉。",
-            "parenthetical": "O.S.",
+            "line": "（同事的声音从画外传来）听说林深从慕尼黑回来了，还是老样子，谁也不告诉。",
+            "parenthetical": "画外音",
             "source_ref": {
               "chapter": 2,
               "spans": [
@@ -423,7 +401,7 @@
           },
           {
             "type": "action",
-            "text": "沈言的手停在鼠标上，眼神失焦。屏幕上的报表变得模糊。她缓缓松开鼠标，指尖微微颤抖。",
+            "text": "沈言握着鼠标的手猛地停住，屏幕上的报表瞬间变得一个字也看不进去。她眼神失焦，呼吸微滞。",
             "source_ref": {
               "chapter": 2,
               "spans": [
@@ -437,7 +415,7 @@
           },
           {
             "type": "action",
-            "text": "沈言深吸一口气，闭上眼睛，再睁开时，眼神里闪过一丝慌乱。她拿起手机，又放下，最终只是盯着屏幕发呆。",
+            "text": "她缓缓松开鼠标，指尖微微颤抖，目光落在窗外漆黑的夜色中。",
             "source_ref": null,
             "adaptation": {
               "from": "interior_monologue",
@@ -471,17 +449,17 @@
         "characters": [
           "char_shen_yan"
         ],
-        "synopsis": "沈言回家翻出三年前未拆的信，回忆雨夜林深离开的场景。",
+        "synopsis": "沈言翻出三年前未拆的信，回忆雨夜林深离开的场景。",
         "elements": [
           {
             "type": "action",
-            "text": "沈言走进小公寓，关上门。她走到床边，蹲下，从抽屉最底层翻出一封旧信。信封边角发软，上面是林深的字迹，写着她的名字。",
+            "text": "沈言打开抽屉最底层，手指触到一个旧信封，边角发软，上面是林深的字迹写着她的名字。",
             "source_ref": {
               "chapter": 2,
               "spans": [
                 {
-                  "start": 111,
-                  "end": 175
+                  "start": 124,
+                  "end": 166
                 }
               ]
             },
@@ -489,27 +467,27 @@
           },
           {
             "type": "action",
-            "text": "沈言的手指摩挲着信封，眼神复杂。她缓缓拆开信封，抽出信纸。",
+            "text": "她拿起信封，指尖摩挲着未拆的封口，眼神复杂。",
+            "source_ref": {
+              "chapter": 2,
+              "spans": [
+                {
+                  "start": 167,
+                  "end": 174
+                }
+              ]
+            },
+            "adaptation": null
+          },
+          {
+            "type": "action",
+            "text": "闪回：雨夜，林深将信塞进门缝，沈言开门捡起，看了一眼，赌气地丢回给他。",
             "source_ref": {
               "chapter": 2,
               "spans": [
                 {
                   "start": 175,
-                  "end": 202
-                }
-              ]
-            },
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "闪回：雨夜，林深将信塞进门缝。沈言开门，拿起信，看了一眼，赌气地丢回给他。",
-            "source_ref": {
-              "chapter": 2,
-              "spans": [
-                {
-                  "start": 204,
-                  "end": 229
+                  "end": 220
                 }
               ]
             },
@@ -519,13 +497,13 @@
             "type": "dialogue",
             "character": "char_shen_yan",
             "line": "我不想看。",
-            "parenthetical": "（闪回中，赌气地）",
+            "parenthetical": "赌气地",
             "source_ref": {
               "chapter": 2,
               "spans": [
                 {
-                  "start": 222,
-                  "end": 228
+                  "start": 221,
+                  "end": 227
                 }
               ]
             },
@@ -533,7 +511,7 @@
           },
           {
             "type": "action",
-            "text": "沈言转身上楼，在窗口站了一整夜，看着楼下打着伞的林深。雨越下越大，林深一直站到凌晨，最后被雨水浇透，慢慢走远。",
+            "text": "沈言转身上楼，在窗口站了一整夜，看着楼下林深打着伞站到凌晨，最后被雨水浇透，慢慢走远。",
             "source_ref": {
               "chapter": 2,
               "spans": [
@@ -547,12 +525,9 @@
           },
           {
             "type": "action",
-            "text": "闪回结束。沈言低头看着手中的信纸，手指微微颤抖。",
+            "text": "回到现在，沈言深吸一口气，缓缓撕开信封。",
             "source_ref": null,
-            "adaptation": {
-              "from": "interior_monologue",
-              "technique": "action"
-            }
+            "adaptation": null
           },
           {
             "type": "transition",
@@ -585,7 +560,7 @@
         "elements": [
           {
             "type": "action",
-            "text": "沈言坐在地板上，把信纸贴在胸口，闭上眼睛。",
+            "text": "沈言坐在地板上，把信贴在胸口，眼神空洞。",
             "source_ref": {
               "chapter": 2,
               "spans": [
@@ -599,32 +574,12 @@
           },
           {
             "type": "action",
-            "text": "她睁开眼，眼神空洞，嘴唇微动。",
-            "source_ref": null,
-            "adaptation": {
-              "from": "interior_monologue",
-              "technique": "action"
-            }
-          },
-          {
-            "type": "dialogue",
-            "character": "char_shen_yan",
-            "line": "如果……如果那天我追下楼……",
-            "parenthetical": "低声自语",
-            "source_ref": null,
-            "adaptation": {
-              "from": "interior_monologue",
-              "technique": "subtext"
-            }
-          },
-          {
-            "type": "action",
-            "text": "她攥紧信纸，指节发白，身体微微颤抖。",
+            "text": "她缓缓闭上眼睛，眉头紧锁，仿佛在忍受痛苦。",
             "source_ref": {
               "chapter": 2,
               "spans": [
                 {
-                  "start": 402,
+                  "start": 382,
                   "end": 415
                 }
               ]
@@ -637,14 +592,14 @@
           {
             "type": "dialogue",
             "character": "char_shen_yan",
-            "line": "三年了……我恨的不是你，是我自己。",
-            "parenthetical": "声音哽咽",
+            "line": "如果……如果那天我追下楼……",
+            "parenthetical": "低声自语，声音颤抖",
             "source_ref": {
               "chapter": 2,
               "spans": [
                 {
-                  "start": 336,
-                  "end": 357
+                  "start": 362,
+                  "end": 382
                 }
               ]
             },
@@ -655,7 +610,7 @@
           },
           {
             "type": "action",
-            "text": "她抬头看向窗外，眼神复杂，既有期待又有恐惧。",
+            "text": "她睁开眼睛，看着手中的信，表情复杂，既有期待又有恐惧。",
             "source_ref": {
               "chapter": 2,
               "spans": [
@@ -673,17 +628,26 @@
           {
             "type": "dialogue",
             "character": "char_shen_yan",
-            "line": "现在他回来了……我该怎么办？",
-            "parenthetical": "喃喃自语",
+            "line": "他回来了……我该高兴吗？还是……",
+            "parenthetical": "自问自答，语气迷茫",
             "source_ref": {
               "chapter": 2,
               "spans": [
                 {
-                  "start": 417,
-                  "end": 426
+                  "start": 428,
+                  "end": 444
                 }
               ]
             },
+            "adaptation": {
+              "from": "interior_monologue",
+              "technique": "subtext"
+            }
+          },
+          {
+            "type": "action",
+            "text": "她将信紧紧攥在手里，指节发白。",
+            "source_ref": null,
             "adaptation": null
           },
           {
@@ -749,7 +713,7 @@
           {
             "type": "dialogue",
             "character": "char_shen_yan",
-            "line": "只是路过。",
+            "line": "只是路过而已。",
             "parenthetical": "低声自语",
             "source_ref": {
               "chapter": 3,
@@ -767,7 +731,7 @@
           },
           {
             "type": "action",
-            "text": "她转身欲走，却又停下，手不自觉地推开了门。",
+            "text": "她转身欲走，却又停下，手指无意识地摩挲着包带。",
             "source_ref": null,
             "adaptation": null
           },
@@ -808,7 +772,7 @@
               "chapter": 3,
               "spans": [
                 {
-                  "start": 29,
+                  "start": 31,
                   "end": 44
                 }
               ]
@@ -817,7 +781,7 @@
           },
           {
             "type": "action",
-            "text": "林深坐在老位置，面前放着两杯咖啡——一杯黑咖啡，另一杯冒着热气，旁边放着糖包。",
+            "text": "林深坐在老位置上，面前放着两杯咖啡——一杯是他的，另一杯是她从前总点的那种，加双份糖。",
             "source_ref": {
               "chapter": 3,
               "spans": [
@@ -830,32 +794,8 @@
             "adaptation": null
           },
           {
-            "type": "dialogue",
-            "character": "char_lin_shen",
-            "line": "还是老位置。",
-            "parenthetical": "抬头看向她，声音平静",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_shen_yan",
-            "line": "你怎么知道我会来？",
-            "parenthetical": "停在桌边，没有坐下",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "dialogue",
-            "character": "char_lin_shen",
-            "line": "你总是会来的。",
-            "parenthetical": "轻轻推了推那杯加糖的咖啡",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
             "type": "action",
-            "text": "沈言看着那杯咖啡，眼神闪烁，手指微微蜷缩。",
+            "text": "沈言脚步微顿，手指无意识地摩挲着包带。",
             "source_ref": null,
             "adaptation": {
               "from": "interior_monologue",
@@ -894,7 +834,7 @@
         "elements": [
           {
             "type": "action",
-            "text": "林深抬头看向沈言，眼神中带着一丝紧张。",
+            "text": "林深抬头看向沈言，眼神中透出紧张。",
             "source_ref": {
               "chapter": 3,
               "spans": [
@@ -947,7 +887,7 @@
         "id": "sc_010",
         "heading": {
           "int_ext": "INT",
-          "location_id": "loc_cheng_nan_jiu_ka_fei_guan",
+          "location_id": "loc_ka_fei_guan",
           "time_of_day": "傍晚",
           "time_ref": null
         },
@@ -968,7 +908,7 @@
         "elements": [
           {
             "type": "action",
-            "text": "林深从风衣口袋里缓缓拿出那封信，信封边角已经磨损发软。他手指微微颤抖，将信放在桌上，推向沈言。",
+            "text": "林深从风衣口袋里拿出那封信，边角软得更厉害了。",
             "source_ref": {
               "chapter": 3,
               "spans": [
@@ -989,8 +929,8 @@
               "chapter": 3,
               "spans": [
                 {
-                  "start": 178,
-                  "end": 191
+                  "start": 177,
+                  "end": 199
                 }
               ]
             },
@@ -1005,7 +945,7 @@
               "chapter": 3,
               "spans": [
                 {
-                  "start": 200,
+                  "start": 199,
                   "end": 225
                 }
               ]
@@ -1022,7 +962,7 @@
               "spans": [
                 {
                   "start": 225,
-                  "end": 240
+                  "end": 241
                 }
               ]
             },
@@ -1030,12 +970,9 @@
           },
           {
             "type": "action",
-            "text": "沈言的目光落在信封上，手指蜷缩了一下，没有立刻去拿。",
+            "text": "林深将信放在桌上，推向沈言。沈言低头看着信封，没有伸手。",
             "source_ref": null,
-            "adaptation": {
-              "from": "interior_monologue",
-              "technique": "action"
-            }
+            "adaptation": null
           },
           {
             "type": "transition",
@@ -1065,11 +1002,11 @@
           "char_lin_shen",
           "char_shen_yan"
         ],
-        "synopsis": "沈言情绪激动，最终按住林深的手，表示不用看了。",
+        "synopsis": "沈言情绪激动，按住林深的手，表示不用看信了。",
         "elements": [
           {
             "type": "action",
-            "text": "沈言眼眶泛红，手指微微颤抖，目光紧锁着那封信。",
+            "text": "沈言低头看着信封，眼眶泛红，手指微微颤抖。",
             "source_ref": {
               "chapter": 3,
               "spans": [
@@ -1084,14 +1021,14 @@
           {
             "type": "dialogue",
             "character": "char_shen_yan",
-            "line": "我……早就拆开看过了。",
+            "line": "我……我早就拆开看过了。",
             "parenthetical": "声音发颤",
             "source_ref": {
               "chapter": 3,
               "spans": [
                 {
                   "start": 262,
-                  "end": 275
+                  "end": 282
                 }
               ]
             },
@@ -1102,7 +1039,43 @@
           },
           {
             "type": "action",
-            "text": "她停顿了一下，嘴唇翕动，似乎还有千言万语，最终却只伸出手，轻轻按住了林深递信的手背。",
+            "text": "她停顿了一下，眼神闪烁，最终没有拆穿自己的谎言。",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 277,
+                  "end": 282
+                }
+              ]
+            },
+            "adaptation": {
+              "from": "interior_monologue",
+              "technique": "action"
+            }
+          },
+          {
+            "type": "dialogue",
+            "character": "char_shen_yan",
+            "line": "对不起……那天我在窗口站了一夜。",
+            "parenthetical": "声音哽咽",
+            "source_ref": {
+              "chapter": 3,
+              "spans": [
+                {
+                  "start": 295,
+                  "end": 319
+                }
+              ]
+            },
+            "adaptation": {
+              "from": "interior_monologue",
+              "technique": "subtext"
+            }
+          },
+          {
+            "type": "action",
+            "text": "她伸出手，轻轻按住了林深递信的手背，阻止他再推过来。",
             "source_ref": {
               "chapter": 3,
               "spans": [
@@ -1118,13 +1091,7 @@
             "type": "dialogue",
             "character": "char_shen_yan",
             "line": "不用看了。",
-            "parenthetical": "低声，带着哽咽",
-            "source_ref": null,
-            "adaptation": null
-          },
-          {
-            "type": "action",
-            "text": "林深的手僵在半空，眼神复杂地看着她。",
+            "parenthetical": "摇头，眼泪滑落",
             "source_ref": null,
             "adaptation": null
           },
@@ -1139,7 +1106,7 @@
         "id": "sc_012",
         "heading": {
           "int_ext": "INT",
-          "location_id": "loc_cheng_nan_jiu_ka_fei_guan",
+          "location_id": "loc_ka_fei_guan",
           "time_of_day": "傍晚",
           "time_ref": null
         },
@@ -1231,12 +1198,12 @@
     "scene_count": 12,
     "character_count": 2,
     "location_count": 4,
-    "element_count": 69,
-    "dialogue_count": 23,
-    "action_count": 35,
+    "element_count": 62,
+    "dialogue_count": 17,
+    "action_count": 34,
     "transition_count": 11,
-    "externalized_count": 15,
-    "traceability_coverage": 0.7068965517241379,
+    "externalized_count": 14,
+    "traceability_coverage": 0.8627450980392157,
     "continuity_error_count": 0,
     "continuity_warn_count": 0,
     "schema_valid": true,

@@ -653,14 +653,17 @@ def import_screenplay(req: ImportRequest):
     # pydantic 错误 + 原始内容回喂 llm 求修复，最多重试若干次；全失败抛异常。
     try:
         sp = validate_and_repair(req.content, llm)
-    except Exception as exc:  # noqa: BLE001
-        # 解析失败 / 修复用尽仍不合法。只回送简短信息。
-        msg = str(exc)
-        if len(msg) > 200:
-            msg = msg[:200]
+    except Exception:  # noqa: BLE001
+        # 解析失败 / 修复用尽仍不合法。给用户人话提示, 不泄露 pydantic 内部细节与堆栈。
         return JSONResponse(
             status_code=400,
-            content={"detail": "导入失败(无法解析或修复后仍不合法): " + msg},
+            content={
+                "detail": (
+                    "导入失败：剧本无法解析或自动修复。请检查 YAML 结构是否符合剧本 Schema —— "
+                    "顶层需含 meta、story_bible、scenes；每个 scene 需有 heading、source_ref、elements；"
+                    "每个 element 需带 type(action/dialogue/transition)。"
+                )
+            },
         )
 
     # 给了原文：ingest 出 novel，既用于算更准的溯源覆盖率，也回送 chapters 给前端。

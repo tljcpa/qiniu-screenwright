@@ -240,6 +240,33 @@ def test_format_report_text():
     assert "外化" in report           # 创新③ 文案
 
 
+def test_format_report_language_en():
+    """language='en' 时输出英文简报，关键数字仍正确，且不含中文模板词。"""
+    sp = _build_screenplay()
+    m = compute_metrics(sp)
+    report = format_report(m, language="en")
+
+    assert isinstance(report, str)
+    assert len(report) > 0
+    # 英文模板标志词。
+    assert "Screenwright Quality Dashboard" in report
+    assert "60.0%" in report           # 溯源覆盖率 0.6 -> 60.0%
+    assert "valid" in report           # schema 自检英文文案
+    assert "externaliz" in report      # 创新③ 英文文案(externalization)
+    # 反证：不应混入中文模板。
+    assert "质量看板" not in report
+    assert "合法" not in report
+
+
+def test_format_report_default_is_chinese():
+    """不传 language 时默认仍是中文(向后兼容，既有调用不受影响)。"""
+    sp = _build_screenplay()
+    m = compute_metrics(sp)
+    # 默认调用与显式 zh 调用应完全一致。
+    assert format_report(m) == format_report(m, language="zh")
+    assert "质量看板" in format_report(m)
+
+
 def test_format_report_with_source_coverage():
     """带 source_coverage 时简报应输出原文覆盖率行。"""
     sp = _build_screenplay()

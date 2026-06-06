@@ -54,11 +54,13 @@ _SAMPLES = [
         "id": "zh_oldtown_cafe",
         "filename": "中文网文样本_旧城咖啡.txt",
         "medium": "short_drama",
+        "language": "zh",
     },
     {
         "id": "en_pride_prejudice",
         "filename": "english_pride_and_prejudice_ch1-3.txt",
         "medium": "film",
+        "language": "en",
     },
 ]
 
@@ -70,6 +72,8 @@ def _run_one(sample: dict, llm: LLM) -> dict:
     """对单个样例真跑整条管线，返回与 convert done 事件一致的 dict。"""
     sample_id = sample["id"]
     medium = sample["medium"]
+    # 语言提示：影响 heading.time_of_day 的兜底默认值与下游简报语言。默认中文。
+    language = sample.get("language", "zh")
     path = os.path.join(_SAMPLES_DIR, sample["filename"])
     print("\n==== 预计算样例 %s (medium=%s) ====" % (sample_id, medium))
     with open(path, "r", encoding="utf-8") as f:
@@ -90,7 +94,7 @@ def _run_one(sample: dict, llm: LLM) -> dict:
     print("场骨架数：%d" % len(stubs))
 
     # Pass3 generate(最重一步)。
-    scenes = generate(novel, bible, stubs, medium=medium, llm=llm)
+    scenes = generate(novel, bible, stubs, medium=medium, llm=llm, language=language)
     print("生成场数：%d" % len(scenes))
 
     # 组装顶层 Screenplay(与 main.py _run_pipeline_blocking 同款)。

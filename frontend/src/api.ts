@@ -205,6 +205,35 @@ interface DoneEvent {
 }
 
 // ---------------------------------------------------------------------------
+// 朴素基线(创新点对比)相关类型
+// ---------------------------------------------------------------------------
+// 朴素版的单场：只有自由文本(无溯源/无外化/无圣经)，结构刻意粗糙。
+export interface NaiveScene {
+  heading: string
+  lines: string[]
+}
+
+// 朴素版本体：媒介 + 场数 + 自由文本场列表。
+export interface NaiveScreenplay {
+  medium: string
+  chunks: number
+  scenes: NaiveScene[]
+}
+
+// 五维差异摘要：后端可选返回，前端有则用、无则按 ours 指标兜底。
+// 键名与 BaselineSummary 渲染一一对应；值可为布尔(支持/不支持)或数值/文本。
+export interface BaselineDimensions {
+  // 后端可能返回任意维度键值，这里用宽松映射，渲染层只挑展示的几个。
+  [k: string]: unknown
+}
+
+// /api/baseline 返回结构。
+export interface BaselineResult {
+  naive: NaiveScreenplay
+  summary?: { dimensions?: BaselineDimensions } & Record<string, unknown>
+}
+
+// ---------------------------------------------------------------------------
 // 对外 API 函数（签名即将来真实接口）
 // ---------------------------------------------------------------------------
 
@@ -407,6 +436,94 @@ export async function getSampleResult(sampleId: string): Promise<WorkbenchData> 
   }
   const d = (await res.json()) as DoneEvent
   // 与 convert 的返回保持一致：只取 screenplay + chapters(metrics 前端自行派生)。
+  return { screenplay: d.screenplay, chapters: d.chapters }
+}
+
+// 朴素基线对比(创新点路演杀手锏)
+// 真实对接点：POST /api/baseline
+// 入参：原文 text + 目标媒介 medium + 可选的"我们的"指标(用于摘要对比)。
+// 返回：朴素版剧本(自由文本场、无溯源/无外化/无圣经) + 可选五维差异摘要。
+export async function baseline(
+  text: string,
+  medium: TargetMedium,
+  oursMetrics?: QualityMetrics,
+): Promise<BaselineResult> {
+  if (USE_MOCK) {
+    await delay(400)
+    // mock 一份明显粗糙的朴素版：把原文按段落硬切成自由文本场，无任何结构化能力。
+    return {
+      naive: {
+        medium,
+        chunks: 3,
+        scenes: [
+          {
+            heading: '场景 1',
+            lines: [
+              '林晚推开旧城咖啡的木门，铜铃轻响。她已经三年没回这条街了。柜台后的男人抬起头，是周屿。',
+              '两人都没有说话，空气里只有咖啡机低低的嗡鸣。她想，他大概早就把我忘了吧。',
+            ],
+          },
+          {
+            heading: '场景 2',
+            lines: [
+              '周屿给她端来一杯没有加糖的拿铁。窗外开始下雨。他终于开口：还以为你不会回来了。',
+              '她笑了笑，没有回答，心里却翻江倒海。',
+            ],
+          },
+          {
+            heading: '场景 3',
+            lines: ['雨停的时候，林晚起身告辞。周屿送她到门口，欲言又止。'],
+          },
+        ],
+      },
+      summary: { dimensions: {} },
+    }
+  }
+  const res = await fetch(API_BASE + '/api/baseline', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    // 契约 body: {text, medium, ours_metrics?}
+    body: JSON.stringify({ text, medium, ours_metrics: oursMetrics }),
+  })
+  if (!res.ok) {
+    throw new Error('baseline failed: ' + res.status)
+  }
+  return (await res.json()) as BaselineResult
+}
+
+// 导入剧本续编(闭合"导出->手改->导回"可编辑环)
+// 真实对接点：POST /api/import
+// 入参：剧本文本 content(YAML/JSON)，可选附原著原文 text(用于溯源重建)。
+// 返回：与 convert 的 done 同形(screenplay + chapters)，前端无缝载入工作台。
+// 400 由调用方捕获 message 友好提示(后端解析失败时应在 body 给出 detail)。
+export async function importScreenplay(
+  content: string,
+  text?: string,
+): Promise<WorkbenchData> {
+  if (USE_MOCK) {
+    await delay(300)
+    return buildMockWorkbench('film')
+  }
+  const res = await fetch(API_BASE + '/api/import', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content, text }),
+  })
+  if (!res.ok) {
+    // 尽力解析后端给出的错误详情，做友好提示；解析失败则退回状态码。
+    let detail = 'import failed: ' + res.status
+    try {
+      const body = (await res.json()) as { detail?: unknown }
+      if (body && typeof body.detail === 'string' && body.detail) {
+        detail = body.detail
+      }
+    } catch {
+      // 后端未返回 JSON，沿用默认 detail。
+    }
+    throw new Error(detail)
+  }
+  const d = (await res.json()) as DoneEvent
+  // 与 convert / sample result 返回保持一致：只取 screenplay + chapters。
   return { screenplay: d.screenplay, chapters: d.chapters }
 }
 
